@@ -3,6 +3,8 @@ using System.Collections;
 
 public class BallBounceHandler : MonoBehaviour
 {
+    const int MAXREBOTE = 0;
+
     private int bounceCount = 0;
     private Rigidbody rb;
     public float ascendSpeed = 1f; // Velocidad de ascenso
@@ -46,7 +48,7 @@ public class BallBounceHandler : MonoBehaviour
         bounceCount++;
         Debug.Log(bounceCount);
 
-        if (bounceCount >= 3 && !isAscending)
+        if (bounceCount >= MAXREBOTE && !isAscending)
         {
             StartCoroutine(AscendToHeight(2f));
             rb.velocity = Vector3.zero; // Detener la bola

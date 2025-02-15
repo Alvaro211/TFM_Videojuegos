@@ -13,6 +13,12 @@ public class PoolBolaLuminosa : MonoBehaviour
         GeneratePrefabs();
     }
 
+    private void Update()
+    {
+        if (transform.position.y < -2)
+            gameObject.SetActive(false);
+    }
+
     void GeneratePrefabs()
     {
         for (int i = 0; i < poolSize; i++)

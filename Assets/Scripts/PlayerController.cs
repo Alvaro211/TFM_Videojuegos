@@ -4,23 +4,32 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed; // Velocidad del movimiento
-    public float gravityScale = 1f; // Gravedad normal del jugador
+    public float gravityScale = -9.8f; // Gravedad normal del jugador
     public float jumpForce = 5f; // Fuerza de salto
     public PoolBolaLuminosa poolBola;
 
     private CharacterController controller;
     private Rigidbody rb;
     private Vector3 moveInput;
-    private bool isOnFloor; // Indica si el jugador está tocando el suelo
     private bool isOnHotSpot;
     private HotSpot hotspot;
 
     public GameObject ballPrefab; // Prefab de la bola
     public float launchForce = 5f; // Fuerza con la que se lanza la bola
+
+    private Vector3 startPosition;
+    private float verticalVelocity;
+    private bool isMoving;
+    private Vector3 currentVelocity;
+    private bool jumpCooldown;
+
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
+        startPosition = transform.position; // Guarda la posición inicial
     }
 
     void Update()
@@ -30,27 +39,42 @@ public class PlayerMovement : MonoBehaviour
         moveInput.z = Input.GetAxisRaw("Vertical"); // W/S (movimiento en Z)
         moveInput.Normalize(); // Evita moverse más rápido en diagonal
 
+        if (moveInput.magnitude > 0.1f )
+            isMoving = true;
+
+        else
+            isMoving = false;
+
         // Si está tocando el suelo (Floor), desactivamos la gravedad
-        if (isOnFloor)
+        if (!controller.isGrounded)
         {
-            rb.useGravity = false; // Desactivar la gravedad mientras esté sobre el suelo
+            //rb.useGravity = false; // Desactivar la gravedad mientras esté sobre el suelo
+            
+        /*}
+        else
+        {*/
+            //rb.useGravity = true; // Reactivar la gravedad fuera del
+            verticalVelocity += gravityScale * Time.deltaTime;
+        }
+
+        //Move the player
+        if (isMoving)
+        {
+            currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
         }
         else
         {
-            rb.useGravity = true; // Reactivar la gravedad fuera del suelo
+            //Player inertia
+            currentVelocity = Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * 5f);
+
+             
         }
 
-        // Aplicar el movimiento en X y Z
-        Vector3 movement = moveInput * moveSpeed * Time.deltaTime;
-        rb.MovePosition(transform.position + movement); // Mover el jugador
-        //rb.AddForce(moveInput * moveSpeed, ForceMode.Acceleration);
-       /* float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
-        Vector3 move = new Vector3(moveX, 0, moveZ).normalized * moveSpeed;
-        controller.Move((move ) * Time.deltaTime);*/
+        currentVelocity.y = verticalVelocity;
+        controller.Move(currentVelocity * Time.deltaTime);
 
         // Detectar salto con la tecla espacio, solo si está tocando el suelo
-        if (Input.GetKeyDown(KeyCode.Space) && (isOnFloor || isOnHotSpot))
+        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded && !jumpCooldown)
         {
             Jump();
         }
@@ -64,44 +88,24 @@ public class PlayerMovement : MonoBehaviour
         {
             LaunchBall();
         }
+
+        if(transform.position.y < -1.5f)
+        {
+            transform.position = startPosition;
+        }
     }
 
     // Método para aplicar el salto
     void Jump()
     {
-        // Aplica una fuerza vertical en el eje Y
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        isOnFloor = false; // Evita saltar nuevamente mientras está en el aire
+        jumpCooldown = true;
+        verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
+        Invoke(nameof(EnableJumpCooldown), 0.1f);
     }
 
-    // Detectar cuando entra en contacto con el suelo
-    private void OnCollisionEnter(Collision collision)
+    void EnableJumpCooldown()
     {
-        if (collision.gameObject.CompareTag("Floor"))
-        {
-            isOnFloor = true; // El jugador está tocando el suelo
-        }
-
-        if (collision.gameObject.CompareTag("HotSpot"))
-        {
-            isOnHotSpot = true;
-            hotspot = collision.collider.GetComponent<HotSpot>();
-        }
-    }
-
-    // Detectar cuando sale del suelo
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Floor"))
-        {
-            isOnFloor = false; // El jugador ya no está tocando el suelo
-        }
-
-        if (collision.gameObject.CompareTag("HotSpot"))
-        {
-            isOnHotSpot = false;
-            hotspot = null;
-        }
+        jumpCooldown = false;
     }
 
     void LaunchBall()
@@ -154,5 +158,43 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    // Detectar cuando entra en contacto con el suelo
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            transform.position = startPosition;
+        }
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Enemy"))
+        {
+            transform.position = startPosition;
+        }
+    }
+
+    // Detectar cuando sale del suelo
+    private void OnTriggerExit(Collider other)
+    {
+
+        if (other.tag == "HotSpot")
+        {
+            isOnHotSpot = false;
+            hotspot = null;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "HotSpot") {
+            isOnHotSpot = true;
+            hotspot = other.GetComponent<HotSpot>();
+        }
+
+
     }
 }
