@@ -7,6 +7,11 @@ TagManager:
   - Floor
   - HotSpot
   - Enemy
+  - Ball
+  - ObjetoCancion
+  - FloorObjectSong
+  - StartLevel
+  - FinishLevel
   layers:
   - Default
   - TransparentFX

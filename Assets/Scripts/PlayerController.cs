@@ -1,20 +1,22 @@
+using Unity.Burst.CompilerServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed; // Velocidad del movimiento
     public float gravityScale = -9.8f; // Gravedad normal del jugador
     public float jumpForce = 5f; // Fuerza de salto
-    public PoolBolaLuminosa poolBola;
+    public AudioSource audioSource;
+    public PoolBolaLuminosa poolBall;
+    public Image[] circles;
 
     private CharacterController controller;
-    private Rigidbody rb;
     private Vector3 moveInput;
     private bool isOnHotSpot;
     private HotSpot hotspot;
 
-    public GameObject ballPrefab; // Prefab de la bola
     public float launchForce = 5f; // Fuerza con la que se lanza la bola
 
     private Vector3 startPosition;
@@ -22,13 +24,18 @@ public class PlayerMovement : MonoBehaviour
     private bool isMoving;
     private Vector3 currentVelocity;
     private bool jumpCooldown;
+    private int currentIndex = 0;
 
+    private bool isNearObjectSong;
+    private ObjectSong objectSong;
 
+    private StartLevel startLevel;
+    
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
         startPosition = transform.position; // Guarda la posición inicial
     }
 
@@ -48,12 +55,6 @@ public class PlayerMovement : MonoBehaviour
         // Si está tocando el suelo (Floor), desactivamos la gravedad
         if (!controller.isGrounded)
         {
-            //rb.useGravity = false; // Desactivar la gravedad mientras esté sobre el suelo
-            
-        /*}
-        else
-        {*/
-            //rb.useGravity = true; // Reactivar la gravedad fuera del
             verticalVelocity += gravityScale * Time.deltaTime;
         }
 
@@ -82,6 +83,9 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && isOnHotSpot && hotspot != null)
         {
             hotspot.ActivateLights();
+        }else if(Input.GetKeyDown(KeyCode.E) && isNearObjectSong && objectSong != null)
+        {
+            objectSong.SoundItem();
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -89,9 +93,26 @@ public class PlayerMovement : MonoBehaviour
             LaunchBall();
         }
 
+        if (Input.GetKeyDown(KeyCode.R) && isNearObjectSong && objectSong != null)
+        {
+            Color color = objectSong.TakeItem();
+
+            // Si hay un círculo disponible, cambia su color
+            if (currentIndex < circles.Length)
+            {
+                circles[currentIndex].color = color; // Pinta el círculo
+                currentIndex++; // Pasa al siguiente círculo
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q) && audioSource != null && startLevel != null)
+        {
+            StartCoroutine(startLevel.PlaySoundsInSequence(audioSource));
+        }
+
         if(transform.position.y < -1.5f)
         {
-            transform.position = startPosition;
+            Dead();
         }
     }
 
@@ -110,13 +131,13 @@ public class PlayerMovement : MonoBehaviour
 
     void LaunchBall()
     {
-        if (ballPrefab != null)
+        if (poolBall != null)
         {
             // Obtener la posición del ratón en el mundo
             Vector3 mousePosition = GetMouseWorldPosition();
 
             // Crear la bola desde el pool
-            GameObject newBall = poolBola.GetInactivePrefab();
+            GameObject newBall = poolBall.GetInactivePrefab();
             if (newBall == null) return; // Si no hay bolas inactivas, salir
 
             newBall.gameObject.SetActive(true);
@@ -160,41 +181,80 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.zero;
     }
 
-    // Detectar cuando entra en contacto con el suelo
-    private void OnCollisionEnter(Collision collision)
+    private void Dead()
     {
-
-        if (collision.gameObject.CompareTag("Enemy"))
+        transform.position = startPosition;
+        foreach (Image image in circles)
         {
-            transform.position = startPosition;
+            image.color = Color.white;
         }
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Verifica si el objeto con el que colisionó tiene la etiqueta "Bola"
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            BallBounceHandler ballScript = collision.gameObject.GetComponent<BallBounceHandler>();
+
+            if (ballScript != null)
+            {
+                // Llamar a una función dentro del script si es necesario
+                ballScript.TurnOffLight();
+            }
+            collision.gameObject.SetActive(false);
+        }
+    }
+
+    void OnControllerCollideraHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.CompareTag("Enemy"))
         {
-            transform.position = startPosition;
+            Dead();
+        }else if (hit.gameObject.CompareTag("Ball"))
+        {
+            BallBounceHandler ballScript = hit.gameObject.GetComponent<BallBounceHandler>();
+
+            if (ballScript != null)
+            {
+                // Llamar a una función dentro del script si es necesario
+                ballScript.TurnOffLight();
+            }
+            hit.gameObject.SetActive(false);
         }
     }
 
     // Detectar cuando sale del suelo
     private void OnTriggerExit(Collider other)
     {
-
         if (other.tag == "HotSpot")
         {
             isOnHotSpot = false;
             hotspot = null;
+        }else if (other.tag == "FloorObjectSong")
+        {
+            isNearObjectSong = false;
+            objectSong = null;
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "HotSpot") {
+         if (other.tag == "HotSpot") {
             isOnHotSpot = true;
             hotspot = other.GetComponent<HotSpot>();
+        }else if(other.tag == "FloorObjectSong")
+        {
+            isNearObjectSong = true;
+            objectSong = other.GetComponent<ObjectSong>();
+        }else if(other.tag == "StartLevel")
+        {
+            startLevel = other.GetComponent<StartLevel>();
+            if (!startLevel.activated)
+            {
+                StartCoroutine(startLevel.PlaySoundsInSequence(audioSource));
+                startLevel.activated = true;
+            }
         }
-
-
     }
 }

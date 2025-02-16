@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BallBounceHandler : MonoBehaviour
 {
-    const int MAXREBOTE = 0;
+    const int MAXREBOUNCE = 0;
 
     private int bounceCount = 0;
     private Rigidbody rb;
@@ -14,6 +15,8 @@ public class BallBounceHandler : MonoBehaviour
 
     private float lastCollisionTime = 0f; // Guarda el tiempo del último choque
     private float collisionCooldown = 0.1f; // Tiempo mínimo entre colisiones
+
+    private List<Light> lightBounce = new List<Light>();
 
     void Start()
     {
@@ -32,9 +35,28 @@ public class BallBounceHandler : MonoBehaviour
         }
 
         transform.position = new Vector3(transform.position.x, targetY, transform.position.z); // Asegurar la altura exacta
+        isAscending = false;
     }
 
     void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            Enemy enemy = FindObjectOfType<Enemy>();
+            if (enemy != null)
+            {
+                enemy.MoveToBall(transform.position); // Envía la posición al enemigo
+            }
+
+            ControlBounce(collision);
+        }else if(collision.gameObject.CompareTag("Enemy"))
+        {
+            gameObject.SetActive(false);
+        }
+        
+    }
+
+    public void ControlBounce(Collision collision)
     {
         if (Time.time - lastCollisionTime < collisionCooldown) return;
         lastCollisionTime = Time.time;
@@ -46,21 +68,22 @@ public class BallBounceHandler : MonoBehaviour
             return;
         }
         bounceCount++;
-        Debug.Log(bounceCount);
 
-        if (bounceCount >= MAXREBOTE && !isAscending)
+        if (bounceCount >= MAXREBOUNCE && !isAscending)
         {
             StartCoroutine(AscendToHeight(2f));
-            rb.velocity = Vector3.zero; // Detener la bola
+            rb.velocity = new Vector3(0, 0, 0); // Detener la bola
             rb.angularVelocity = Vector3.zero; // Detener la rotación
             rb.isKinematic = true; // Hacer que la bola no sea afectada por la física
         }
-        else if (bounceCount < 3) {
-            rb.velocity = new Vector3(velocityX, velocityY, 0)  * 15;
+        else if (bounceCount < 3)
+        {
+            rb.velocity = new Vector3(velocityX, velocityY, 0) * 15;
 
         }
         CreatePointLight(collision.GetContact(0).point);
     }
+
 
     // Método para generar la Point Light en la colisión
     void CreatePointLight(Vector3 position)
@@ -75,9 +98,12 @@ public class BallBounceHandler : MonoBehaviour
 
         lightObject.transform.position = position; // Colocar en la posición de la colisión
 
+        lightBounce.Add(pointLight);
+
         // Iniciar la reducción de intensidad después de 5 segundos
         StartCoroutine(FadeOutLight(pointLight, 2f));
     }
+
 
     // Corrutina para reducir la intensidad gradualmente
     private IEnumerator FadeOutLight(Light light, float fadeDuration)
@@ -94,7 +120,17 @@ public class BallBounceHandler : MonoBehaviour
         }
 
         light.intensity = 0f; // Asegurar que quede completamente apagada
+        lightBounce.RemoveAt(0);
         Destroy(light.gameObject); // Eliminar la luz después de apagarse
     }
 
+    public void TurnOffLight()
+    {
+        foreach(Light light in lightBounce)
+        {
+            light.gameObject.SetActive(false);
+        }
+
+        lightBounce.Clear();
+    }
 }

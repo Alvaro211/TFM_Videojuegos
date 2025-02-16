@@ -8,7 +8,7 @@ public class HotSpot : MonoBehaviour
     public List<int> numLightPlatform;
     public List<Light> allLight;
     public float fadeDuration = 100f;
-    public float tiempoLucesEncendidas = 10f;
+    public float TimeLightOn = 10f;
 
     void Start()
     {
@@ -45,7 +45,7 @@ public class HotSpot : MonoBehaviour
         SetAllLightsIntensity(20); // Encender todas las luces al máximo
         for (int i = 0; i < lights.Count; i++)
         {
-            StartCoroutine(FadeOutLights(tiempoLucesEncendidas - i, lights[i])); // Iniciar la reducción de intensidad
+            StartCoroutine(FadeOutLights(TimeLightOn - i, lights[i])); // Iniciar la reducción de intensidad
         }
     }
 
