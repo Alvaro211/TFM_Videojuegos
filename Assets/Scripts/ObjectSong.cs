@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectSong : MonoBehaviour
 {
     public GameObject objectSong;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()

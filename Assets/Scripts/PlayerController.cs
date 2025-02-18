@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -30,13 +32,19 @@ public class PlayerMovement : MonoBehaviour
     private ObjectSong objectSong;
 
     private StartLevel startLevel;
-    
+    private FinishLevel finishLevel;
+    private AudioClip[] sequence;
+    private bool isOnFinishLevel = false;
+    private bool souning = false;
+
+
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
         startPosition = transform.position; // Guarda la posición inicial
+        sequence = new AudioClip[3];
     }
 
     void Update()
@@ -67,8 +75,6 @@ public class PlayerMovement : MonoBehaviour
         {
             //Player inertia
             currentVelocity = Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * 5f);
-
-             
         }
 
         currentVelocity.y = verticalVelocity;
@@ -80,7 +86,15 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && isOnHotSpot && hotspot != null)
+        if (Input.GetKeyDown(KeyCode.E) && isOnFinishLevel && finishLevel != null)
+        {
+            PlaySoundsInSequence(audioSource);
+            if (CheckSequence())
+            {
+                finishLevel.OpenDoor();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && isOnHotSpot && hotspot != null)
         {
             hotspot.ActivateLights();
         }else if(Input.GetKeyDown(KeyCode.E) && isNearObjectSong && objectSong != null)
@@ -101,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentIndex < circles.Length)
             {
                 circles[currentIndex].color = color; // Pinta el círculo
+                sequence[currentIndex] = objectSong.audioSource.clip;
                 currentIndex++; // Pasa al siguiente círculo
             }
         }
@@ -129,6 +144,32 @@ public class PlayerMovement : MonoBehaviour
         jumpCooldown = false;
     }
 
+    public IEnumerator PlaySoundsInSequence(AudioSource audioSource)
+    {
+        if (!souning)
+        {
+            souning = true;
+            foreach (AudioClip clip in sequence)
+            {
+                audioSource.clip = clip;  // Asigna el clip actual al AudioSource
+                audioSource.Play();        // Lo reproduce
+
+                yield return new WaitWhile(() => audioSource.isPlaying); // Espera a que termine
+            }
+            souning = false;
+        }
+    }
+
+    public bool CheckSequence()
+    {
+        bool correct = true;
+        for (int i = 0; i < sequence.Length; i++)
+        {
+            if(sequence[i] != startLevel.audioClips[i])
+                correct = false;
+        }
+        return correct;
+    }
     void LaunchBall()
     {
         if (poolBall != null)
@@ -193,17 +234,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Verifica si el objeto con el que colisionó tiene la etiqueta "Bola"
-        if (collision.gameObject.CompareTag("Ball"))
-        {
-            BallBounceHandler ballScript = collision.gameObject.GetComponent<BallBounceHandler>();
-
-            if (ballScript != null)
-            {
-                // Llamar a una función dentro del script si es necesario
-                ballScript.TurnOffLight();
-            }
-            collision.gameObject.SetActive(false);
-        }
+        
     }
 
     void OnControllerCollideraHit(ControllerColliderHit hit)
@@ -236,6 +267,11 @@ public class PlayerMovement : MonoBehaviour
             isNearObjectSong = false;
             objectSong = null;
         }
+        else if (other.gameObject.CompareTag("FinishLevel"))
+        {
+            isOnFinishLevel = false;
+            finishLevel = null;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -255,6 +291,23 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(startLevel.PlaySoundsInSequence(audioSource));
                 startLevel.activated = true;
             }
+        }else if(other.gameObject.CompareTag("Ball"))
+        {
+            BallBounceHandler ballScript = other.gameObject.GetComponent<BallBounceHandler>();
+
+            if (ballScript != null)
+            {
+                // Llamar a una función dentro del script si es necesario
+                ballScript.TurnOffLight();
+            }
+            other.gameObject.SetActive(false);
+
+            SphereCollider colliderBall = other.gameObject.GetComponent<SphereCollider>();
+            if (colliderBall != null) colliderBall.isTrigger = false;
+        }else if (other.gameObject.CompareTag("FinishLevel"))
+        {
+            isOnFinishLevel = true;
+            finishLevel = other.GetComponent<FinishLevel>();
         }
     }
 }

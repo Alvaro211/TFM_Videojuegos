@@ -8,6 +8,7 @@ public class BallBounceHandler : MonoBehaviour
 
     private int bounceCount = 0;
     private Rigidbody rb;
+    private SphereCollider collider;
     public float ascendSpeed = 1f; // Velocidad de ascenso
     private bool isAscending = false; // Para evitar múltiples llamadas
     public float velocityX = 0;
@@ -21,12 +22,14 @@ public class BallBounceHandler : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        collider = GetComponent<SphereCollider>();
     }
 
     private IEnumerator AscendToHeight(float targetY)
     {
         isAscending = true; // Evitar múltiples llamadas
         rb.isKinematic = true; // Desactivar la física para controlar el movimiento manualmente
+        collider.isTrigger = true;
 
         while (transform.position.y < targetY)
         {
