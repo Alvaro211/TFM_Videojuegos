@@ -162,13 +162,12 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CheckSequence()
     {
-        bool correct = true;
         for (int i = 0; i < sequence.Length; i++)
         {
             if(sequence[i] != startLevel.audioClips[i])
-                correct = false;
+                return false;
         }
-        return correct;
+        return true;
     }
     void LaunchBall()
     {
