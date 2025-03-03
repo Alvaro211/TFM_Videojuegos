@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Floor
   - HotSpot
+  - Enemy
+  - Ball
+  - ObjetoCancion
+  - FloorObjectSong
+  - StartLevel
+  - FinishLevel
+  - Reset
   layers:
   - Default
   - TransparentFX
@@ -13,7 +20,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Fondo
   - 
   - 
   - 

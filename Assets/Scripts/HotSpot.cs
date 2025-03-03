@@ -1,18 +1,27 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.Audio;
 
 public class HotSpot : MonoBehaviour
 {
+    public TextMeshPro control;
+    public AudioSource audioSource;
     public List<Light[]> lights = new List<Light[]>(); // Array de luces a controlar
     public List<int> numLightPlatform;
     public List<Light> allLight;
     public float fadeDuration = 100f;
-    public float tiempoLucesEncendidas = 10f;
+    public float TimeLightOn = 10f;
+
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         int currentIndex = 0;
+
+        control.gameObject.SetActive(false);
 
         foreach (int numLights in numLightPlatform)
         {
@@ -41,11 +50,12 @@ public class HotSpot : MonoBehaviour
 
     public void ActivateLights()
     {
+        audioSource.Play();
         StopAllCoroutines(); // Detener cualquier desvanecimiento previo
         SetAllLightsIntensity(20); // Encender todas las luces al máximo
         for (int i = 0; i < lights.Count; i++)
         {
-            StartCoroutine(FadeOutLights(tiempoLucesEncendidas - i, lights[i])); // Iniciar la reducción de intensidad
+            StartCoroutine(FadeOutLights(TimeLightOn - i, lights[i])); // Iniciar la reducción de intensidad
         }
     }
 
@@ -56,7 +66,7 @@ public class HotSpot : MonoBehaviour
 
         while (elapsedTime < fadeDuration)
         {
-            float intensity = Mathf.Lerp(20f, 0f, elapsedTime / fadeDuration);
+            float intensity = Mathf.Lerp(10f, 0f, elapsedTime / fadeDuration);
             SetLightsIntensity(intensity, light);
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -72,6 +82,7 @@ public class HotSpot : MonoBehaviour
             foreach (Light light in lightVector) { 
                 if (light != null)
                 {
+                    light.range = 7;
                     light.intensity = intensity;
                 }
             }
@@ -88,4 +99,17 @@ public class HotSpot : MonoBehaviour
                 }
         }
     }
+
+    public void ShowControl()
+    {
+        if(GameManager.instance.helpControls)
+            control.gameObject.SetActive(true);
+    }
+
+    public void HideControl()
+    {
+        control.gameObject.SetActive(false);
+    }
+
+    
 }

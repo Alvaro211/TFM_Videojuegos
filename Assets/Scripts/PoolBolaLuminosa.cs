@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PoolBolaLuminosa : MonoBehaviour
@@ -11,6 +12,14 @@ public class PoolBolaLuminosa : MonoBehaviour
     void Start()
     {
         GeneratePrefabs();
+    }
+
+    private void Update()
+    {
+        if (transform.position.y < -2)
+            gameObject.SetActive(false);
+
+        CheckBall();
     }
 
     void GeneratePrefabs()
@@ -33,5 +42,17 @@ public class PoolBolaLuminosa : MonoBehaviour
             }
         }
         return null; // Si no hay inactivos, devuelve null
+    }
+
+    private void CheckBall()
+    {
+        foreach (GameObject obj in prefabPool)
+        {
+            if (obj.activeInHierarchy)
+            {
+                if (obj.transform.position.y < -3)
+                    obj.gameObject.SetActive(false);
+            }
+        }
     }
 }
