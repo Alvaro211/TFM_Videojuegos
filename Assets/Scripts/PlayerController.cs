@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,16 +12,24 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed; // Velocidad del movimiento
     public float gravityScale = -9.8f; // Gravedad normal del jugador
     public float jumpForce = 5f; // Fuerza de salto
-    public AudioSource audioSource;
+    public AudioSource audioSourceSequence;
+    public AudioSource audioSourceEffectPlayer;
     public PoolBolaLuminosa poolBall;
-    public Image[] circles;
+    public GameObject menuPause;
+    public RawImage[] notes;
+    public RawImage[] imagesBall;
+    public AudioClip aduioJump;
+
+    public List<Enemy> listEnemy = new List<Enemy>();
+    public AudioSource audioSourceMusic;
+    public List<GameObject> listObjectSong = new List<GameObject>();
 
     private CharacterController controller;
     private Vector3 moveInput;
     private bool isOnHotSpot;
     private HotSpot hotspot;
 
-    public float launchForce = 5f; // Fuerza con la que se lanza la bola
+    private float launchForce = 5f; // Fuerza con la que se lanza la bola
 
     private Vector3 startPosition;
     private float verticalVelocity;
@@ -27,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 currentVelocity;
     private bool jumpCooldown;
     private int currentIndex = 0;
+    private int indexBallImage = 0;
 
     private bool isNearObjectSong;
     private ObjectSong objectSong;
@@ -42,9 +53,14 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        audioSource = GetComponent<AudioSource>();
+        audioSourceEffectPlayer = GetComponent<AudioSource>();
         startPosition = transform.position; // Guarda la posición inicial
         sequence = new AudioClip[3];
+
+        foreach(RawImage image in notes)
+        {
+            image.color = Color.white;      
+        }
     }
 
     void Update()
@@ -86,13 +102,18 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && isOnFinishLevel && finishLevel != null)
-        {
-            PlaySoundsInSequence(audioSource);
-            if (CheckSequence())
+        if (Input.GetKeyDown(KeyCode.E) && isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
+        { 
+
+            PlaySoundsInSequence(audioSourceSequence);
+            bool correct = CheckSequence();
+            if (correct)
             {
-                finishLevel.OpenDoor();
+                StartCoroutine(finishLevel.RotateOverTime());
+                finishLevel.HideControl();
+                finishLevel.doorOpen = true;
             }
+            finishLevel.SoundDoor(correct);
         }
         else if (Input.GetKeyDown(KeyCode.E) && isOnHotSpot && hotspot != null)
         {
@@ -100,11 +121,23 @@ public class PlayerMovement : MonoBehaviour
         }else if(Input.GetKeyDown(KeyCode.E) && isNearObjectSong && objectSong != null)
         {
             objectSong.SoundItem();
+            objectSong.ChangeControlTake();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (menuPause.activeSelf)
+                menuPause.gameObject.SetActive(false);
+            else
+                menuPause.gameObject.SetActive(true);
+
         }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
             LaunchBall();
+            imagesBall[indexBallImage].gameObject.SetActive(false);
+            indexBallImage--;
         }
 
         if (Input.GetKeyDown(KeyCode.R) && isNearObjectSong && objectSong != null)
@@ -112,28 +145,43 @@ public class PlayerMovement : MonoBehaviour
             Color color = objectSong.TakeItem();
 
             // Si hay un círculo disponible, cambia su color
-            if (currentIndex < circles.Length)
+            if (currentIndex < notes.Length)
             {
-                circles[currentIndex].color = color; // Pinta el círculo
+                notes[currentIndex].color = color; // Pinta el círculo
                 sequence[currentIndex] = objectSong.audioSource.clip;
                 currentIndex++; // Pasa al siguiente círculo
             }
+
+            objectSong.ChangeControlSound();
+            objectSong.HideControl();
         }
 
-        if(Input.GetKeyDown(KeyCode.Q) && audioSource != null && startLevel != null)
+        if(Input.GetKeyDown(KeyCode.Q) && audioSourceSequence != null && startLevel != null)
         {
-            StartCoroutine(startLevel.PlaySoundsInSequence(audioSource));
+            StartCoroutine(startLevel.PlaySoundsInSequence(audioSourceSequence));
         }
 
         if(transform.position.y < -1.5f)
         {
             Dead();
         }
+
+        if (CheckEnemyAround()) {
+
+            //audioSourceMusic.pitch = Mathf.Lerp(1.0f, 0.7f, Time.deltaTime * 2);
+            audioSourceMusic.pitch = 0.5f;
+        }
+        else if(audioSourceMusic.pitch != 1)
+        {
+            audioSourceMusic.pitch = 1;
+        }
     }
 
     // Método para aplicar el salto
     void Jump()
     {
+        audioSourceEffectPlayer.clip = aduioJump;
+        audioSourceEffectPlayer.Play();
         jumpCooldown = true;
         verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
@@ -164,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
     {
         for (int i = 0; i < sequence.Length; i++)
         {
-            if(sequence[i] != startLevel.audioClips[i])
+            if (sequence[i] == null || !sequence[i].name.Equals(startLevel.audioClips[i].name))
                 return false;
         }
         return true;
@@ -223,17 +271,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dead()
     {
+        
+        controller.enabled = false;
         transform.position = startPosition;
-        foreach (Image image in circles)
+        controller.enabled = true;
+        foreach (RawImage image in notes)
         {
             image.color = Color.white;
         }
+
+        foreach(GameObject obj in listObjectSong){
+            obj.gameObject.SetActive(true);
+        }
+
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private bool CheckEnemyAround()
     {
-        // Verifica si el objeto con el que colisionó tiene la etiqueta "Bola"
-        
+        foreach (Enemy enemy in listEnemy)
+        {
+            float distancia = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distancia < 10)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     void OnControllerCollideraHit(ControllerColliderHit hit)
@@ -257,18 +321,21 @@ public class PlayerMovement : MonoBehaviour
     // Detectar cuando sale del suelo
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "HotSpot")
+        if (other.tag == "HotSpot" && hotspot != null)
         {
             isOnHotSpot = false;
+            hotspot.HideControl();
             hotspot = null;
-        }else if (other.tag == "FloorObjectSong")
+        }else if (other.tag == "FloorObjectSong" && objectSong != null)
         {
             isNearObjectSong = false;
+            objectSong.HideControl();
             objectSong = null;
         }
-        else if (other.gameObject.CompareTag("FinishLevel"))
+        else if (other.gameObject.CompareTag("FinishLevel") && finishLevel != null)
         {
             isOnFinishLevel = false;
+            finishLevel.HideControl();
             finishLevel = null;
         }
     }
@@ -278,16 +345,19 @@ public class PlayerMovement : MonoBehaviour
          if (other.tag == "HotSpot") {
             isOnHotSpot = true;
             hotspot = other.GetComponent<HotSpot>();
-        }else if(other.tag == "FloorObjectSong")
+            hotspot.ShowControl();
+        }
+        else if(other.tag == "FloorObjectSong")
         {
             isNearObjectSong = true;
             objectSong = other.GetComponent<ObjectSong>();
+            objectSong.ShowControl();
         }else if(other.tag == "StartLevel")
         {
             startLevel = other.GetComponent<StartLevel>();
             if (!startLevel.activated)
             {
-                StartCoroutine(startLevel.PlaySoundsInSequence(audioSource));
+                StartCoroutine(startLevel.PlaySoundsInSequence(audioSourceSequence));
                 startLevel.activated = true;
             }
         }else if(other.gameObject.CompareTag("Ball"))
@@ -302,11 +372,21 @@ public class PlayerMovement : MonoBehaviour
             other.gameObject.SetActive(false);
 
             SphereCollider colliderBall = other.gameObject.GetComponent<SphereCollider>();
+
+            indexBallImage++;
+            imagesBall[indexBallImage].gameObject.SetActive(true);
             if (colliderBall != null) colliderBall.isTrigger = false;
         }else if (other.gameObject.CompareTag("FinishLevel"))
         {
             isOnFinishLevel = true;
             finishLevel = other.GetComponent<FinishLevel>();
+            finishLevel.ShowControl();
+        }else if (other.gameObject.CompareTag("Enemy"))
+        {
+            Dead();
+        }else if (other.gameObject.CompareTag("Reset"))
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }
