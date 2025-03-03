@@ -12,6 +12,7 @@ TagManager:
   - FloorObjectSong
   - StartLevel
   - FinishLevel
+  - Reset
   layers:
   - Default
   - TransparentFX

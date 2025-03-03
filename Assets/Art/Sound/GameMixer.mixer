@@ -72,6 +72,8 @@ AudioMixerController:
     name: effectVol
   - guid: c03b68f8a049afc4eb160a214d0d9b39
     name: musicVol
+  - guid: f0d0711a95d700648be5bf7911c8c762
+    name: musicPitch
   m_AudioMixerGroupViews:
   - guids:
     - 0a43363c3df8d7c41aa55e58d17b7193

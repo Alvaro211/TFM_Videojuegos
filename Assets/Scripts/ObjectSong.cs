@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ObjectSong : MonoBehaviour
 {
     public GameObject objectSong;
     public AudioSource audioSource;
+    public TextMeshPro control;
 
     // Start is called before the first frame update
     void Start()
@@ -28,5 +30,28 @@ public class ObjectSong : MonoBehaviour
         {
             audioSource.Play();
         }
+    }
+
+    public void ShowControl()
+    {
+        if (GameManager.instance.helpControls)
+            control.gameObject.SetActive(true);
+    }
+
+    public void HideControl()
+    {
+        control.gameObject.SetActive(false);
+    }
+
+    public void ChangeControlTake()
+    {
+        if (control.text == "E")
+            control.text = "R";
+    }
+
+    public void ChangeControlSound()
+    {
+        if (control.text == "R")
+            control.text = "E";
     }
 }
