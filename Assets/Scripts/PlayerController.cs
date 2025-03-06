@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Leer entrada de W, A, S, D (movimiento en X y Z)
         moveInput.x = Input.GetAxisRaw("Horizontal"); // A/D (movimiento en X)
-        moveInput.z = Input.GetAxisRaw("Vertical"); // W/S (movimiento en Z)
+        //moveInput.z = Input.GetAxisRaw("Vertical"); // W/S (movimiento en Z)
         moveInput.Normalize(); // Evita moverse más rápido en diagonal
 
         if (moveInput.magnitude > 0.1f )
@@ -135,9 +135,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            LaunchBall();
-            imagesBall[indexBallImage].gameObject.SetActive(false);
-            indexBallImage--;
+            if (indexBallImage < imagesBall.Length)
+            {
+                LaunchBall();
+                imagesBall[indexBallImage].gameObject.SetActive(false);
+                indexBallImage++;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.R) && isNearObjectSong && objectSong != null)
@@ -229,7 +232,6 @@ public class PlayerMovement : MonoBehaviour
             if (newBall == null) return; // Si no hay bolas inactivas, salir
 
             newBall.gameObject.SetActive(true);
-            
 
             // Asegurar que la bola tenga un Rigidbody
             Rigidbody rb = newBall.GetComponent<Rigidbody>();
@@ -242,6 +244,8 @@ public class PlayerMovement : MonoBehaviour
                 direction.z = 0;
                 ballBuounce.velocityY = direction.y;
                 ballBuounce.velocityX = direction.x;
+                ballBuounce.bounceCount = 0;
+                ballBuounce.isAscending = false;
 
                 // Ajustar velocidad en base a la dirección
                 rb.velocity = direction * 15;
@@ -373,7 +377,7 @@ public class PlayerMovement : MonoBehaviour
 
             SphereCollider colliderBall = other.gameObject.GetComponent<SphereCollider>();
 
-            indexBallImage++;
+            indexBallImage--;
             imagesBall[indexBallImage].gameObject.SetActive(true);
             if (colliderBall != null) colliderBall.isTrigger = false;
         }else if (other.gameObject.CompareTag("FinishLevel"))

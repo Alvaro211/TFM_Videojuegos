@@ -6,11 +6,11 @@ public class BallBounceHandler : MonoBehaviour
 {
     const int MAXREBOUNCE = 0;
 
-    private int bounceCount = 0;
+    public int bounceCount = 0;
     private Rigidbody rb;
     private SphereCollider collider;
     public float ascendSpeed = 1f; // Velocidad de ascenso
-    private bool isAscending = false; // Para evitar múltiples llamadas
+    public bool isAscending = false; // Para evitar múltiples llamadas
     public float velocityX = 0;
     public float velocityY = 0;
 
@@ -25,11 +25,12 @@ public class BallBounceHandler : MonoBehaviour
         collider = GetComponent<SphereCollider>();
     }
 
-    private IEnumerator AscendToHeight(float targetY)
+    private IEnumerator AscendToHeight()
     {
         isAscending = true; // Evitar múltiples llamadas
         rb.isKinematic = true; // Desactivar la física para controlar el movimiento manualmente
         collider.isTrigger = true;
+        float targetY = transform.position.y + 2f;
 
         while (transform.position.y < targetY)
         {
@@ -43,8 +44,9 @@ public class BallBounceHandler : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("HotSpot"))
         {
+            
             Enemy enemy = FindObjectOfType<Enemy>();
             if (enemy != null)
             {
@@ -63,7 +65,7 @@ public class BallBounceHandler : MonoBehaviour
     {
         if (Time.time - lastCollisionTime < collisionCooldown) return;
         lastCollisionTime = Time.time;
-
+        Debug.Log("68");
         if (collision.gameObject.CompareTag("Player"))
         {
             gameObject.SetActive(false);
@@ -74,7 +76,8 @@ public class BallBounceHandler : MonoBehaviour
 
         if (bounceCount >= MAXREBOUNCE && !isAscending)
         {
-            StartCoroutine(AscendToHeight(2f));
+            Debug.Log("79");
+            StartCoroutine(AscendToHeight());
             rb.velocity = new Vector3(0, 0, 0); // Detener la bola
             rb.angularVelocity = Vector3.zero; // Detener la rotación
             rb.isKinematic = true; // Hacer que la bola no sea afectada por la física
