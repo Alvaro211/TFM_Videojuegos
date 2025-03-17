@@ -1,8 +1,23 @@
-Metricas Plataformas:
-	En X para plataformas pequeñas 7 unidades
-	En Y para cambiar altura, 2/0/-2
-	En Z para diferentes filas 12/0/-12
-	Las luces tienes que estar a 4 unidades de la plataforma
+Métricas Plataformas:
+	La escala mínima en Y es 1
+	La escala en Z es 10
+	La posición en Y  entre las plataformas son 3
+
+Métricas Luces Plataforma:
+	La altura a la plataforma que ilumina es 2
+	Debe haber 2 luces para iluminar
+	Ambas luces deben estar en Z  0.25 y -0.25
+
+Jugador:
+	Salto cómodo longuitud:	10
+	Salto máximo longitud:	14
+	Salto cómodo altura: 	3
+	Salto máxima altura:	4
+	Salto cómodo longitud diferente altura las plataformas:	8
+	Salto máximo longitud diferente altura las plataformas:	12
+
+
+
 
 
 Para crear los Hotspot, en el script HotSpot deben declararse varias variables:

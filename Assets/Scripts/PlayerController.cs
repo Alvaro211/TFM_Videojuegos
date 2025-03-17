@@ -279,14 +279,14 @@ public class PlayerMovement : MonoBehaviour
         controller.enabled = false;
         transform.position = startPosition;
         controller.enabled = true;
-        foreach (RawImage image in notes)
+      /*  foreach (RawImage image in notes)
         {
             image.color = Color.white;
         }
 
         foreach(GameObject obj in listObjectSong){
             obj.gameObject.SetActive(true);
-        }
+        }*/
 
     }
 
