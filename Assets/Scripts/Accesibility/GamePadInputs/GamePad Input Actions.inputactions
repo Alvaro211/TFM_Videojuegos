@@ -1,0 +1,62 @@
+{
+    "name": "GamePad Input Actions",
+    "maps": [
+        {
+            "name": "MoveRight",
+            "id": "ace00c41-a6a5-41d0-8c28-e12c5550dc14",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "6cea41ef-0ad3-47ac-b530-09f197b6a434",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "12f6f6f1-bd81-4b8d-b534-0196481942ee",
+                    "path": "<XInputController>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Jump",
+            "id": "5f772458-d10b-4e51-8e39-82f328507d5e",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "6473a349-72be-4291-8493-09418a3d15bf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3b3ec9ad-9607-4fd8-9f7e-b34d8b3efb42",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
