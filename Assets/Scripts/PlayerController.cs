@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
     private StartLevel startLevel;
     private FinishLevel finishLevel;
-    private AudioClip[] sequence;
+    private List<AudioClip> sequence;
     private bool isOnFinishLevel = false;
     private bool souning = false;
 
@@ -55,9 +55,9 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         audioSourceEffectPlayer = GetComponent<AudioSource>();
         startPosition = transform.position; // Guarda la posición inicial
-        sequence = new AudioClip[3];
+        sequence = new List<AudioClip>();
 
-        foreach(RawImage image in notes)
+        foreach (RawImage image in notes)
         {
             image.color = Color.white;      
         }
@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentIndex < notes.Length)
             {
                 notes[currentIndex].color = color; // Pinta el círculo
-                sequence[currentIndex] = objectSong.audioSource.clip;
+                sequence.Add(objectSong.audioSource.clip);
                 currentIndex++; // Pasa al siguiente círculo
             }
 
@@ -213,7 +213,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CheckSequence()
     {
-        for (int i = 0; i < sequence.Length; i++)
+        if (sequence.Count == 0) return false;
+
+        for (int i = 0; i < sequence.Count; i++)
         {
             if (sequence[i] == null || !sequence[i].name.Equals(startLevel.audioClips[i].name))
                 return false;
