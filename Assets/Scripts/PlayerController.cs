@@ -378,6 +378,7 @@ public class PlayerMovement : MonoBehaviour
             isOnHotSpot = true;
             hotspot = other.GetComponent<HotSpot>();
             hotspot.ShowControl();
+            startPosition = transform.position;
         }
         else if(other.tag == "FloorObjectSong")
         {
