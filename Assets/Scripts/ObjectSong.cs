@@ -9,10 +9,24 @@ public class ObjectSong : MonoBehaviour
     public AudioSource audioSource;
     public TextMeshPro control;
 
+    public GameObject player;
+
+    private bool isSouning;
+
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>(); // Obtiene el AudioSource del mismo GameObject
+        isSouning = false;
+    }
+
+    private void Update()
+    {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance < 20.0f && !isSouning) 
+        {
+            StartCoroutine(SoundItemCoorutine());
+        }
     }
 
     public Color TakeItem()
@@ -30,6 +44,17 @@ public class ObjectSong : MonoBehaviour
         {
             audioSource.Play();
         }
+    }
+
+    public IEnumerator SoundItemCoorutine()
+    {
+        isSouning = true;
+        if (objectSong.gameObject.activeInHierarchy)
+        {
+            audioSource.Play();
+        }
+        yield return new WaitForSeconds(2f);
+        isSouning = false;
     }
 
     public void ShowControl()
