@@ -149,8 +149,41 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""434f8102-f2ae-492c-a737-994c97c13e28"",
+                    ""path"": ""<XInputController>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dde439e7-5f1c-483a-9f59-543b85730bb2"",
+                    ""path"": ""<XInputController>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""750132a7-6c7e-44b4-ab6d-f9db7f04b9cb"",
                     ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca812dc3-e648-4432-b64c-c55c164f5b2d"",
+                    ""path"": ""<XInputController>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -171,8 +204,30 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""d57ac36d-21f8-4599-be05-3887709e0217"",
+                    ""path"": ""<XInputController>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sequence"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8361bc82-6e98-4be5-8cc0-a11c4e355cd8"",
                     ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sphere"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6dcfe860-d4ad-4e52-b8be-3fda8441ba0d"",
+                    ""path"": ""<XInputController>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -193,6 +248,17 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""46e8b46d-03cf-458c-856f-d3334f26c058"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""6c8ba91d-5541-4be3-8ef1-f6b6aac8c5dc"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
@@ -204,8 +270,30 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""9cf8477c-5562-4b11-9c2a-fbbde90574d4"",
+                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TakeSound"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""f3540dc8-1682-4909-8ef4-36cc0ba560a2"",
                     ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Options"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d21a3ee-40a0-4a9a-afa3-52b3cf13303e"",
+                    ""path"": ""<XInputController>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
