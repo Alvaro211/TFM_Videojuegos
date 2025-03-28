@@ -6,9 +6,10 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public float patrolDistanceZ = 8f; // Distancia que avanzará en Z
+    public float patrolDistance = 8f; // Distancia que avanzará en Z
     public float waitTime = 2f;         // Tiempo de espera en cada punto
     public float searchRadius = 10;
+    public bool horizontal = false;
 
     private NavMeshAgent agent;
     private Vector3 startPosition;
@@ -21,7 +22,10 @@ public class Enemy : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         startPosition = transform.position; // Guarda la posición inicial
-        targetPosition = startPosition + new Vector3(0, 0, patrolDistanceZ);
+        if(!horizontal) 
+            targetPosition = startPosition + new Vector3(0, 0, patrolDistance);
+        else
+            targetPosition = startPosition + new Vector3(patrolDistance, 0, 0);
 
         // Moverse al primer destino
         agent.SetDestination(targetPosition);

@@ -31,11 +31,17 @@ public class ObjectSong : MonoBehaviour
 
     public Color TakeItem()
     {
-        SoundItem();
-        Color color = objectSong.gameObject.GetComponent<Renderer>().material.color;
-        objectSong.gameObject.SetActive(false);
+        
+        if (objectSong.activeInHierarchy)
+        {
+            SoundItem();
+            Color color = objectSong.gameObject.GetComponent<Renderer>().material.color;
+            objectSong.gameObject.SetActive(false);
 
-        return color;
+            return color;
+        }
+
+        return Color.white;
     }
 
     public void SoundItem()
@@ -59,7 +65,7 @@ public class ObjectSong : MonoBehaviour
 
     public void ShowControl()
     {
-        if (GameManager.instance.helpControls)
+        if (GameManager.instance.helpControls && objectSong.activeInHierarchy)
             control.gameObject.SetActive(true);
     }
 

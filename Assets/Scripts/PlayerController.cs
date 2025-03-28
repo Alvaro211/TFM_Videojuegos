@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public PoolBolaLuminosa poolBall;
     public GameObject menuPause;
     public RawImage[] notes;
-    public RawImage[] imagesBall;
+    //public RawImage[] imagesBall;
     public AudioClip aduioJump;
 
     public List<Enemy> listEnemy = new List<Enemy>();
@@ -36,7 +36,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 currentVelocity;
     private bool jumpCooldown;
     private int currentIndex = 0;
-    private int indexBallImage = 0;
+    // private int indexBallImage = 0;
+    private bool ballLauch;
 
     private bool isNearObjectSong;
     private ObjectSong objectSong;
@@ -58,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
         audioSourceEffectPlayer = GetComponent<AudioSource>();
         startPosition = transform.position; // Guarda la posición inicial
         sequence = new List<AudioClip>();
+        ballLauch = false;
 
         foreach (RawImage image in notes)
         {
@@ -131,7 +133,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        Jump();
+        if (controller.isGrounded && !jumpCooldown)
+            Jump();
     }
 
     public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -173,11 +176,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void SpherePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (indexBallImage < imagesBall.Length)
+        if (!ballLauch)
         {
             LaunchBall();
-            imagesBall[indexBallImage].gameObject.SetActive(false);
-            indexBallImage++;
+            //imagesBall[indexBallImage].gameObject.SetActive(false);
+           // indexBallImage++;
         }
     }
 
@@ -252,6 +255,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (poolBall != null)
         {
+            ballLauch = true;
+
             // Obtener la posición del ratón en el mundo
             Vector3 mousePosition = GetMouseWorldPosition();
 
@@ -284,6 +289,8 @@ public class PlayerMovement : MonoBehaviour
 
                     newBall.transform.position = transform.position + new Vector3(-2, 1, 0);
             }
+
+            StartCoroutine(HideBall(newBall));
         }
     }
 
@@ -299,6 +306,20 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return Vector3.zero;
+    }
+
+    IEnumerator HideBall(GameObject newBall)
+    {
+        yield return new WaitForSeconds(8);
+        newBall.gameObject.SetActive(false);
+
+        BallBounceHandler ballScript = newBall.GetComponent<BallBounceHandler>();
+        ballScript.TurnOffLight();
+
+        SphereCollider colliderBall = newBall.GetComponent<SphereCollider>();
+        colliderBall.isTrigger = false;
+
+        ballLauch = false;
     }
 
     private void Dead()
@@ -347,6 +368,7 @@ public class PlayerMovement : MonoBehaviour
                 ballScript.TurnOffLight();
             }
             hit.gameObject.SetActive(false);
+            ballLauch = false;
         }
     }
 
@@ -405,9 +427,10 @@ public class PlayerMovement : MonoBehaviour
             other.gameObject.SetActive(false);
 
             SphereCollider colliderBall = other.gameObject.GetComponent<SphereCollider>();
+            ballLauch = false;
 
-            indexBallImage--;
-            imagesBall[indexBallImage].gameObject.SetActive(true);
+            //indexBallImage--;
+            //imagesBall[indexBallImage].gameObject.SetActive(true);
             if (colliderBall != null) colliderBall.isTrigger = false;
         }else if (other.gameObject.CompareTag("FinishLevel"))
         {
