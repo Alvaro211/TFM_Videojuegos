@@ -12,6 +12,12 @@ public class FinishLevel : MonoBehaviour
     public TextMeshPro control;
     public bool doorOpen = false;
 
+    public List<AudioClip> audioClips = new List<AudioClip>(); // Array de clips de audio (3 sonidos)
+    public bool activated = false;
+    public GameObject advise;
+
+    private bool souning = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,13 +51,40 @@ public class FinishLevel : MonoBehaviour
         if (correct)
         {
             audioSource.clip = open;
+            audioSource.Play();
         }
         else
         {
-            audioSource.clip = wrong;
+            StartCoroutine(PlaySoundsInSequence(audioSource));
         }
 
-        audioSource.Play();
+        
+    }
+
+    public IEnumerator PlaySoundsInSequence(AudioSource audioSource)
+    {
+
+        if (!souning)
+        {
+            souning = true;
+            foreach (AudioClip clip in audioClips)
+            {
+                audioSource.clip = clip;  // Asigna el clip actual al AudioSource
+                audioSource.Play();        // Lo reproduce
+
+                yield return new WaitWhile(() => audioSource.isPlaying); // Espera a que termine
+            }
+            souning = false;
+        }
+
+
+    }
+
+    public IEnumerator ShowAdvice()
+    {
+        advise.gameObject.SetActive(true);
+        yield return new WaitForSeconds(4);
+        advise.gameObject.SetActive(false);
     }
 
     public void ShowControl()

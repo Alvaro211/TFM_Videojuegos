@@ -191,6 +191,7 @@ MonoBehaviour:
   wrong: {fileID: 8300000, guid: b2a3fdb5dbaca0d419db9bd355fba12d, type: 3}
   audioSource: {fileID: 0}
   control: {fileID: 8945748246027460258}
+  doorOpen: 0
 --- !u!82 &5082061318161917437
 AudioSource:
   m_ObjectHideFlags: 0
@@ -305,7 +306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1978035979592981038
 RectTransform:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class StartLevel : MonoBehaviour
 {
-    public AudioClip[] audioClips; // Array de clips de audio (3 sonidos)
+    public List<AudioClip> audioClips = new List<AudioClip>(); // Array de clips de audio (3 sonidos)
     public bool activated = false;
     public GameObject advise;
 

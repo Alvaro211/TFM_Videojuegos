@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.Burst.CompilerServices;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public PoolBolaLuminosa poolBall;
     public GameObject menuPause;
     public RawImage[] notes;
-    public RawImage[] imagesBall;
+    //public RawImage[] imagesBall;
     public AudioClip aduioJump;
 
     public List<Enemy> listEnemy = new List<Enemy>();
@@ -37,37 +36,52 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 currentVelocity;
     private bool jumpCooldown;
     private int currentIndex = 0;
-    private int indexBallImage = 0;
+    // private int indexBallImage = 0;
+    private bool ballLauch;
 
     private bool isNearObjectSong;
     private ObjectSong objectSong;
 
     private StartLevel startLevel;
     private FinishLevel finishLevel;
-    private AudioClip[] sequence;
+    private List<AudioClip> sequence;
     private bool isOnFinishLevel = false;
     private bool souning = false;
 
 
+    private PlayerMap inputMap;
+
+    private Vector2 inputValues;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         audioSourceEffectPlayer = GetComponent<AudioSource>();
         startPosition = transform.position; // Guarda la posición inicial
-        sequence = new AudioClip[3];
+        sequence = new List<AudioClip>();
+        ballLauch = false;
 
-        foreach(RawImage image in notes)
+        foreach (RawImage image in notes)
         {
             image.color = Color.white;      
         }
+
+        inputMap = new PlayerMap();
+        inputMap.Enable();
+
+        inputMap.Player.Movement.performed += DirKeysPerformed;
+        inputMap.Player.Movement.canceled += DirKeysPerformed;
+        inputMap.Player.Interact.performed += InterectPerformed;
+        inputMap.Player.Sequence.performed += SequencePerformed;
+        inputMap.Player.Sphere.performed += SpherePerformed;
+        inputMap.Player.Jump.performed += JumpPerformed;
+        inputMap.Player.TakeSound.performed += TakeSoundPerformed;
+        inputMap.Player.Options.performed += OptionsPerformed;
     }
 
     void Update()
     {
-        // Leer entrada de W, A, S, D (movimiento en X y Z)
-        moveInput.x = Input.GetAxisRaw("Horizontal"); // A/D (movimiento en X)
-        //moveInput.z = Input.GetAxisRaw("Vertical"); // W/S (movimiento en Z)
+        moveInput.x = inputValues.x;
         moveInput.Normalize(); // Evita moverse más rápido en diagonal
 
         if (moveInput.magnitude > 0.1f )
@@ -96,74 +110,6 @@ public class PlayerMovement : MonoBehaviour
         currentVelocity.y = verticalVelocity;
         controller.Move(currentVelocity * Time.deltaTime);
 
-        // Detectar salto con la tecla espacio, solo si está tocando el suelo
-        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded && !jumpCooldown)
-        {
-            Jump();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
-        { 
-
-            PlaySoundsInSequence(audioSourceSequence);
-            bool correct = CheckSequence();
-            if (correct)
-            {
-                StartCoroutine(finishLevel.RotateOverTime());
-                finishLevel.HideControl();
-                finishLevel.doorOpen = true;
-            }
-            finishLevel.SoundDoor(correct);
-        }
-        else if (Input.GetKeyDown(KeyCode.E) && isOnHotSpot && hotspot != null)
-        {
-            hotspot.ActivateLights();
-        }else if(Input.GetKeyDown(KeyCode.E) && isNearObjectSong && objectSong != null)
-        {
-            objectSong.SoundItem();
-            objectSong.ChangeControlTake();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (menuPause.activeSelf)
-                menuPause.gameObject.SetActive(false);
-            else
-                menuPause.gameObject.SetActive(true);
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (indexBallImage < imagesBall.Length)
-            {
-                LaunchBall();
-                imagesBall[indexBallImage].gameObject.SetActive(false);
-                indexBallImage++;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.R) && isNearObjectSong && objectSong != null)
-        {
-            Color color = objectSong.TakeItem();
-
-            // Si hay un círculo disponible, cambia su color
-            if (currentIndex < notes.Length)
-            {
-                notes[currentIndex].color = color; // Pinta el círculo
-                sequence[currentIndex] = objectSong.audioSource.clip;
-                currentIndex++; // Pasa al siguiente círculo
-            }
-
-            objectSong.ChangeControlSound();
-            objectSong.HideControl();
-        }
-
-        if(Input.GetKeyDown(KeyCode.Q) && audioSourceSequence != null && startLevel != null)
-        {
-            StartCoroutine(startLevel.PlaySoundsInSequence(audioSourceSequence));
-        }
-
         if(transform.position.y < -1.5f)
         {
             Dead();
@@ -179,6 +125,84 @@ public class PlayerMovement : MonoBehaviour
             audioSourceMusic.pitch = 1;
         }
     }
+
+    public void DirKeysPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        inputValues = obj.ReadValue<Vector2>();
+    }
+
+    public void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (controller.isGrounded && !jumpCooldown)
+            Jump();
+    }
+
+    public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (menuPause.activeSelf)
+            menuPause.gameObject.SetActive(false);
+        else
+            menuPause.gameObject.SetActive(true);
+    }
+
+    public void InterectPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
+        {
+
+            //PlaySoundsInSequence(audioSourceSequence);
+            bool correct = CheckSequence();
+            if (correct)
+            {
+                StartCoroutine(finishLevel.RotateOverTime());
+                finishLevel.HideControl();
+                finishLevel.doorOpen = true;
+            }
+            finishLevel.SoundDoor(correct);
+        }
+        else if ( isOnHotSpot && hotspot != null)
+        {
+            hotspot.ActivateLights();
+        }
+    }
+
+    public void SequencePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (audioSourceSequence != null && finishLevel != null)
+        {
+            StartCoroutine(finishLevel.PlaySoundsInSequence(audioSourceSequence));
+        }
+    }
+
+    public void SpherePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (!ballLauch)
+        {
+            LaunchBall();
+            //imagesBall[indexBallImage].gameObject.SetActive(false);
+           // indexBallImage++;
+        }
+    }
+
+    public void TakeSoundPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (isNearObjectSong && objectSong != null)
+        {
+            Color color = objectSong.TakeItem();
+
+            // Si hay un círculo disponible, cambia su color
+            if (currentIndex < notes.Length)
+            {
+                notes[currentIndex].color = color; // Pinta el círculo
+                sequence.Add(objectSong.audioSource.clip);
+                currentIndex++; // Pasa al siguiente círculo
+            }
+
+            objectSong.ChangeControlSound();
+            objectSong.HideControl();
+        }
+    }
+
 
     // Método para aplicar el salto
     void Jump()
@@ -213,17 +237,26 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CheckSequence()
     {
-        for (int i = 0; i < sequence.Length; i++)
+        if (sequence.Count == 0) return false;
+
+        /*for (int i = 0; i < sequence.Count; i++)
         {
-            if (sequence[i] == null || !sequence[i].name.Equals(startLevel.audioClips[i].name))
-                return false;
-        }
-        return true;
+            for (int j = 0; j < finishLevel.audioClips.Count; j++)
+            {
+                if (sequence[i] == null)
+                    return false;
+                if (sequence[i].name.Equals(finishLevel.audioClips[j].name))
+                    break;
+            }
+        }*/
+        return finishLevel.audioClips.All(item => sequence.Any(audio => audio.name == item.name)); ;
     }
     void LaunchBall()
     {
         if (poolBall != null)
         {
+            ballLauch = true;
+
             // Obtener la posición del ratón en el mundo
             Vector3 mousePosition = GetMouseWorldPosition();
 
@@ -256,6 +289,8 @@ public class PlayerMovement : MonoBehaviour
 
                     newBall.transform.position = transform.position + new Vector3(-2, 1, 0);
             }
+
+            StartCoroutine(HideBall(newBall));
         }
     }
 
@@ -273,20 +308,34 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.zero;
     }
 
+    IEnumerator HideBall(GameObject newBall)
+    {
+        yield return new WaitForSeconds(8);
+        newBall.gameObject.SetActive(false);
+
+        BallBounceHandler ballScript = newBall.GetComponent<BallBounceHandler>();
+        ballScript.TurnOffLight();
+
+        SphereCollider colliderBall = newBall.GetComponent<SphereCollider>();
+        colliderBall.isTrigger = false;
+
+        ballLauch = false;
+    }
+
     private void Dead()
     {
         
         controller.enabled = false;
         transform.position = startPosition;
         controller.enabled = true;
-        foreach (RawImage image in notes)
+      /*  foreach (RawImage image in notes)
         {
             image.color = Color.white;
         }
 
         foreach(GameObject obj in listObjectSong){
             obj.gameObject.SetActive(true);
-        }
+        }*/
 
     }
 
@@ -319,6 +368,7 @@ public class PlayerMovement : MonoBehaviour
                 ballScript.TurnOffLight();
             }
             hit.gameObject.SetActive(false);
+            ballLauch = false;
         }
     }
 
@@ -336,11 +386,11 @@ public class PlayerMovement : MonoBehaviour
             objectSong.HideControl();
             objectSong = null;
         }
-        else if (other.gameObject.CompareTag("FinishLevel") && finishLevel != null)
+        else if (other.gameObject.CompareTag("FinishLevel") /*&& finishLevel != null*/)
         {
             isOnFinishLevel = false;
             finishLevel.HideControl();
-            finishLevel = null;
+            //finishLevel = null;
         }
     }
 
@@ -350,6 +400,7 @@ public class PlayerMovement : MonoBehaviour
             isOnHotSpot = true;
             hotspot = other.GetComponent<HotSpot>();
             hotspot.ShowControl();
+            startPosition = transform.position;
         }
         else if(other.tag == "FloorObjectSong")
         {
@@ -376,16 +427,22 @@ public class PlayerMovement : MonoBehaviour
             other.gameObject.SetActive(false);
 
             SphereCollider colliderBall = other.gameObject.GetComponent<SphereCollider>();
+            ballLauch = false;
 
-            indexBallImage--;
-            imagesBall[indexBallImage].gameObject.SetActive(true);
+            //indexBallImage--;
+            //imagesBall[indexBallImage].gameObject.SetActive(true);
             if (colliderBall != null) colliderBall.isTrigger = false;
         }else if (other.gameObject.CompareTag("FinishLevel"))
         {
             isOnFinishLevel = true;
             finishLevel = other.GetComponent<FinishLevel>();
             finishLevel.ShowControl();
-        }else if (other.gameObject.CompareTag("Enemy"))
+            if (GameManager.instance.helpControls)
+            {
+                StartCoroutine(finishLevel.ShowAdvice());
+            }
+        }
+        else if (other.gameObject.CompareTag("Enemy"))
         {
             Dead();
         }else if (other.gameObject.CompareTag("Reset"))

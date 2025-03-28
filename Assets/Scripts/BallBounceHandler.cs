@@ -65,7 +65,6 @@ public class BallBounceHandler : MonoBehaviour
     {
         if (Time.time - lastCollisionTime < collisionCooldown) return;
         lastCollisionTime = Time.time;
-        Debug.Log("68");
         if (collision.gameObject.CompareTag("Player"))
         {
             gameObject.SetActive(false);
@@ -76,7 +75,6 @@ public class BallBounceHandler : MonoBehaviour
 
         if (bounceCount >= MAXREBOUNCE && !isAscending)
         {
-            Debug.Log("79");
             StartCoroutine(AscendToHeight());
             rb.velocity = new Vector3(0, 0, 0); // Detener la bola
             rb.angularVelocity = Vector3.zero; // Detener la rotación
