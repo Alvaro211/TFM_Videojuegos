@@ -23,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource audioSourceMusic;
     public List<GameObject> listObjectSong = new List<GameObject>();
 
+    public GameObject imagePrefab;  // Arrastra aquí el prefab en el Inspector
+    public Transform canvasTransform; 
+    public float yOffset = 50f;  // Distancia desde la parte baja del Canvas
+    public float spacing = 100f; // Espacio entre imágenes
+
     private CharacterController controller;
     private Vector3 moveInput;
     private bool isOnHotSpot;
@@ -48,10 +53,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isOnFinishLevel = false;
     private bool souning = false;
 
-
     private PlayerMap inputMap;
-
     private Vector2 inputValues;
+
+    private List<GameObject> spawnedImages = new List<GameObject>();
+    private int sound = -1;
 
     void Start()
     {
@@ -77,6 +83,12 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Jump.performed += JumpPerformed;
         inputMap.Player.TakeSound.performed += TakeSoundPerformed;
         inputMap.Player.Options.performed += OptionsPerformed;
+        inputMap.Player.Sound1.performed += Sound1Performed;
+        inputMap.Player.Sound2.performed += Sound2Performed;
+        inputMap.Player.Sound3.performed += Sound3Performed;
+        inputMap.Player.Sound4.performed += Sound4Performed;
+        inputMap.Player.Sound5.performed += Sound5Performed;
+        inputMap.Player.Sound6.performed += Sound6Performed;
     }
 
     void Update()
@@ -168,6 +180,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SequencePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+
         if (audioSourceSequence != null && finishLevel != null)
         {
             StartCoroutine(finishLevel.PlaySoundsInSequence(audioSourceSequence));
@@ -190,19 +203,119 @@ public class PlayerMovement : MonoBehaviour
         {
             Color color = objectSong.TakeItem();
 
-            // Si hay un círculo disponible, cambia su color
-            if (currentIndex < notes.Length)
-            {
-                notes[currentIndex].color = color; // Pinta el círculo
-                sequence.Add(objectSong.audioSource.clip);
-                currentIndex++; // Pasa al siguiente círculo
-            }
+            SpawnImage(color);
+            
+            sequence.Add(objectSong.audioSource.clip);
 
-            objectSong.ChangeControlSound();
+
+            //objectSong.ChangeControlSound();
             objectSong.HideControl();
         }
     }
 
+    public void Sound1Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 0;
+
+        if(sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+    public void Sound2Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 1;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+    public void Sound3Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 2;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+    public void Sound4Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 3;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+    public void Sound5Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 4;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+    public void Sound6Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 5;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+
+    private IEnumerator WaitForSoundToEnd()
+    {
+        yield return new WaitUntil(() => !audioSourceSequence.isPlaying);
+        souning = false;
+    }
+
+    public void SpawnImage(Color color)
+    {
+        GameObject newImage = Instantiate(imagePrefab, canvasTransform);
+        RawImage image = newImage.GetComponent<RawImage>();
+        image.color = color;
+        spawnedImages.Add(newImage);
+
+        // Ajustar la posición de todas las imágenes
+        UpdateImagePositions();
+    }
+
+    private void UpdateImagePositions()
+    {
+        int count = spawnedImages.Count;
+        float startX = -(count - 1) * spacing / 2;  // Centra las imágenes
+
+        for (int i = 0; i < count; i++)
+        {
+            RectTransform rectTransform = spawnedImages[i].GetComponent<RectTransform>();
+
+            // Posición en la parte baja del Canvas
+            rectTransform.anchoredPosition = new Vector2(startX + (i * spacing), -yOffset);
+        }
+    }
 
     // Método para aplicar el salto
     void Jump()

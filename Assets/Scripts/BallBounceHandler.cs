@@ -46,11 +46,11 @@ public class BallBounceHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("HotSpot"))
         {
-            
-            Enemy enemy = FindObjectOfType<Enemy>();
-            if (enemy != null)
+
+            Enemy[] enemies = FindObjectsOfType<Enemy>();
+            foreach (Enemy enemy in enemies)
             {
-                enemy.MoveToBall(transform.position); // Envía la posición al enemigo
+                enemy.MoveToBall(transform.position); // Envía la posición de la bola a cada enemigo
             }
 
             ControlBounce(collision);

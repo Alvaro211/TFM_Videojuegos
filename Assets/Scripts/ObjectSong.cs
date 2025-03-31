@@ -74,7 +74,7 @@ public class ObjectSong : MonoBehaviour
         control.gameObject.SetActive(false);
     }
 
-    public void ChangeControlTake()
+   /* public void ChangeControlTake()
     {
         if (control.text == "E")
             control.text = "R";
@@ -84,5 +84,5 @@ public class ObjectSong : MonoBehaviour
     {
         if (control.text == "R")
             control.text = "E";
-    }
+    }*/
 }

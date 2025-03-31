@@ -55,8 +55,9 @@ public class Enemy : MonoBehaviour
 
     public void MoveToBall(Vector3 ballPosition)
     {
-        if (Vector3.Distance(transform.position, targetPosition) < searchRadius &&
-            Mathf.Abs(ballPosition.y - transform.position.y) <= 0.5f)
+        Debug.Log(transform.position.x - targetPosition.x);
+
+        if (Vector3.Distance(transform.position, targetPosition) < searchRadius)
         {
             //// Verifica si la posición es alcanzable
             NavMeshHit hit;

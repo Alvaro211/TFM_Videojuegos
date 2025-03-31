@@ -89,6 +89,60 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sound1"",
+                    ""type"": ""Button"",
+                    ""id"": ""53c3a5f4-e559-441f-b195-90b28f7fa6e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sound2"",
+                    ""type"": ""Button"",
+                    ""id"": ""faadbb65-65d1-4c25-ad5d-43d5f3054405"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sound3"",
+                    ""type"": ""Button"",
+                    ""id"": ""a4d2923e-e71e-492a-b082-c14749e7007a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sound4"",
+                    ""type"": ""Button"",
+                    ""id"": ""cc888563-7662-49e8-a50e-67037cdfc7be"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sound5"",
+                    ""type"": ""Button"",
+                    ""id"": ""9990077c-9328-482d-a39d-b0d43555662c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sound6"",
+                    ""type"": ""Button"",
+                    ""id"": ""0694df17-3359-4915-b04d-6e919212346f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -300,6 +354,72 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""action"": ""Options"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2de62cf-dd0d-4ddb-9314-b1612d9e4190"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sound1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56a26b69-16c9-49bc-8571-e304f699b843"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sound2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef1433a0-ad71-407a-b11b-4b68913755bf"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sound3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""daf6cf2b-385a-4a2a-bfd0-f6fa9b78312c"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sound4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8bd4e98-163a-4d6b-8624-4fce0eed9051"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sound5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""129c74ee-ebbd-4ade-8450-df6b523e798c"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sound6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -315,6 +435,12 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_TakeSound = m_Player.FindAction("TakeSound", throwIfNotFound: true);
         m_Player_Options = m_Player.FindAction("Options", throwIfNotFound: true);
+        m_Player_Sound1 = m_Player.FindAction("Sound1", throwIfNotFound: true);
+        m_Player_Sound2 = m_Player.FindAction("Sound2", throwIfNotFound: true);
+        m_Player_Sound3 = m_Player.FindAction("Sound3", throwIfNotFound: true);
+        m_Player_Sound4 = m_Player.FindAction("Sound4", throwIfNotFound: true);
+        m_Player_Sound5 = m_Player.FindAction("Sound5", throwIfNotFound: true);
+        m_Player_Sound6 = m_Player.FindAction("Sound6", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -383,6 +509,12 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_TakeSound;
     private readonly InputAction m_Player_Options;
+    private readonly InputAction m_Player_Sound1;
+    private readonly InputAction m_Player_Sound2;
+    private readonly InputAction m_Player_Sound3;
+    private readonly InputAction m_Player_Sound4;
+    private readonly InputAction m_Player_Sound5;
+    private readonly InputAction m_Player_Sound6;
     public struct PlayerActions
     {
         private @PlayerMap m_Wrapper;
@@ -394,6 +526,12 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @TakeSound => m_Wrapper.m_Player_TakeSound;
         public InputAction @Options => m_Wrapper.m_Player_Options;
+        public InputAction @Sound1 => m_Wrapper.m_Player_Sound1;
+        public InputAction @Sound2 => m_Wrapper.m_Player_Sound2;
+        public InputAction @Sound3 => m_Wrapper.m_Player_Sound3;
+        public InputAction @Sound4 => m_Wrapper.m_Player_Sound4;
+        public InputAction @Sound5 => m_Wrapper.m_Player_Sound5;
+        public InputAction @Sound6 => m_Wrapper.m_Player_Sound6;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -424,6 +562,24 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @Options.started += instance.OnOptions;
             @Options.performed += instance.OnOptions;
             @Options.canceled += instance.OnOptions;
+            @Sound1.started += instance.OnSound1;
+            @Sound1.performed += instance.OnSound1;
+            @Sound1.canceled += instance.OnSound1;
+            @Sound2.started += instance.OnSound2;
+            @Sound2.performed += instance.OnSound2;
+            @Sound2.canceled += instance.OnSound2;
+            @Sound3.started += instance.OnSound3;
+            @Sound3.performed += instance.OnSound3;
+            @Sound3.canceled += instance.OnSound3;
+            @Sound4.started += instance.OnSound4;
+            @Sound4.performed += instance.OnSound4;
+            @Sound4.canceled += instance.OnSound4;
+            @Sound5.started += instance.OnSound5;
+            @Sound5.performed += instance.OnSound5;
+            @Sound5.canceled += instance.OnSound5;
+            @Sound6.started += instance.OnSound6;
+            @Sound6.performed += instance.OnSound6;
+            @Sound6.canceled += instance.OnSound6;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -449,6 +605,24 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @Options.started -= instance.OnOptions;
             @Options.performed -= instance.OnOptions;
             @Options.canceled -= instance.OnOptions;
+            @Sound1.started -= instance.OnSound1;
+            @Sound1.performed -= instance.OnSound1;
+            @Sound1.canceled -= instance.OnSound1;
+            @Sound2.started -= instance.OnSound2;
+            @Sound2.performed -= instance.OnSound2;
+            @Sound2.canceled -= instance.OnSound2;
+            @Sound3.started -= instance.OnSound3;
+            @Sound3.performed -= instance.OnSound3;
+            @Sound3.canceled -= instance.OnSound3;
+            @Sound4.started -= instance.OnSound4;
+            @Sound4.performed -= instance.OnSound4;
+            @Sound4.canceled -= instance.OnSound4;
+            @Sound5.started -= instance.OnSound5;
+            @Sound5.performed -= instance.OnSound5;
+            @Sound5.canceled -= instance.OnSound5;
+            @Sound6.started -= instance.OnSound6;
+            @Sound6.performed -= instance.OnSound6;
+            @Sound6.canceled -= instance.OnSound6;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -475,5 +649,11 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnTakeSound(InputAction.CallbackContext context);
         void OnOptions(InputAction.CallbackContext context);
+        void OnSound1(InputAction.CallbackContext context);
+        void OnSound2(InputAction.CallbackContext context);
+        void OnSound3(InputAction.CallbackContext context);
+        void OnSound4(InputAction.CallbackContext context);
+        void OnSound5(InputAction.CallbackContext context);
+        void OnSound6(InputAction.CallbackContext context);
     }
 }
