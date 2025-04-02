@@ -162,15 +162,16 @@ public class PlayerMovement : MonoBehaviour
         if (isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
         {
 
-            //PlaySoundsInSequence(audioSourceSequence);
-            bool correct = CheckSequence();
+           /* bool correct = CheckSequence();
             if (correct)
             {
                 StartCoroutine(finishLevel.RotateOverTime());
                 finishLevel.HideControl();
                 finishLevel.doorOpen = true;
             }
-            finishLevel.SoundDoor(correct);
+            finishLevel.SoundDoor(correct);*/
+
+
         }
         else if ( isOnHotSpot && hotspot != null)
         {
@@ -207,8 +208,6 @@ public class PlayerMovement : MonoBehaviour
             
             sequence.Add(objectSong.audioSource.clip);
 
-
-            //objectSong.ChangeControlSound();
             objectSong.HideControl();
         }
     }
@@ -222,6 +221,7 @@ public class PlayerMovement : MonoBehaviour
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
         }
     }
@@ -234,6 +234,7 @@ public class PlayerMovement : MonoBehaviour
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
         }
     }
@@ -246,6 +247,7 @@ public class PlayerMovement : MonoBehaviour
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
         }
     }
@@ -258,6 +260,7 @@ public class PlayerMovement : MonoBehaviour
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
         }
     }
@@ -270,6 +273,7 @@ public class PlayerMovement : MonoBehaviour
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
         }
     }
@@ -282,10 +286,18 @@ public class PlayerMovement : MonoBehaviour
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
         }
     }
 
+    public void SoundToDoor(AudioClip clip)
+    {
+        if (isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
+        {
+            finishLevel.RegisterSound(clip);
+        }
+    }
     private IEnumerator WaitForSoundToEnd()
     {
         yield return new WaitUntil(() => !audioSourceSequence.isPlaying);
@@ -503,7 +515,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isOnFinishLevel = false;
             finishLevel.HideControl();
-            //finishLevel = null;
+            finishLevel.ClearSequence();
         }
     }
 

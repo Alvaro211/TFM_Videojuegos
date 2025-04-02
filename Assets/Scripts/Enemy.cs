@@ -44,12 +44,18 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator ChangeDirection()
     {
+        if (chasingBall) yield break;
+
         waiting = true; // Evita múltiples llamadas
         yield return new WaitForSeconds(waitTime); // Espera antes de cambiar dirección
 
         // Cambiar destino
-        agent.SetDestination(movingForward ? startPosition : targetPosition);
-        movingForward = !movingForward; // Alterna entre ida y vuelta
+        if (!chasingBall)
+        {
+            agent.SetDestination(movingForward ? startPosition : targetPosition);
+            movingForward = !movingForward;
+        }
+
         waiting = false;
     }
 
@@ -75,7 +81,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
         yield return new WaitForSeconds(5f); // Espera 3 segundos en la bola
         chasingBall = false;
-        agent.ResetPath();
+        agent.ResetPath();  
         StartCoroutine(ContinuePatrol());
     }
 
