@@ -463,7 +463,7 @@ public class PlayerMovement : MonoBehaviour
         ballLauch = false;
     }
 
-    private void Dead()
+    public void Dead()
     {
         
         controller.enabled = false;

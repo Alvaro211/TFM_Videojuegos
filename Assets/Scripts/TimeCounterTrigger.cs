@@ -1,9 +1,18 @@
 using UnityEngine;
+using UnityEngine.Diagnostics;
 
 public class TimeCounterTrigger : MonoBehaviour
 {
     public bool startCounting = true;   
-    private float timeInTrigger = 0f;    
+    private float timeInTrigger = 0f;
+
+    private PlayerMovement player;
+
+    private void Start()
+    {
+        GameObject playerGO = GameObject.FindWithTag("Player");
+        player = playerGO.GetComponent<PlayerMovement>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,8 +33,7 @@ public class TimeCounterTrigger : MonoBehaviour
             timeInTrigger += Time.deltaTime;  
             if (timeInTrigger >= 2f) 
             {
-                CallFunction();  
-                startCounting = false;  
+                player.Dead();
             }
         }
     }
@@ -38,12 +46,5 @@ public class TimeCounterTrigger : MonoBehaviour
         {
             timeInTrigger = 0f;
         }
-    }
-
-    // Función que se llama después de 2 segundos
-    private void CallFunction()
-    {
-        Debug.Log("Han pasado 2 segundos. Llamando la función.");
-        // Aquí puedes poner la lógica que deseas ejecutar después de 2 segundos
     }
 }
