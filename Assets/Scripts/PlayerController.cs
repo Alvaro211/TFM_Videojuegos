@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 startPosition;
     private float verticalVelocity;
     private bool isMoving;
+    private bool isHit = false;
     private Vector3 currentVelocity;
     private bool jumpCooldown;
     private int currentIndex = 0;
@@ -58,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
 
     private List<GameObject> spawnedImages = new List<GameObject>();
     private int sound = -1;
+
+    private PlatformMove plataformaMovimiento;
 
     void Start()
     {
@@ -117,6 +120,11 @@ public class PlayerMovement : MonoBehaviour
         {
             //Player inertia
             currentVelocity = Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * 5f);
+        }
+
+        if(isHit && verticalVelocity > 0)
+        {
+            verticalVelocity = 0; 
         }
 
         currentVelocity.y = verticalVelocity;
@@ -223,6 +231,11 @@ public class PlayerMovement : MonoBehaviour
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
+
+            if (plataformaMovimiento != null)
+            {
+                plataformaMovimiento.MovePlatform();
+            }
         }
     }
     public void Sound2Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -236,6 +249,8 @@ public class PlayerMovement : MonoBehaviour
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
+
+            
         }
     }
     public void Sound3Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -335,6 +350,7 @@ public class PlayerMovement : MonoBehaviour
         audioSourceEffectPlayer.clip = aduioJump;
         audioSourceEffectPlayer.Play();
         jumpCooldown = true;
+        isHit = false;
         verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
     }
@@ -447,7 +463,7 @@ public class PlayerMovement : MonoBehaviour
         ballLauch = false;
     }
 
-    private void Dead()
+    public void Dead()
     {
         
         controller.enabled = false;
@@ -478,8 +494,9 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    void OnControllerCollideraHit(ControllerColliderHit hit)
+  /*  void OnControllerCollideraHit(ControllerColliderHit hit)
     {
+
         if (hit.gameObject.CompareTag("Enemy"))
         {
             Dead();
@@ -495,7 +512,7 @@ public class PlayerMovement : MonoBehaviour
             hit.gameObject.SetActive(false);
             ballLauch = false;
         }
-    }
+    }*/
 
     // Detectar cuando sale del suelo
     private void OnTriggerExit(Collider other)
@@ -516,6 +533,10 @@ public class PlayerMovement : MonoBehaviour
             isOnFinishLevel = false;
             finishLevel.HideControl();
             finishLevel.ClearSequence();
+        }else if (other.gameObject.CompareTag("PlatformMove") && plataformaMovimiento != null)
+        {
+            plataformaMovimiento.ResetEffect();
+            plataformaMovimiento = null;
         }
     }
 
@@ -573,6 +594,19 @@ public class PlayerMovement : MonoBehaviour
         }else if (other.gameObject.CompareTag("Reset"))
         {
             SceneManager.LoadScene(0);
+        }else if (other.gameObject.CompareTag("PlatformMove"))
+        {
+            if (other.gameObject.TryGetComponent<PlatformMove>(out PlatformMove mover))
+            {
+                plataformaMovimiento = mover;
+                plataformaMovimiento.ActivateEffect();
+            }
         }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        isHit = true;
+
     }
 }
