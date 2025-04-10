@@ -10,18 +10,41 @@ public class FinishLevel : MonoBehaviour
     public AudioClip wrong;
     public AudioSource audioSource;
     public TextMeshPro control;
+    public bool isDoorOnLeft;
     public bool doorOpen = false;
 
-    public List<AudioClip> audioClips = new List<AudioClip>(); // Array de clips de audio (3 sonidos)
+    public List<AudioClip> audioClips = new List<AudioClip>();
     public bool activated = false;
     public GameObject advise;
 
     private bool souning = false;
+    private List<AudioClip> playerSequence = new List<AudioClip>();
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
+        if (isDoorOnLeft)
+        {
+            Transform[] children = new Transform[door.transform.childCount];
+
+            // Guardamos los hijos antes de mover el objeto
+            for (int i = 0; i < door.transform.childCount; i++)
+            {
+                children[i] = door.transform.GetChild(i);
+                children[i].SetParent(null); // Los desvinculamos del padre
+            }
+
+            // Mover el objeto padre
+            door.transform.position += new Vector3(0, 0, 10);
+
+            // Volver a asignar los hijos
+            foreach (Transform child in children)
+            {
+                child.SetParent(door.transform);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -33,8 +56,13 @@ public class FinishLevel : MonoBehaviour
     public IEnumerator RotateOverTime()
     {
         Quaternion startRotation = door.transform.rotation;
-        Quaternion endRotation = Quaternion.Euler(door.transform.eulerAngles + new Vector3(0, -90, 0));
+        Quaternion endRotation;
         float elapsedTime = 0f;
+
+        if (isDoorOnLeft)
+            endRotation = Quaternion.Euler(door.transform.eulerAngles + new Vector3(0, 90, 0));
+        else
+            endRotation = Quaternion.Euler(door.transform.eulerAngles + new Vector3(0, -90, 0));
 
         while (elapsedTime < 2f)
         {
@@ -52,10 +80,12 @@ public class FinishLevel : MonoBehaviour
         {
             audioSource.clip = open;
             audioSource.Play();
+            StartCoroutine(RotateOverTime());
         }
         else
         {
-            StartCoroutine(PlaySoundsInSequence(audioSource));
+            audioSource.clip = wrong;
+            audioSource.Play();
         }
 
         
@@ -76,8 +106,6 @@ public class FinishLevel : MonoBehaviour
             }
             souning = false;
         }
-
-
     }
 
     public IEnumerator ShowAdvice()
@@ -96,5 +124,41 @@ public class FinishLevel : MonoBehaviour
     public void HideControl()
     {
         control.gameObject.SetActive(false);
+    }
+
+
+    public void RegisterSound(AudioClip clip)
+    {
+        playerSequence.Add(clip);
+        CheckSequence();
+    }
+
+    void CheckSequence()
+    {
+        if (playerSequence.Count == audioClips.Count)
+        {
+            if (IsSequenceCorrect())
+                SoundDoor(true);
+            else
+            {
+                playerSequence.Clear();
+                SoundDoor(false);
+            }
+        }
+    }
+
+    bool IsSequenceCorrect()
+    {
+        for (int i = 0; i < audioClips.Count; i++)
+        {
+            if (playerSequence[i] != audioClips[i])
+                return false;
+        }
+        return true;
+    }
+
+    public void ClearSequence()
+    {
+        playerSequence.Clear();
     }
 }

@@ -23,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource audioSourceMusic;
     public List<GameObject> listObjectSong = new List<GameObject>();
 
+    public GameObject imagePrefab;  // Arrastra aquí el prefab en el Inspector
+    public Transform canvasTransform; 
+    public float yOffset = 50f;  // Distancia desde la parte baja del Canvas
+    public float spacing = 100f; // Espacio entre imágenes
+
     private CharacterController controller;
     private Vector3 moveInput;
     private bool isOnHotSpot;
@@ -33,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 startPosition;
     private float verticalVelocity;
     private bool isMoving;
+    private bool isHit = false;
     private Vector3 currentVelocity;
     private bool jumpCooldown;
     private int currentIndex = 0;
@@ -48,10 +54,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isOnFinishLevel = false;
     private bool souning = false;
 
-
     private PlayerMap inputMap;
-
     private Vector2 inputValues;
+
+    private List<GameObject> spawnedImages = new List<GameObject>();
+    private int sound = -1;
+
+    private PlatformMove plataformaMovimiento;
 
     void Start()
     {
@@ -77,6 +86,12 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Jump.performed += JumpPerformed;
         inputMap.Player.TakeSound.performed += TakeSoundPerformed;
         inputMap.Player.Options.performed += OptionsPerformed;
+        inputMap.Player.Sound1.performed += Sound1Performed;
+        inputMap.Player.Sound2.performed += Sound2Performed;
+        inputMap.Player.Sound3.performed += Sound3Performed;
+        inputMap.Player.Sound4.performed += Sound4Performed;
+        inputMap.Player.Sound5.performed += Sound5Performed;
+        inputMap.Player.Sound6.performed += Sound6Performed;
     }
 
     void Update()
@@ -105,6 +120,11 @@ public class PlayerMovement : MonoBehaviour
         {
             //Player inertia
             currentVelocity = Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * 5f);
+        }
+
+        if(isHit && verticalVelocity > 0)
+        {
+            verticalVelocity = 0; 
         }
 
         currentVelocity.y = verticalVelocity;
@@ -150,15 +170,16 @@ public class PlayerMovement : MonoBehaviour
         if (isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
         {
 
-            //PlaySoundsInSequence(audioSourceSequence);
-            bool correct = CheckSequence();
+           /* bool correct = CheckSequence();
             if (correct)
             {
                 StartCoroutine(finishLevel.RotateOverTime());
                 finishLevel.HideControl();
                 finishLevel.doorOpen = true;
             }
-            finishLevel.SoundDoor(correct);
+            finishLevel.SoundDoor(correct);*/
+
+
         }
         else if ( isOnHotSpot && hotspot != null)
         {
@@ -168,6 +189,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SequencePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+
         if (audioSourceSequence != null && finishLevel != null)
         {
             StartCoroutine(finishLevel.PlaySoundsInSequence(audioSourceSequence));
@@ -190,19 +212,137 @@ public class PlayerMovement : MonoBehaviour
         {
             Color color = objectSong.TakeItem();
 
-            // Si hay un círculo disponible, cambia su color
-            if (currentIndex < notes.Length)
-            {
-                notes[currentIndex].color = color; // Pinta el círculo
-                sequence.Add(objectSong.audioSource.clip);
-                currentIndex++; // Pasa al siguiente círculo
-            }
+            SpawnImage(color);
+            
+            sequence.Add(objectSong.audioSource.clip);
 
-            objectSong.ChangeControlSound();
             objectSong.HideControl();
         }
     }
 
+    public void Sound1Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 0;
+
+        if(sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+
+            if (plataformaMovimiento != null)
+            {
+                plataformaMovimiento.MovePlatform();
+            }
+        }
+    }
+    public void Sound2Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 1;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+
+            
+        }
+    }
+    public void Sound3Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 2;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+    public void Sound4Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 3;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+    public void Sound5Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 4;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+    public void Sound6Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        sound = 5;
+
+        if (sequence.Count > sound && !souning)
+        {
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+        }
+    }
+
+    public void SoundToDoor(AudioClip clip)
+    {
+        if (isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
+        {
+            finishLevel.RegisterSound(clip);
+        }
+    }
+    private IEnumerator WaitForSoundToEnd()
+    {
+        yield return new WaitUntil(() => !audioSourceSequence.isPlaying);
+        souning = false;
+    }
+
+    public void SpawnImage(Color color)
+    {
+        GameObject newImage = Instantiate(imagePrefab, canvasTransform);
+        RawImage image = newImage.GetComponent<RawImage>();
+        image.color = color;
+        spawnedImages.Add(newImage);
+
+        // Ajustar la posición de todas las imágenes
+        UpdateImagePositions();
+    }
+
+    private void UpdateImagePositions()
+    {
+        int count = spawnedImages.Count;
+        float startX = -(count - 1) * spacing / 2;  // Centra las imágenes
+
+        for (int i = 0; i < count; i++)
+        {
+            RectTransform rectTransform = spawnedImages[i].GetComponent<RectTransform>();
+
+            // Posición en la parte baja del Canvas
+            rectTransform.anchoredPosition = new Vector2(startX + (i * spacing), -yOffset);
+        }
+    }
 
     // Método para aplicar el salto
     void Jump()
@@ -210,6 +350,7 @@ public class PlayerMovement : MonoBehaviour
         audioSourceEffectPlayer.clip = aduioJump;
         audioSourceEffectPlayer.Play();
         jumpCooldown = true;
+        isHit = false;
         verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
     }
@@ -322,7 +463,7 @@ public class PlayerMovement : MonoBehaviour
         ballLauch = false;
     }
 
-    private void Dead()
+    public void Dead()
     {
         
         controller.enabled = false;
@@ -353,8 +494,9 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    void OnControllerCollideraHit(ControllerColliderHit hit)
+  /*  void OnControllerCollideraHit(ControllerColliderHit hit)
     {
+
         if (hit.gameObject.CompareTag("Enemy"))
         {
             Dead();
@@ -370,7 +512,7 @@ public class PlayerMovement : MonoBehaviour
             hit.gameObject.SetActive(false);
             ballLauch = false;
         }
-    }
+    }*/
 
     // Detectar cuando sale del suelo
     private void OnTriggerExit(Collider other)
@@ -390,7 +532,11 @@ public class PlayerMovement : MonoBehaviour
         {
             isOnFinishLevel = false;
             finishLevel.HideControl();
-            //finishLevel = null;
+            finishLevel.ClearSequence();
+        }else if (other.gameObject.CompareTag("PlatformMove") && plataformaMovimiento != null)
+        {
+            plataformaMovimiento.ResetEffect();
+            plataformaMovimiento = null;
         }
     }
 
@@ -448,6 +594,19 @@ public class PlayerMovement : MonoBehaviour
         }else if (other.gameObject.CompareTag("Reset"))
         {
             SceneManager.LoadScene(0);
+        }else if (other.gameObject.CompareTag("PlatformMove"))
+        {
+            if (other.gameObject.TryGetComponent<PlatformMove>(out PlatformMove mover))
+            {
+                plataformaMovimiento = mover;
+                plataformaMovimiento.ActivateEffect();
+            }
         }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        isHit = true;
+
     }
 }
