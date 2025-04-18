@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5699084953118267139}
+  - component: {fileID: 2538960169333465635}
   m_Layer: 0
   m_Name: PuertaObject
   m_TagString: Untagged
@@ -32,6 +33,27 @@ Transform:
   - {fileID: 3341554561759385516}
   m_Father: {fileID: 8782365980734931651}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2538960169333465635
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929867893652376515}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.278605, y: 25.450462, z: 33.84083}
+  m_Center: {x: 0.0045776367, y: 11.217936, z: -16.420414}
 --- !u!1 &1833951815549216200
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +213,11 @@ MonoBehaviour:
   wrong: {fileID: 8300000, guid: b2a3fdb5dbaca0d419db9bd355fba12d, type: 3}
   audioSource: {fileID: 0}
   control: {fileID: 8945748246027460258}
+  isDoorOnLeft: 0
   doorOpen: 0
+  audioClips: []
+  activated: 0
+  advise: {fileID: 0}
 --- !u!82 &5082061318161917437
 AudioSource:
   m_ObjectHideFlags: 0
@@ -472,7 +498,6 @@ GameObject:
   - component: {fileID: 3341554561759385516}
   - component: {fileID: 6765487954462062443}
   - component: {fileID: 4852933928266667522}
-  - component: {fileID: 7196054179402201177}
   m_Layer: 0
   m_Name: Puerta
   m_TagString: Floor
@@ -490,7 +515,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.16667682, y: 11, z: -16.499998}
-  m_LocalScale: {x: 2.4999998, y: 6.666666, z: 3.333333}
+  m_LocalScale: {x: 24.946846, y: 0.48931995, z: 25.45733}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5699084953118267139}
@@ -502,7 +527,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8060082061765150981}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &4852933928266667522
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -545,25 +570,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7196054179402201177
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8060082061765150981}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}

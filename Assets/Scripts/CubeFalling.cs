@@ -19,7 +19,9 @@ public class CubeFalling : MonoBehaviour
         {
             fastCubeRb = gameObject.AddComponent<Rigidbody>();
             fastCubeRb.useGravity = false;
+            fastCubeRb.freezeRotation = true;
             fastCubeStartPos = gameObject.transform.position;
+           
         }
     }
 

@@ -20,9 +20,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Verde
+  m_Name: Verde 1
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: aa953270356c2bd4385f55e055e47a17, type: 2}
+  m_Parent: {fileID: 2100000, guid: 37fb48d52d16b1f489ff82675c574dc4, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -40,6 +40,6 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _BaseColor: {r: 0.022774577, g: 1, b: 0, a: 1}
-    - _Color: {r: 0.022774577, g: 1, b: 0, a: 1}
+    - _BaseColor: {r: 0.7198608, g: 0.97735846, b: 0.71365607, a: 1}
+    - _Color: {r: 0.7198608, g: 0.9773584, b: 0.71365607, a: 1}
   m_BuildTextureStacks: []
