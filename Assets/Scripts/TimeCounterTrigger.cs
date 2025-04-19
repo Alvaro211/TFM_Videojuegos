@@ -16,7 +16,7 @@ public class TimeCounterTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entro");
+        //Debug.Log("Entro");
 
         if (other.CompareTag("Player"))  
         {
@@ -29,7 +29,7 @@ public class TimeCounterTrigger : MonoBehaviour
         
         if (startCounting && other.CompareTag("Player"))
         {
-            Debug.Log(timeInTrigger);
+           // Debug.Log(timeInTrigger);
             timeInTrigger += Time.deltaTime;  
             if (timeInTrigger >= 2f) 
             {
@@ -40,7 +40,7 @@ public class TimeCounterTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Salgo");
+        //Debug.Log("Salgo");
 
         if (other.CompareTag("Player"))
         {
