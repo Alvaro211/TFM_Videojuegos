@@ -119,16 +119,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1711837788939192811}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< HEAD
   m_Script: {fileID: 11500000, guid: f0641bcdc48d1dc41bf2a9d8686ae046, type: 3}
+=======
+  m_Script: {fileID: 11500000, guid: 08033917ba3b80540b9c6e7017f9b335, type: 3}
+>>>>>>> Inventario-y-Enemigos
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: 0
   moveDistance: 2
   moveSpeed: 2
+<<<<<<< HEAD
   platform: {fileID: 0}
   activatedMaterial: {fileID: 0}
   inActivatedMaterial: {fileID: 0}
   lights: []
+=======
+  platform: {fileID: 3532028730376989073}
+  activatedMaterial: {fileID: 2100000, guid: 134b32cfeba6d434b90cb0b0fbb29510, type: 2}
+  inActivatedMaterial: {fileID: 2100000, guid: 9906552edc30e6d418d7aa745c222cdf, type: 2}
+  lights:
+  - {fileID: 7753237747559134138}
+  - {fileID: 47452247180308570}
+  - {fileID: 6209324491703043825}
+  - {fileID: 7793140062038475680}
+>>>>>>> Inventario-y-Enemigos
 --- !u!1 &2352399867385492538
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +443,11 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+<<<<<<< HEAD
   - {fileID: 2100000, guid: f6e6e8040f84b66438006d5f4c5c1ea0, type: 2}
+=======
+  - {fileID: 2100000, guid: 9906552edc30e6d418d7aa745c222cdf, type: 2}
+>>>>>>> Inventario-y-Enemigos
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

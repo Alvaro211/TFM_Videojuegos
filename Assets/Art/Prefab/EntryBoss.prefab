@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7988701524206503765}
   - component: {fileID: 5217989548363605798}
   - component: {fileID: 2106432659046447178}
-  - component: {fileID: 5323865442050258340}
+  - component: {fileID: 7318374227653437234}
   m_Layer: 0
-  m_Name: StartLevel
-  m_TagString: StartLevel
+  m_Name: EntryBoss
+  m_TagString: EntryBoss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +106,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &5323865442050258340
+--- !u!114 &7318374227653437234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,12 +115,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4092191854085143926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16086ad11df6f0f498d34cb968b752a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 07e7528841786594a8a8f7d9731f699a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClips:
-  - {fileID: 8300000, guid: 17956050cde8ffc40bc2279d3cb56337, type: 3}
-  - {fileID: 8300000, guid: e1550161db5dbc841bef0ca880e9ceff, type: 3}
-  - {fileID: 8300000, guid: 2fb435b2b32ddad4aaa924c18ef01189, type: 3}
-  activated: 0
-  advise: {fileID: 4092191854085143926}

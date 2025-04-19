@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: f6e6e8040f84b66438006d5f4c5c1ea0
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
+=======
+guid: 9906552edc30e6d418d7aa745c222cdf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+>>>>>>> Inventario-y-Enemigos
   userData: 
   assetBundleName: 
   assetBundleVariant: 

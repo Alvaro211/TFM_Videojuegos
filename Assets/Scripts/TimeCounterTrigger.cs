@@ -16,7 +16,11 @@ public class TimeCounterTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+<<<<<<< HEAD
         Debug.Log("Entro");
+=======
+        //Debug.Log("Entro");
+>>>>>>> Inventario-y-Enemigos
 
         if (other.CompareTag("Player"))  
         {
@@ -29,7 +33,11 @@ public class TimeCounterTrigger : MonoBehaviour
         
         if (startCounting && other.CompareTag("Player"))
         {
+<<<<<<< HEAD
             Debug.Log(timeInTrigger);
+=======
+           // Debug.Log(timeInTrigger);
+>>>>>>> Inventario-y-Enemigos
             timeInTrigger += Time.deltaTime;  
             if (timeInTrigger >= 2f) 
             {
@@ -40,7 +48,11 @@ public class TimeCounterTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+<<<<<<< HEAD
         Debug.Log("Salgo");
+=======
+        //Debug.Log("Salgo");
+>>>>>>> Inventario-y-Enemigos
 
         if (other.CompareTag("Player"))
         {

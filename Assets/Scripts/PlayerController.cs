@@ -44,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
     private int currentIndex = 0;
     // private int indexBallImage = 0;
     private bool ballLauch;
+    private bool onBoss = false;
+    private BossLight bossLight;
 
     private bool isNearObjectSong;
     private ObjectSong objectSong;
@@ -269,6 +271,8 @@ public class PlayerMovement : MonoBehaviour
     public void Sound4Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         sound = 3;
+        if (bossLight != null)
+            bossLight.TriggerLightFade();
 
         if (sequence.Count > sound && !souning)
         {
@@ -277,6 +281,8 @@ public class PlayerMovement : MonoBehaviour
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
+
+            
         }
     }
     public void Sound5Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -553,14 +559,10 @@ public class PlayerMovement : MonoBehaviour
             isNearObjectSong = true;
             objectSong = other.GetComponent<ObjectSong>();
             objectSong.ShowControl();
-        }else if(other.tag == "StartLevel")
+        }else if(other.tag == "EntryBoss")
         {
-            startLevel = other.GetComponent<StartLevel>();
-            if (!startLevel.activated)
-            {
-                StartCoroutine(startLevel.PlaySoundsInSequence(audioSourceSequence));
-                startLevel.activated = true;
-            }
+            onBoss = true;
+            bossLight = other.GetComponent<BossLight>();
         }else if(other.gameObject.CompareTag("Ball"))
         {
             BallBounceHandler ballScript = other.gameObject.GetComponent<BallBounceHandler>();
