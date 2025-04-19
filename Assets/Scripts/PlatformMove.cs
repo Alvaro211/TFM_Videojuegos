@@ -7,6 +7,7 @@ public class PlatformMove : MonoBehaviour
 {
     public enum Direction { Up, Right, Down, Left }
     public Direction moveDirection = Direction.Up;
+    public bool activatedPlatform1;
 
     public float moveDistance = 2f;     // Distancia del movimiento
     public float moveSpeed = 2f;        // Velocidad en unidades por segundo
@@ -32,9 +33,9 @@ public class PlatformMove : MonoBehaviour
         objRenderer = platform.GetComponent<Renderer>();
     }
 
-    public void MovePlatform()
+    public void MovePlatform(int index)
     {
-        if (isMoving) return; // Evita activar el movimiento si ya se está moviendo
+        if (isMoving || (index == 1 && !activatedPlatform1) || (index == 2 && activatedPlatform1)) return; // Evita activar el movimiento si ya se está moviendo
 
         isMoved = !isMoved;
         targetPosition = isMoved
@@ -46,15 +47,29 @@ public class PlatformMove : MonoBehaviour
 
     private System.Collections.IEnumerator MoveToPosition(Vector3 destination)
     {
-        Transform playerTransform = GameObject.FindWithTag("Player").transform;
-        playerTransform.SetParent(platform.transform);
+        GameObject player = GameObject.FindWithTag("Player");
+        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
+        CharacterController controller = player.GetComponent<CharacterController>();
+
+        Vector3 lastPlatformPos = platform.transform.position;
+
         isMoving = true;
         while (Vector3.Distance(platform.transform.position, destination) > 0.01f)
         {
-            platform.transform.position = Vector3.MoveTowards(platform.transform.position, destination, moveSpeed * Time.deltaTime);
+            Vector3 currentPlatformPos = platform.transform.position;
+            Vector3 nextPlatformPos = Vector3.MoveTowards(currentPlatformPos, destination, moveSpeed * Time.deltaTime);
+            Vector3 platformDelta = nextPlatformPos - currentPlatformPos;
+
+            // Mover plataforma
+            platform.transform.position = nextPlatformPos;
+
+            // Si el jugador está encima de la plataforma, moverlo también
+            // (aquí asumimos que siempre lo está; si necesitás precisión, podés usar un raycast o trigger)
+            controller.Move(platformDelta);
+
+            lastPlatformPos = nextPlatformPos;
             yield return null;
         }
-        playerTransform.SetParent(null);
 
         platform.transform.position = destination; // Ajuste final
         isMoving = false;

@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 2926322370341035005}
   - component: {fileID: 2695757669796104344}
   - component: {fileID: 3420808636101999221}
-  - component: {fileID: 6952995988684368412}
+  - component: {fileID: 347896108651589728}
   m_Layer: 0
   m_Name: LuzRoja
   m_TagString: Untagged
@@ -227,7 +227,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6952995988684368412
+--- !u!114 &347896108651589728
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,11 +236,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4480716197114102453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-<<<<<<< HEAD
   m_Script: {fileID: 11500000, guid: 64ef06d108de7fd40b8a60fe08d6096e, type: 3}
-=======
-  m_Script: {fileID: 11500000, guid: 1bc45c5d19a1d964481a24cc93c3e274, type: 3}
->>>>>>> Inventario-y-Enemigos
   m_Name: 
   m_EditorClassIdentifier: 
   timeUnderLight: 2
@@ -374,11 +370,8 @@ GameObject:
   - component: {fileID: 8662440351026423063}
   - component: {fileID: 3682312634622412650}
   - component: {fileID: 1959220147841878580}
-  - component: {fileID: 8539211852803651330}
-<<<<<<< HEAD
-=======
   - component: {fileID: 3995018480533435090}
->>>>>>> Inventario-y-Enemigos
+  - component: {fileID: 7966344479784652082}
   m_Layer: 0
   m_Name: TriggerLightRed
   m_TagString: Untagged
@@ -472,25 +465,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8539211852803651330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8302702754142637119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-<<<<<<< HEAD
-  m_Script: {fileID: 11500000, guid: b67b3affc7acb834392a919556de20aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startCounting: 1
-=======
-  m_Script: {fileID: 11500000, guid: 3b2cd9229895dca46a40bc6750ef1493, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startCounting: 1
 --- !u!82 &3995018480533435090
 AudioSource:
   m_ObjectHideFlags: 0
@@ -503,7 +477,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -923159350489427428, guid: f8757647a04f3b340a4b200fc424afe7,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 544f06438840a0144ba47334b68e349e, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -588,4 +562,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
->>>>>>> Inventario-y-Enemigos
+--- !u!114 &7966344479784652082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8302702754142637119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67b3affc7acb834392a919556de20aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startCounting: 1

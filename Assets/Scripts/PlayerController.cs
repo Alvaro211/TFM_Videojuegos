@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Sequence.performed += SequencePerformed;
         inputMap.Player.Sphere.performed += SpherePerformed;
         inputMap.Player.Jump.performed += JumpPerformed;
-        inputMap.Player.TakeSound.performed += TakeSoundPerformed;
+        //inputMap.Player.TakeSound.performed += TakeSoundPerformed;
         inputMap.Player.Options.performed += OptionsPerformed;
         inputMap.Player.Sound1.performed += Sound1Performed;
         inputMap.Player.Sound2.performed += Sound2Performed;
@@ -218,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
             
             sequence.Add(objectSong.audioSource.clip);
 
-            objectSong.HideControl();
+            //objectSong.HideControl();
         }
     }
 
@@ -236,7 +236,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (plataformaMovimiento != null)
             {
-                plataformaMovimiento.MovePlatform();
+                plataformaMovimiento.MovePlatform(1);
             }
         }
     }
@@ -252,7 +252,10 @@ public class PlayerMovement : MonoBehaviour
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
 
-            
+            if (plataformaMovimiento != null)
+            {
+                plataformaMovimiento.MovePlatform(2);
+            }
         }
     }
     public void Sound3Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -531,7 +534,7 @@ public class PlayerMovement : MonoBehaviour
         }else if (other.tag == "FloorObjectSong" && objectSong != null)
         {
             isNearObjectSong = false;
-            objectSong.HideControl();
+           // objectSong.HideControl();
             objectSong = null;
         }
         else if (other.gameObject.CompareTag("FinishLevel") /*&& finishLevel != null*/)
@@ -558,7 +561,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isNearObjectSong = true;
             objectSong = other.GetComponent<ObjectSong>();
-            objectSong.ShowControl();
+            //objectSong.ShowControl();
         }else if(other.tag == "EntryBoss")
         {
             onBoss = true;
@@ -593,15 +596,26 @@ public class PlayerMovement : MonoBehaviour
         else if (other.gameObject.CompareTag("Enemy"))
         {
             Dead();
-        }else if (other.gameObject.CompareTag("Reset"))
-        {
-            SceneManager.LoadScene(0);
         }else if (other.gameObject.CompareTag("PlatformMove"))
         {
             if (other.gameObject.TryGetComponent<PlatformMove>(out PlatformMove mover))
             {
                 plataformaMovimiento = mover;
                 plataformaMovimiento.ActivateEffect();
+            }
+        }
+        else if (other.gameObject.CompareTag("ObjetoCancion"))
+        {
+
+            if (isNearObjectSong && objectSong != null)
+            {
+                Color color = objectSong.TakeItem();
+
+                SpawnImage(color);
+
+                sequence.Add(objectSong.audioSource.clip);
+
+                //objectSong.HideControl();
             }
         }
     }

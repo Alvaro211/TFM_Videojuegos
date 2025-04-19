@@ -13,6 +13,9 @@ public class BallBounceHandler : MonoBehaviour
     public bool isAscending = false; // Para evitar múltiples llamadas
     public float velocityX = 0;
     public float velocityY = 0;
+    private bool HasCollision = false;
+
+    private Vector3 velocity;
 
     private float lastCollisionTime = 0f; // Guarda el tiempo del último choque
     private float collisionCooldown = 0.1f; // Tiempo mínimo entre colisiones
@@ -23,6 +26,12 @@ public class BallBounceHandler : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<SphereCollider>();
+    }
+
+    private void Update()
+    {
+        if(!HasCollision)
+            velocity = rb.velocity;
     }
 
     private IEnumerator AscendToHeight()
@@ -53,7 +62,31 @@ public class BallBounceHandler : MonoBehaviour
                 enemy.MoveToBall(transform.position); // Envía la posición de la bola a cada enemigo
             }
 
-            ControlBounce(collision);
+            // Obtener la normal del primer punto de contacto
+            Vector3 contactNormal = collision.GetContact(0).normal;
+
+            // Verificar si la colisión vino desde abajo (normal apunta hacia arriba)
+            if (Vector3.Dot(contactNormal, Vector3.up) < 0.5f)
+            {
+                /* rb.isKinematic = false;
+                 rb.constraints = RigidbodyConstraints.None;
+
+
+                 Debug.Log(velocity);
+
+                 Vector3 reactionForce = -contactNormal.normalized * 10f; // fuerza manual de prueba
+                 transform.position += reactionForce * 0.1f;
+                 rb.AddForce(reactionForce, ForceMode.Impulse);
+
+                 Debug.Log(" Fuerza aplicada: " + reactionForce);*/
+                velocity.x = -velocity.x;
+                rb.velocity = velocity * 0.7f;
+
+                CreatePointLight(collision.GetContact(0).point);
+                return;
+            }
+            else 
+                ControlBounce(collision);
         }else if(collision.gameObject.CompareTag("Enemy"))
         {
             gameObject.SetActive(false);
@@ -65,6 +98,7 @@ public class BallBounceHandler : MonoBehaviour
     {
         if (Time.time - lastCollisionTime < collisionCooldown) return;
         lastCollisionTime = Time.time;
+
         if (collision.gameObject.CompareTag("Player"))
         {
             gameObject.SetActive(false);

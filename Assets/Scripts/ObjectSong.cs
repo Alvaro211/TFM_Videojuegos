@@ -63,7 +63,7 @@ public class ObjectSong : MonoBehaviour
         isSouning = false;
     }
 
-    public void ShowControl()
+   /* public void ShowControl()
     {
         if (GameManager.instance.helpControls && objectSong.activeInHierarchy)
             control.gameObject.SetActive(true);
@@ -72,7 +72,7 @@ public class ObjectSong : MonoBehaviour
     public void HideControl()
     {
         control.gameObject.SetActive(false);
-    }
+    }*/
 
    /* public void ChangeControlTake()
     {
