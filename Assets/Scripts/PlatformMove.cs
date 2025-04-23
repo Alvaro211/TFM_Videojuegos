@@ -53,6 +53,7 @@ public class PlatformMove : MonoBehaviour
 
         Vector3 lastPlatformPos = platform.transform.position;
 
+        GameManager.instance.playerMovePlatform = true;
         isMoving = true;
         while (Vector3.Distance(platform.transform.position, destination) > 0.01f)
         {
@@ -73,6 +74,7 @@ public class PlatformMove : MonoBehaviour
 
         platform.transform.position = destination; // Ajuste final
         isMoving = false;
+        GameManager.instance.playerMovePlatform = false;
     }
 
     private Vector3 GetDirectionVector(Direction direction)

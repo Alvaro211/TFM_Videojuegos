@@ -3,7 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Floor
+  - FinishLevel
+  - HotSpot
+  - StartLevel
+  - Ball
+  - EntryBoss
+  - PlatformMove
+  - Enemy
+  - FloorObjectSong
+  - ObjetoCancion
+  - EnemyMunition
   layers:
   - Default
   - TransparentFX

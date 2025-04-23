@@ -167,17 +167,31 @@ public class PlayerMovement : MonoBehaviour
 
     public void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (controller.isGrounded && !jumpCooldown)
+        if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
             Jump();
     }
 
     public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         if (menuPause.activeSelf)
+        {
             menuPause.gameObject.SetActive(false);
+            if (hotspot != null)
+                hotspot.ShowControl();
+            if (finishLevel != null)
+                finishLevel.ShowControl();
+        }
         else
+        {
             menuPause.gameObject.SetActive(true);
+            if (hotspot != null)
+                hotspot.HideControl();
+            if (finishLevel != null)
+                finishLevel.HideControl();
+
+        }
     }
+
 
     public void InterectPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
@@ -286,8 +300,8 @@ public class PlayerMovement : MonoBehaviour
     public void Sound4Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         sound = 3;
-        if (bossLight != null)
-            bossLight.TriggerLightFade();
+       /* if (bossLight != null)
+            bossLight.TriggerLightFade();*/
 
         if (sequence.Count > sound && !souning)
         {
@@ -574,11 +588,15 @@ public class PlayerMovement : MonoBehaviour
             isNearObjectSong = true;
             objectSong = other.GetComponent<ObjectSong>();
             //objectSong.ShowControl();
-        }else if(other.tag == "EntryBoss")
+        }else if(other.tag == "EntryBoss" && !onBoss)
         {
+            startPosition = this.transform.position;
             onBoss = true;
             bossLight = other.GetComponent<BossLight>();
-        }else if(other.gameObject.CompareTag("Ball"))
+            StartCoroutine(bossLight.Blink());
+
+        }
+        else if(other.gameObject.CompareTag("Ball"))
         {
             BallBounceHandler ballScript = other.gameObject.GetComponent<BallBounceHandler>();
 
@@ -636,5 +654,9 @@ public class PlayerMovement : MonoBehaviour
     {
         isHit = true;
 
+        if (hit.gameObject.CompareTag("Enemy"))
+        {
+            Dead();
+        }
     }
 }

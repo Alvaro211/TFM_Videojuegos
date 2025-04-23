@@ -3,7 +3,9 @@ using UnityEngine.Diagnostics;
 
 public class TimeCounterTrigger : MonoBehaviour
 {
-    public bool startCounting = true;   
+    public bool startCounting = true;
+    public float timeAfterDead = 2f;
+
     private float timeInTrigger = 0f;
 
     private PlayerMovement player;
@@ -16,7 +18,6 @@ public class TimeCounterTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entro");
 
         if (other.CompareTag("Player"))  
         {
@@ -29,10 +30,9 @@ public class TimeCounterTrigger : MonoBehaviour
         
         if (startCounting && other.CompareTag("Player"))
         {
-            Debug.Log(timeInTrigger);
 
             timeInTrigger += Time.deltaTime;  
-            if (timeInTrigger >= 2f) 
+            if (timeInTrigger >= timeAfterDead) 
             {
                 player.Dead();
             }
@@ -41,7 +41,6 @@ public class TimeCounterTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Salgo");
 
         if (other.CompareTag("Player"))
         {

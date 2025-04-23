@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class RedBall : MonoBehaviour
 {
-    public float timeUnderLight = 2f;  // Tiempo en segundos que el jugador debe estar bajo la luz roja
 
     private void Start()
     {

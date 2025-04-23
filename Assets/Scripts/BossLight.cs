@@ -6,8 +6,9 @@ public class BossLight : MonoBehaviour
 {
     public List<GameObject> redBalls;
 
-    public float fadeOutDuration = 1f;   // Tiempo en bajar a 0
-    public float fadeInDuration = 2f;    // Tiempo en volver al original
+    public float fadeOutDuration = 1f;   
+    public float fadeInDuration = 1f;
+    public float waitInBlink = 2f;
     
     private List<Light> lights;
     private List<TimeCounterTrigger> timeCounter;
@@ -63,6 +64,7 @@ public class BossLight : MonoBehaviour
             yield return null;
         }
 
+
         timer = 0f;
         while (timer < fadeInDuration)
         {
@@ -81,6 +83,57 @@ public class BossLight : MonoBehaviour
         foreach (TimeCounterTrigger time in timeCounter)
         {
             time.startCounting = true;
+        }
+    }
+
+    public IEnumerator Blink()
+    {
+        while (true)
+        {
+
+            yield return new WaitForSeconds(5);
+
+            float timer = 0f;
+
+            foreach (TimeCounterTrigger time in timeCounter)
+            {
+                time.startCounting = false;
+            }
+
+            while (timer < fadeOutDuration)
+            {
+                timer += Time.deltaTime;
+                float t = timer / fadeOutDuration;
+                for (int i = 0; i < lights.Count; i++)
+                {
+                    lights[i].intensity = Mathf.Lerp(originalIntensities[i], 0f, t);
+                }
+                yield return null;
+            }
+
+
+            yield return new WaitForSeconds(waitInBlink);
+
+            timer = 0f;
+            while (timer < fadeInDuration)
+            {
+                timer += Time.deltaTime;
+                float t = timer / fadeInDuration;
+                for (int i = 0; i < lights.Count; i++)
+                {
+                    lights[i].intensity = Mathf.Lerp(0f, originalIntensities[i], t);
+                }
+                yield return null;
+            }
+
+            for (int i = 0; i < lights.Count; i++)
+                lights[i].intensity = originalIntensities[i];
+
+            foreach (TimeCounterTrigger time in timeCounter)
+            {
+                time.startCounting = true;
+            }
+
         }
     }
 }
