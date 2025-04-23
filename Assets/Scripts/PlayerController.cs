@@ -64,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
 
     private PlatformMove plataformaMovimiento;
 
+    public Animator anim;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -101,11 +103,20 @@ public class PlayerMovement : MonoBehaviour
         moveInput.x = inputValues.x;
         moveInput.Normalize(); // Evita moverse más rápido en diagonal
 
-        if (moveInput.magnitude > 0.1f )
+        if (moveInput.magnitude > 0.1f)
+        {
             isMoving = true;
+            anim.SetBool("IsWalking", true);
+        }
+
+
 
         else
+        {
             isMoving = false;
+            anim.SetBool("IsWalking", false);
+        }
+            
 
         // Si está tocando el suelo (Floor), desactivamos la gravedad
         if (!controller.isGrounded)
@@ -117,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
         if (isMoving)
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
+           
         }
         else
         {
