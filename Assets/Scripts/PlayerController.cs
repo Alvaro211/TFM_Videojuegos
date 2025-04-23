@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -140,6 +141,9 @@ public class PlayerMovement : MonoBehaviour
         {
             verticalVelocity = 0; 
         }
+
+        if (verticalVelocity < -30)
+            verticalVelocity = -30;
 
         currentVelocity.y = verticalVelocity;
         controller.Move(currentVelocity * Time.deltaTime);
@@ -358,7 +362,9 @@ public class PlayerMovement : MonoBehaviour
     {
         GameObject newImage = Instantiate(imagePrefab, canvasTransform);
         RawImage image = newImage.GetComponent<RawImage>();
+        TextMeshProUGUI text = newImage.GetComponentInChildren<TextMeshProUGUI>();
         image.color = color;
+        text.text = (spawnedImages.Count + 1).ToString();
         spawnedImages.Add(newImage);
 
         // Ajustar la posición de todas las imágenes
