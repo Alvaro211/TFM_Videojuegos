@@ -23,10 +23,15 @@ public class BossConroller : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.right * direcction * velocityBoss * Time.deltaTime);
-
-        if (Mathf.Abs(transform.position.x - positionInitial.x) >= distance)
-            direcction *= -1;
+        if (GameManager.instance.defeatBoss) {
+            ReturnToStartPosition();
+            CancelInvoke("Shoot");
+        }
+        else
+        {
+            Movement();
+        }
+        
     }
 
     void Shoot()
@@ -53,5 +58,19 @@ public class BossConroller : MonoBehaviour
         }
 
         Invoke("Shoot", timeWaitShoot);
+    }
+
+    void Movement()
+    {
+        transform.Translate(Vector3.right * direcction * velocityBoss * Time.deltaTime);
+
+        if (Mathf.Abs(transform.position.x - positionInitial.x) >= distance)
+            direcction *= -1;
+    }
+
+    void ReturnToStartPosition()
+    {
+        float returnSpeed = velocityBoss * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, positionInitial, returnSpeed);
     }
 }

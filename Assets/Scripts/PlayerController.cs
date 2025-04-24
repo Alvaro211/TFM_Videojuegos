@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     public float yOffset = 50f;  // Distancia desde la parte baja del Canvas
     public float spacing = 100f; // Espacio entre imágenes
 
+    public SpriteRenderer sprite;
+    public GameObject layout;
+
     private CharacterController controller;
     private Vector3 moveInput;
     private bool isOnHotSpot;
@@ -65,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
     private int sound = -1;
 
     private PlatformMove plataformaMovimiento;
+    private Vector3 positionEscape;
 
     //Animaciones
     public Animator anim;
@@ -196,6 +200,11 @@ public class PlayerMovement : MonoBehaviour
         if (menuPause.activeSelf)
         {
             menuPause.gameObject.SetActive(false);
+
+            layout.gameObject.SetActive(true);
+            sprite.gameObject.SetActive(true);
+            this.transform.position = positionEscape;
+
             if (hotspot != null)
                 hotspot.ShowControl();
             if (finishLevel != null)
@@ -203,6 +212,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            layout.gameObject.SetActive(false);
+            sprite.gameObject.SetActive(false);
+            positionEscape = this.transform.position;
+
             menuPause.gameObject.SetActive(true);
             if (hotspot != null)
                 hotspot.HideControl();
@@ -669,6 +682,9 @@ public class PlayerMovement : MonoBehaviour
 
                 //objectSong.HideControl();
             }
+        }else if (other.gameObject.CompareTag("DefeatBoss"))
+        {
+            GameManager.instance.defeatBoss = true;
         }
     }
 

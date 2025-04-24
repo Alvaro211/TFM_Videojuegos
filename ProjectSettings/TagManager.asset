@@ -15,6 +15,7 @@ TagManager:
   - FloorObjectSong
   - ObjetoCancion
   - EnemyMunition
+  - DefeatBoss
   layers:
   - Default
   - TransparentFX

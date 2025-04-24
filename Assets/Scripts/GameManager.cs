@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     public bool helpControls = true;
     public bool playerMovePlatform = false;
+    public bool defeatBoss = false;
     private void Awake()
     {
         if (instance == null)
