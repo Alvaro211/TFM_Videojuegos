@@ -18,6 +18,7 @@ public class PlatformMove : MonoBehaviour
     public List<Light> lights;
 
     private Vector3 initialPosition;
+    private Vector3 positionToReturn;
     private Vector3 targetPosition;
     private bool isMoved = false;
     private bool isMoving = false;
@@ -29,6 +30,7 @@ public class PlatformMove : MonoBehaviour
     {
         initialPosition = platform.transform.position;
         targetPosition = initialPosition;
+        positionToReturn = initialPosition;
 
         objRenderer = platform.GetComponent<Renderer>();
     }
@@ -128,5 +130,7 @@ public class PlatformMove : MonoBehaviour
         {
             light.gameObject.SetActive(false);
         }
+
+        StartCoroutine(MoveToPosition(positionToReturn));
     }
 }
