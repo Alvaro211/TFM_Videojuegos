@@ -22,12 +22,17 @@ public class ObjectSong : MonoBehaviour
 
     private void Update()
     {
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance < 20.0f && !isSouning) 
+        if (!isSouning)
         {
             StartCoroutine(SoundItemCoorutine());
         }
     }
+
+    private void OnEnable()
+    {
+        isSouning = false;
+    }
+
 
     public Color TakeItem()
     {
