@@ -22,7 +22,7 @@ public class ObjectSong : MonoBehaviour
 
     private void Update()
     {
-        if (!isSouning) 
+        if (!isSouning)
         {
             StartCoroutine(SoundItemCoorutine());
         }
@@ -32,6 +32,7 @@ public class ObjectSong : MonoBehaviour
     {
         isSouning = false;
     }
+    
     public Color TakeItem()
     {
         
