@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
 using TMPro;
+using Unity.VisualScripting;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -65,7 +66,9 @@ public class PlayerMovement : MonoBehaviour
 
     private PlatformMove plataformaMovimiento;
 
+    //Animaciones
     public Animator anim;
+    private bool mirandoDerecha = true;
 
     void Start()
     {
@@ -109,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
             isMoving = true;
             anim.SetBool("IsWalking", true);
         }
-
+        
 
 
         else
@@ -129,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         if (isMoving)
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
-           
+            anim.SetBool("IsWalking", true);
         }
         else
         {
@@ -167,7 +170,20 @@ public class PlayerMovement : MonoBehaviour
     public void DirKeysPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         inputValues = obj.ReadValue<Vector2>();
+
+        if (inputValues.x > 0 && !mirandoDerecha)
+        {
+            mirandoDerecha = !mirandoDerecha;
+            transform.Rotate(0f, 180f, 0f);
+        }
+        else if (inputValues.x < 0 && mirandoDerecha)
+        {
+            mirandoDerecha = !mirandoDerecha;
+            transform.Rotate(0f, 180f, 0f);
+        }
     }
+
+
 
     public void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
