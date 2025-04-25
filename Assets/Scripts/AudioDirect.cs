@@ -16,6 +16,35 @@ public class AudioDirect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        foreach (var g in allBall)
+        {
+            if (!allDistance.ContainsKey(g))
+            {
+                allDistance.Add(g, 0);
+            }
+            else
+            {
+                allDistance[g] = Vector3.SqrMagnitude(player.position - g.transform.position);
+            }
+        }
+
+
+
+
+        GameObject minKey = null;
+        float minValue = float.MaxValue;
+
+        foreach (KeyValuePair<GameObject, float> pair in allDistance)
+        {
+            if (pair.Value < minValue)
+            {
+                minValue = pair.Value;
+                minKey = pair.Key;
+            }
+        }
+
+        audioTransform = minKey.transform;
+
         if (audioTransform != null)
         {
 
@@ -23,32 +52,6 @@ public class AudioDirect : MonoBehaviour
             Vector3 dir = audioTransform.position - player.position;//计算声音与玩家位置向量
             direct.up = -dir;
 
-            foreach (var g in allBall)
-            {
-                if (!allDistance.ContainsKey(g))
-                {
-                    allDistance.Add(g, 0);
-                }
-                else
-                {
-                    allDistance[g] = Vector3.SqrMagnitude(player.position - g.transform.position);
-                }
-            }
-
-
-            GameObject minKey = null;
-            float minValue = float.MaxValue;
-
-            foreach (KeyValuePair<GameObject, float> pair in allDistance)
-            {
-                if (pair.Value < minValue)
-                {
-                    minValue = pair.Value;
-                    minKey = pair.Key;
-                }
-            }
-
-            audioTransform = minKey.transform;
         }
     }
 }
