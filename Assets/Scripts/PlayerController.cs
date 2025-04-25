@@ -171,6 +171,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void OnEnable()
+    {
+        souning = false;
+    }
+
     public void DirKeysPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         inputValues = obj.ReadValue<Vector2>();
@@ -521,7 +526,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator HideBall(GameObject newBall)
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(6);
         newBall.gameObject.SetActive(false);
 
         BallBounceHandler ballScript = newBall.GetComponent<BallBounceHandler>();
