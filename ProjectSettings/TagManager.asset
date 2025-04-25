@@ -16,6 +16,7 @@ TagManager:
   - ObjetoCancion
   - EnemyMunition
   - DefeatBoss
+  - TargetBall
   layers:
   - Default
   - TransparentFX
