@@ -202,31 +202,34 @@ public class PlayerMovement : MonoBehaviour
 
     public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (menuPause.activeSelf)
+        if (!plataformaMovimiento)
         {
-            menuPause.gameObject.SetActive(false);
+            if (menuPause.activeSelf)
+            {
+                menuPause.gameObject.SetActive(false);
 
-            layout.gameObject.SetActive(true);
-            sprite.gameObject.SetActive(true);
-            this.transform.position = positionEscape;
+                layout.gameObject.SetActive(true);
+                sprite.gameObject.SetActive(true);
+                this.transform.position = positionEscape;
 
-            if (hotspot != null)
-                hotspot.ShowControl();
-            if (finishLevel != null)
-                finishLevel.ShowControl();
-        }
-        else
-        {
-            layout.gameObject.SetActive(false);
-            sprite.gameObject.SetActive(false);
-            positionEscape = this.transform.position;
+                if (hotspot != null)
+                    hotspot.ShowControl();
+                if (finishLevel != null)
+                    finishLevel.ShowControl();
+            }
+            else
+            {
+                layout.gameObject.SetActive(false);
+                sprite.gameObject.SetActive(false);
+                positionEscape = this.transform.position;
 
-            menuPause.gameObject.SetActive(true);
-            if (hotspot != null)
-                hotspot.HideControl();
-            if (finishLevel != null)
-                finishLevel.HideControl();
+                menuPause.gameObject.SetActive(true);
+                if (hotspot != null)
+                    hotspot.HideControl();
+                if (finishLevel != null)
+                    finishLevel.HideControl();
 
+            }
         }
     }
 

@@ -22,7 +22,9 @@ public class ObjectSong : MonoBehaviour
 
     private void Update()
     {
-        if (!isSouning)
+        float distancia = Vector3.Distance(transform.position, player.transform.position);
+       // Debug.Log("Distancia al jugador: " + distancia);
+        if (!isSouning && distancia < 40f)
         {
             StartCoroutine(SoundItemCoorutine());
         }

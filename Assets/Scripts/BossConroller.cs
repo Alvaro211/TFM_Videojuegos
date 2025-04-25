@@ -71,6 +71,6 @@ public class BossConroller : MonoBehaviour
     void ReturnToStartPosition()
     {
         float returnSpeed = velocityBoss * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, positionInitial, returnSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, positionInitial + new Vector3(-11, 0, 0), returnSpeed);
     }
 }

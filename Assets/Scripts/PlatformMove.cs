@@ -35,6 +35,8 @@ public class PlatformMove : MonoBehaviour
         objRenderer = platform.GetComponent<Renderer>();
     }
 
+
+
     public void MovePlatform(int index)
     {
         if (isMoving || (index == 1 && !activatedPlatform1) || (index == 2 && activatedPlatform1)) return; // Evita activar el movimiento si ya se está moviendo
@@ -44,10 +46,10 @@ public class PlatformMove : MonoBehaviour
             ? initialPosition + GetDirectionVector(moveDirection) * moveDistance
             : initialPosition;
 
-        StartCoroutine(MoveToPosition(targetPosition));
+        StartCoroutine(MoveToPosition(targetPosition, true));
     }
 
-    private System.Collections.IEnumerator MoveToPosition(Vector3 destination)
+    private System.Collections.IEnumerator MoveToPosition(Vector3 destination, bool movePlayer)
     {
         GameObject player = GameObject.FindWithTag("Player");
         GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
@@ -63,12 +65,14 @@ public class PlatformMove : MonoBehaviour
             Vector3 nextPlatformPos = Vector3.MoveTowards(currentPlatformPos, destination, moveSpeed * Time.deltaTime);
             Vector3 platformDelta = nextPlatformPos - currentPlatformPos;
 
-            // Mover plataforma
+            
             platform.transform.position = nextPlatformPos;
 
             // Si el jugador está encima de la plataforma, moverlo también
             // (aquí asumimos que siempre lo está; si necesitás precisión, podés usar un raycast o trigger)
-            controller.Move(platformDelta);
+            // Mover plataforma
+            if (movePlayer)
+                controller.Move(platformDelta);
 
             lastPlatformPos = nextPlatformPos;
             yield return null;
@@ -113,11 +117,11 @@ public class PlatformMove : MonoBehaviour
 
     public void ResetEffect()
     {
-        corutine = StartCoroutine(Reset());
+        corutine = StartCoroutine(ResetPlatform());
         
     }
 
-    public IEnumerator Reset()
+    public IEnumerator ResetPlatform()
     {
         yield return new WaitForSeconds(5);
         // Cambiar al material estándar de Unity
@@ -131,6 +135,6 @@ public class PlatformMove : MonoBehaviour
             light.gameObject.SetActive(false);
         }
 
-        StartCoroutine(MoveToPosition(positionToReturn));
+        StartCoroutine(MoveToPosition(positionToReturn, false));
     }
 }
