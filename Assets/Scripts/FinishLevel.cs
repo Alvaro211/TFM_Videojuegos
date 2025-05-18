@@ -19,13 +19,15 @@ public class FinishLevel : MonoBehaviour
 
     private bool souning = false;
     private List<AudioClip> playerSequence = new List<AudioClip>();
+    public Animator dooranim;
+    public GameObject doorcollision;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
 
-        if (isDoorOnLeft)
+        /*if (isDoorOnLeft)
         {
             Transform[] children = new Transform[door.transform.childCount];
 
@@ -44,7 +46,7 @@ public class FinishLevel : MonoBehaviour
             {
                 child.SetParent(door.transform);
             }
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -80,7 +82,9 @@ public class FinishLevel : MonoBehaviour
         {
             audioSource.clip = open;
             audioSource.Play();
-            StartCoroutine(RotateOverTime());
+            dooranim.SetBool("IsOpened", true);
+            doorcollision.SetActive(false);
+            // StartCoroutine(RotateOverTime());
         }
         else
         {
