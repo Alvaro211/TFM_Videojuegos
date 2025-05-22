@@ -19,7 +19,7 @@ public class FinishLevel : MonoBehaviour
 
     private bool souning = false;
     private List<AudioClip> playerSequence = new List<AudioClip>();
-    public Animator dooranim;
+    public Animator dooranimgreen;
     public GameObject doorcollision;
 
     // Start is called before the first frame update
@@ -82,7 +82,7 @@ public class FinishLevel : MonoBehaviour
         {
             audioSource.clip = open;
             audioSource.Play();
-            dooranim.SetBool("IsOpened", true);
+            dooranimgreen.SetBool("IsOpened", true);
             doorcollision.SetActive(false);
             // StartCoroutine(RotateOverTime());
         }
