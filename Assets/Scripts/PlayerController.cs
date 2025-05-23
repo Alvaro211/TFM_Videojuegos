@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Sequence.performed += SequencePerformed;
         inputMap.Player.Sphere.performed += SpherePerformed;
         inputMap.Player.Jump.performed += JumpPerformed;
-        inputMap.Player.Jump.canceled += JumpPerformed;
+        inputMap.Player.Jump.canceled += JumpCanceled;
         inputMap.Player.Options.performed += OptionsPerformed;
         inputMap.Player.Sound1.performed += Sound1Performed;
         inputMap.Player.Sound2.performed += Sound2Performed;
@@ -212,6 +212,7 @@ public class PlayerMovement : MonoBehaviour
         if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
             Jump();
     }
+
 
     public void JumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
@@ -537,23 +538,26 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator ImagenBall()
     {
         int i = 0;
-
-        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
+        if(iconBall.texture.name != "iconoBall4")
+            iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
         
         yield return new WaitForSeconds(cooldownBall/4);
 
         i++;
-        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
+        if (iconBall.texture.name != "iconoBall4")
+            iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
 
         yield return new WaitForSeconds(cooldownBall/4);
 
         i++;
-        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
+        if (iconBall.texture.name != "iconoBall4")
+            iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
 
         yield return new WaitForSeconds(cooldownBall/4);
 
         i++;
-        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
+        if (iconBall.texture.name != "iconoBall4")
+            iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
 
         yield return new WaitForSeconds(cooldownBall/4);
 
