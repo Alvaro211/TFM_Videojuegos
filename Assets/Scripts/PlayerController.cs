@@ -26,10 +26,10 @@ public class PlayerMovement : MonoBehaviour
     public List<Enemy> listEnemy = new List<Enemy>();
     public AudioSource audioSourceMusic;
 
-    public GameObject imagePrefab;  // Arrastra aquÌ el prefab en el Inspector
+    public GameObject imagePrefab;  // Arrastra aqu√≠ el prefab en el Inspector
     public Transform canvasTransform; 
     public float yOffset = 50f;  // Distancia desde la parte baja del Canvas
-    public float spacing = 100f; // Espacio entre im·genes
+    public float spacing = 100f; // Espacio entre im√°genes
 
     public SpriteRenderer sprite;
     public GameObject layout;
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         audioSourceEffectPlayer = GetComponent<AudioSource>();
-        startPosition = transform.position; // Guarda la posiciÛn inicial
+        startPosition = transform.position; // Guarda la posici√≥n inicial
         sequence = new List<AudioClip>();
         ballLauch = false;
 
@@ -111,12 +111,13 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         moveInput.x = inputValues.x;
-        moveInput.Normalize(); // Evita moverse m·s r·pido en diagonal
+        moveInput.Normalize(); // Evita moverse m√°s r√°pido en diagonal
 
         if (moveInput.magnitude > 0.1f)
         {
             isMoving = true;
             anim.SetBool("IsWalking", true);
+           // anim.SetBool("IsJumping", false);
         }
         
 
@@ -125,16 +126,19 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = false;
             anim.SetBool("IsWalking", false);
+           // anim.SetBool("IsJumping", false);
+
         }
             
 
-        // Si est· tocando el suelo (Floor), desactivamos la gravedad
+        // Si est√° tocando el suelo (Floor), desactivamos la gravedad
         if (!controller.isGrounded)
         {
             if (isPressJumping)
                 verticalVelocity += (gravityScale - gravityScale/3) * Time.deltaTime;
             else
                 verticalVelocity += gravityScale * Time.deltaTime;
+
         }
 
         //Move the player
@@ -142,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
             anim.SetBool("IsWalking", true);
+            //anim.SetBool("IsJumping", false);
         }
         else
         {
@@ -151,7 +156,8 @@ public class PlayerMovement : MonoBehaviour
 
         if(isHit && verticalVelocity > 0)
         {
-            verticalVelocity = 0; 
+            verticalVelocity = 0;
+            
         }
 
         if (verticalVelocity < -30)
@@ -416,25 +422,25 @@ public class PlayerMovement : MonoBehaviour
         text.text = (spawnedImages.Count + 1).ToString();
         spawnedImages.Add(newImage);
 
-        // Ajustar la posiciÛn de todas las im·genes
+        // Ajustar la posici√≥n de todas las im√°genes
         UpdateImagePositions();
     }
 
     private void UpdateImagePositions()
     {
         int count = spawnedImages.Count;
-        float startX = -(count - 1) * spacing / 2;  // Centra las im·genes
+        float startX = -(count - 1) * spacing / 2;  // Centra las im√°genes
 
         for (int i = 0; i < count; i++)
         {
             RectTransform rectTransform = spawnedImages[i].GetComponent<RectTransform>();
 
-            // PosiciÛn en la parte baja del Canvas
+            // Posici√≥n en la parte baja del Canvas
             rectTransform.anchoredPosition = new Vector2(startX + (i * spacing), -yOffset);
         }
     }
 
-    // MÈtodo para aplicar el salto
+    // M√©todo para aplicar el salto
     void Jump()
     {
         audioSourceEffectPlayer.clip = aduioJump;
@@ -442,7 +448,9 @@ public class PlayerMovement : MonoBehaviour
         jumpCooldown = true;
         isHit = false;
         verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
+        //anim.SetBool("IsJumping", true);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
+        
     }
 
     void EnableJumpCooldown()
@@ -488,7 +496,7 @@ public class PlayerMovement : MonoBehaviour
         {
             ballLauch = true;
 
-            // Obtener la posiciÛn del ratÛn en el mundo
+            // Obtener la posici√≥n del rat√≥n en el mundo
             Vector3 mousePosition = GetMouseWorldPosition();
 
             // Crear la bola desde el pool
@@ -503,7 +511,7 @@ public class PlayerMovement : MonoBehaviour
             if (rb != null && ballBuounce != null)
             {
                 rb.isKinematic = false;
-                // Calcular direcciÛn hacia el ratÛn
+                // Calcular direcci√≥n hacia el rat√≥n
                 Vector3 direction = (mousePosition - transform.position).normalized;
                 direction.z = 0;
                 ballBuounce.velocityY = direction.y;
@@ -511,7 +519,7 @@ public class PlayerMovement : MonoBehaviour
                 ballBuounce.bounceCount = 0;
                 ballBuounce.isAscending = false;
 
-                // Ajustar velocidad en base a la direcciÛn
+                // Ajustar velocidad en base a la direcci√≥n
                 rb.velocity = direction * 15;
 
                 if(direction.x > 0) 
@@ -561,7 +569,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (plane.Raycast(ray, out distance))
         {
-            return ray.GetPoint(distance); // Retorna la posiciÛn del ratÛn en el mundo
+            return ray.GetPoint(distance); // Retorna la posici√≥n del rat√≥n en el mundo
         }
 
         return Vector3.zero;
@@ -624,7 +632,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (ballScript != null)
             {
-                // Llamar a una funciÛn dentro del script si es necesario
+                // Llamar a una funci√≥n dentro del script si es necesario
                 ballScript.TurnOffLight();
             }
             hit.gameObject.SetActive(false);
@@ -685,7 +693,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (ballScript != null)
             {
-                // Llamar a una funciÛn dentro del script si es necesario
+                // Llamar a una funci√≥n dentro del script si es necesario
                 ballScript.TurnOffLight();
             }
             other.gameObject.SetActive(false);
