@@ -654,7 +654,10 @@ public class PlayerMovement : MonoBehaviour
             isOnHotSpot = false;
             hotspot.HideControl();
             hotspot = null;
-        }else if (other.tag == "FloorObjectSong" && objectSong != null)
+           
+
+        }
+        else if (other.tag == "FloorObjectSong" && objectSong != null)
         {
             isNearObjectSong = false;
            // objectSong.HideControl();
