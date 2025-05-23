@@ -118,7 +118,10 @@ public class PlatformMove : MonoBehaviour
     public void ResetEffect()
     {
         corutine = StartCoroutine(ResetPlatform());
-        
+        if (inActivatedMaterial != null && objRenderer != null)
+        {
+            objRenderer.material = inActivatedMaterial;
+        }
     }
 
     public IEnumerator ResetPlatform()
