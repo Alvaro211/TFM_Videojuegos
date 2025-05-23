@@ -117,16 +117,15 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = true;
             anim.SetBool("IsWalking", true);
-           // anim.SetBool("IsJumping", false);
+          
         }
-        
-
 
         else
         {
             isMoving = false;
             anim.SetBool("IsWalking", false);
-           // anim.SetBool("IsJumping", false);
+           
+
 
         }
             
@@ -146,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
             anim.SetBool("IsWalking", true);
+
             //anim.SetBool("IsJumping", false);
         }
         else
@@ -211,12 +211,15 @@ public class PlayerMovement : MonoBehaviour
 
         if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
             Jump();
+        anim.SetBool("IsJumping", true);
+
     }
 
 
     public void JumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         isPressJumping = false;
+        anim.SetBool("IsJumping", false);
     }
 
     public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -449,7 +452,6 @@ public class PlayerMovement : MonoBehaviour
         jumpCooldown = true;
         isHit = false;
         verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
-        //anim.SetBool("IsJumping", true);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
         
     }
