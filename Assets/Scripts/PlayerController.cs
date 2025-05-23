@@ -115,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = true;
             anim.SetBool("IsWalking", true);
+           // anim.SetBool("IsJumping", false);
         }
         
 
@@ -123,6 +124,8 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = false;
             anim.SetBool("IsWalking", false);
+           // anim.SetBool("IsJumping", false);
+
         }
             
 
@@ -130,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
         if (!controller.isGrounded)
         {
             verticalVelocity += gravityScale * Time.deltaTime;
+           
+            
         }
 
         //Move the player
@@ -137,6 +142,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
             anim.SetBool("IsWalking", true);
+            //anim.SetBool("IsJumping", false);
         }
         else
         {
@@ -146,7 +152,8 @@ public class PlayerMovement : MonoBehaviour
 
         if(isHit && verticalVelocity > 0)
         {
-            verticalVelocity = 0; 
+            verticalVelocity = 0;
+            
         }
 
         if (verticalVelocity < -30)
@@ -430,7 +437,9 @@ public class PlayerMovement : MonoBehaviour
         jumpCooldown = true;
         isHit = false;
         verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
+        //anim.SetBool("IsJumping", true);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
+        
     }
 
     void EnableJumpCooldown()
