@@ -17,6 +17,9 @@ public class Enemy : MonoBehaviour
     private bool movingForward = true; 
     private bool waiting = false;
     private bool chasingBall = false;
+    private bool chasingPlayer = false;
+
+    private Transform player;
 
     void Start()
     {
@@ -29,11 +32,35 @@ public class Enemy : MonoBehaviour
 
         // Moverse al primer destino
         agent.SetDestination(targetPosition);
+
+        GameObject playerObj = GameObject.Find("Jugador");
+        if (playerObj != null)
+            player = playerObj.transform;
+        else
+            Debug.LogWarning("No se encontró el objeto llamado 'Jugador'");
     }
 
     void Update()
     {
-        if (!chasingBall) // Solo patrullar si no está yendo a la bola
+        if (player != null && !chasingBall)
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            if (distanceToPlayer <= searchRadius)
+            {
+                NavMeshPath path = new NavMeshPath();
+                if (agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
+                {
+                    chasingPlayer = true;
+                    agent.SetDestination(player.position);
+                    agent.speed = 10;
+                    StartCoroutine(WaitPlayerAndReturn());
+                    return;
+                }
+            }
+        }
+
+
+        if (!chasingBall && !chasingPlayer) // Solo patrullar si no está yendo a la bola
         {
             if (!waiting && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && agent.velocity.magnitude == 0)
             {
@@ -44,13 +71,13 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator ChangeDirection()
     {
-        if (chasingBall) yield break;
+        if (chasingBall || chasingPlayer) yield break;
 
         waiting = true; // Evita múltiples llamadas
         yield return new WaitForSeconds(waitTime); // Espera antes de cambiar dirección
 
         // Cambiar destino
-        if (!chasingBall)
+        if (!chasingBall && !chasingPlayer)
         {
             agent.SetDestination(movingForward ? startPosition : targetPosition);
             movingForward = !movingForward;
@@ -62,7 +89,7 @@ public class Enemy : MonoBehaviour
     public void MoveToBall(Vector3 ballPosition)
     {
 
-        if (Vector3.Distance(transform.position, targetPosition) < searchRadius)
+        if (Vector3.Distance(transform.position, targetPosition) < searchRadius && !chasingPlayer)
         {
             //// Verifica si la posición es alcanzable
             NavMeshHit hit;
@@ -70,24 +97,35 @@ public class Enemy : MonoBehaviour
             {
                 chasingBall = true; // Se dirige a la bola
                 agent.SetDestination(hit.position);
-                StartCoroutine(WaitAndReturn());
+                StartCoroutine(WaitBallAndReturn());
             }
         }
     }
 
-    private IEnumerator WaitAndReturn()
+    private IEnumerator WaitBallAndReturn()
     {
         yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
         yield return new WaitForSeconds(5f); // Espera 3 segundos en la bola
         chasingBall = false;
+        chasingPlayer = false;
         agent.ResetPath();  
-        StartCoroutine(ContinuePatrol());
+        StartCoroutine(ContinuePatrol(false));
     }
 
-    private IEnumerator ContinuePatrol()
+    private IEnumerator WaitPlayerAndReturn()
+    {
+        yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
+        chasingBall = false;
+        chasingPlayer = false;
+        agent.speed = 5f;
+        agent.ResetPath();
+        StartCoroutine(ContinuePatrol(true));
+    }
+
+    private IEnumerator ContinuePatrol(bool hasSeenPlayer)
     {
         // Después de esperar, vuelve a su ruta original
-        yield return new WaitForSeconds(waitTime); // Espera antes de comenzar el patrullaje
+        yield return new WaitForSeconds(hasSeenPlayer ? 0.5f : waitTime); // Espera antes de comenzar el patrullaje
         agent.SetDestination(movingForward ? startPosition : targetPosition);
         movingForward = !movingForward;
     }

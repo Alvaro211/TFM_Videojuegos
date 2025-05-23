@@ -17,13 +17,14 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource audioSourceEffectPlayer;
     public PoolBolaLuminosa poolBall;
     public GameObject menuPause;
+    public float cooldownBall;
     public RawImage[] notes;
+    public RawImage iconBall;
     //public RawImage[] imagesBall;
     public AudioClip aduioJump;
 
     public List<Enemy> listEnemy = new List<Enemy>();
     public AudioSource audioSourceMusic;
-    public List<GameObject> listObjectSong = new List<GameObject>();
 
     public GameObject imagePrefab;  // Arrastra aquí el prefab en el Inspector
     public Transform canvasTransform; 
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isOnHotSpot;
     private HotSpot hotspot;
 
+    private bool isPressJumping;
     private float launchForce = 5f; // Fuerza con la que se lanza la bola
 
     private Vector3 startPosition;
@@ -96,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Sequence.performed += SequencePerformed;
         inputMap.Player.Sphere.performed += SpherePerformed;
         inputMap.Player.Jump.performed += JumpPerformed;
-        //inputMap.Player.TakeSound.performed += TakeSoundPerformed;
+        inputMap.Player.Jump.canceled += JumpPerformed;
         inputMap.Player.Options.performed += OptionsPerformed;
         inputMap.Player.Sound1.performed += Sound1Performed;
         inputMap.Player.Sound2.performed += Sound2Performed;
@@ -129,7 +131,10 @@ public class PlayerMovement : MonoBehaviour
         // Si está tocando el suelo (Floor), desactivamos la gravedad
         if (!controller.isGrounded)
         {
-            verticalVelocity += gravityScale * Time.deltaTime;
+            if (isPressJumping)
+                verticalVelocity += (gravityScale - gravityScale/3) * Time.deltaTime;
+            else
+                verticalVelocity += gravityScale * Time.deltaTime;
         }
 
         //Move the player
@@ -196,8 +201,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        isPressJumping = true;
+
         if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
             Jump();
+    }
+
+    public void JumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        isPressJumping = false;
     }
 
     public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -510,7 +522,35 @@ public class PlayerMovement : MonoBehaviour
             }
 
             StartCoroutine(HideBall(newBall));
+            StartCoroutine(ImagenBall());
         }
+    }
+
+    private IEnumerator ImagenBall()
+    {
+        int i = 0;
+
+        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
+        
+        yield return new WaitForSeconds(cooldownBall/4);
+
+        i++;
+        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
+
+        yield return new WaitForSeconds(cooldownBall/4);
+
+        i++;
+        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
+
+        yield return new WaitForSeconds(cooldownBall/4);
+
+        i++;
+        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
+
+        yield return new WaitForSeconds(cooldownBall/4);
+
+        i++;
+        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
     }
 
     Vector3 GetMouseWorldPosition()
@@ -529,7 +569,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator HideBall(GameObject newBall)
     {
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(cooldownBall);
         newBall.gameObject.SetActive(false);
 
         BallBounceHandler ballScript = newBall.GetComponent<BallBounceHandler>();
@@ -698,7 +738,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        isHit = true;
+        if (Vector3.Dot(hit.normal, Vector3.down) > 0.5f)
+        {
+            isHit = true;
+        }
 
         if (hit.gameObject.CompareTag("Enemy"))
         {

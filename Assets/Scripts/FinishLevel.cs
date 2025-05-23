@@ -137,8 +137,11 @@ public class FinishLevel : MonoBehaviour
     {
         if (playerSequence.Count == audioClips.Count)
         {
-            if (IsSequenceCorrect())
+            if (!doorOpen && IsSequenceCorrect())
+            {
                 SoundDoor(true);
+                doorOpen = true;
+            }
             else
             {
                 playerSequence.Clear();
