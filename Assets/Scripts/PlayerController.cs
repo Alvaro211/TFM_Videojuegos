@@ -126,7 +126,6 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("IsWalking", false);
            
 
-
         }
             
 
@@ -208,10 +207,10 @@ public class PlayerMovement : MonoBehaviour
     public void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         isPressJumping = true;
-
+        
         if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
             Jump();
-        anim.SetBool("IsJumping", true);
+        
 
     }
 
@@ -220,6 +219,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isPressJumping = false;
         anim.SetBool("IsJumping", false);
+
     }
 
     public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -269,7 +269,6 @@ public class PlayerMovement : MonoBehaviour
                 finishLevel.doorOpen = true;
             }
             finishLevel.SoundDoor(correct);*/
-
 
         }
         else if ( isOnHotSpot && hotspot != null)
@@ -449,6 +448,7 @@ public class PlayerMovement : MonoBehaviour
     {
         audioSourceEffectPlayer.clip = aduioJump;
         audioSourceEffectPlayer.Play();
+        anim.SetBool("IsJumping", true);
         jumpCooldown = true;
         isHit = false;
         verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
