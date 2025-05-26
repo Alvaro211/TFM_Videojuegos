@@ -17,6 +17,9 @@ TagManager:
   - EnemyMunition
   - DefeatBoss
   - TargetBall
+  - Animation2
+  - Animation3
+  - Animation4
   layers:
   - Default
   - TransparentFX

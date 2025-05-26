@@ -76,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator anim;
     private bool mirandoDerecha = true;
 
+    public CinemachineAnimation cineMachine;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -601,14 +603,6 @@ public class PlayerMovement : MonoBehaviour
         controller.enabled = false;
         transform.position = startPosition;
         controller.enabled = true;
-      /*  foreach (RawImage image in notes)
-        {
-            image.color = Color.white;
-        }
-
-        foreach(GameObject obj in listObjectSong){
-            obj.gameObject.SetActive(true);
-        }*/
 
     }
 
@@ -625,26 +619,6 @@ public class PlayerMovement : MonoBehaviour
 
         return false;
     }
-
-  /*  void OnControllerCollideraHit(ControllerColliderHit hit)
-    {
-
-        if (hit.gameObject.CompareTag("Enemy"))
-        {
-            Dead();
-        }else if (hit.gameObject.CompareTag("Ball"))
-        {
-            BallBounceHandler ballScript = hit.gameObject.GetComponent<BallBounceHandler>();
-
-            if (ballScript != null)
-            {
-                // Llamar a una función dentro del script si es necesario
-                ballScript.TurnOffLight();
-            }
-            hit.gameObject.SetActive(false);
-            ballLauch = false;
-        }
-    }*/
 
     // Detectar cuando sale del suelo
     private void OnTriggerExit(Collider other)
@@ -750,6 +724,20 @@ public class PlayerMovement : MonoBehaviour
         }else if (other.gameObject.CompareTag("DefeatBoss"))
         {
             GameManager.instance.defeatBoss = true;
+        }else if (other.gameObject.CompareTag("Animation2"))
+        {
+            cineMachine.PlayTimelineLevel2();
+            Destroy(other.gameObject);
+        }
+        else if (other.gameObject.CompareTag("Animation3"))
+        {
+            cineMachine.PlayTimelineLevel3();
+            Destroy(other.gameObject);
+        }
+        else if (other.gameObject.CompareTag("Animation4"))
+        {
+            cineMachine.PlayTimelineLevel4();
+            Destroy(other.gameObject);
         }
     }
 

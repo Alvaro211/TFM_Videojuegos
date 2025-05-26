@@ -17,6 +17,8 @@ public class FinishLevel : MonoBehaviour
     public bool activated = false;
     public GameObject advise;
 
+    public CinemachineAnimation cineMachine;
+
     private bool souning = false;
     private List<AudioClip> playerSequence = new List<AudioClip>();
     public Animator dooranimgreen;
@@ -27,26 +29,6 @@ public class FinishLevel : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
-        /*if (isDoorOnLeft)
-        {
-            Transform[] children = new Transform[door.transform.childCount];
-
-            // Guardamos los hijos antes de mover el objeto
-            for (int i = 0; i < door.transform.childCount; i++)
-            {
-                children[i] = door.transform.GetChild(i);
-                children[i].SetParent(null); // Los desvinculamos del padre
-            }
-
-            // Mover el objeto padre
-            door.transform.position += new Vector3(0, 0, 10);
-
-            // Volver a asignar los hijos
-            foreach (Transform child in children)
-            {
-                child.SetParent(door.transform);
-            }
-        }*/
     }
 
     // Update is called once per frame
@@ -85,6 +67,8 @@ public class FinishLevel : MonoBehaviour
             dooranimgreen.SetBool("IsOpened", true);
             doorcollision.SetActive(false);
             // StartCoroutine(RotateOverTime());
+
+            cineMachine.PlayTimelineLevel1();
         }
         else
         {
