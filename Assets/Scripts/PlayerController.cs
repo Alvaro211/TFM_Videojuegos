@@ -97,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Movement.performed += DirKeysPerformed;
         inputMap.Player.Movement.canceled += DirKeysPerformed;
         inputMap.Player.Interact.performed += InterectPerformed;
+        inputMap.Player.Interact.canceled += InterectCanceled;
         inputMap.Player.Sequence.performed += SequencePerformed;
         inputMap.Player.Sphere.performed += SpherePerformed;
         inputMap.Player.Jump.performed += JumpPerformed;
@@ -119,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = true;
             anim.SetBool("IsWalking", true);
-          
+            
         }
 
         else
@@ -256,13 +257,24 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    public void InterectCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
 
+       
+        
+           anim.SetBool("IsHitting", false);
+        
+
+
+    }
 
     public void InterectPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+       
         if (isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
         {
             anim.SetBool("IsHitting", true);
+
             /* bool correct = CheckSequence();
              if (correct)
              {
@@ -280,6 +292,8 @@ public class PlayerMovement : MonoBehaviour
             hotspot.ActivateLights();
            
         }
+       
+       
        
     }
 
