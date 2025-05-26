@@ -148,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
             anim.SetBool("IsWalking", true);
 
-            //anim.SetBool("IsJumping", false);
+           
         }
         else
         {
@@ -213,7 +213,7 @@ public class PlayerMovement : MonoBehaviour
 
         if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
             Jump();
-        anim.SetBool("IsJumping", true);
+        
 
     }
 
@@ -262,22 +262,25 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
         {
-
-           /* bool correct = CheckSequence();
-            if (correct)
-            {
-                StartCoroutine(finishLevel.RotateOverTime());
-                finishLevel.HideControl();
-                finishLevel.doorOpen = true;
-            }
-            finishLevel.SoundDoor(correct);*/
+            anim.SetBool("IsHitting", true);
+            /* bool correct = CheckSequence();
+             if (correct)
+             {
+                 StartCoroutine(finishLevel.RotateOverTime());
+                 finishLevel.HideControl();
+                 finishLevel.doorOpen = true;
+             }
+             finishLevel.SoundDoor(correct);*/
 
 
         }
         else if ( isOnHotSpot && hotspot != null)
         {
+            anim.SetBool("IsHitting", true);
             hotspot.ActivateLights();
+           
         }
+       
     }
 
     public void SequencePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -451,6 +454,7 @@ public class PlayerMovement : MonoBehaviour
     {
         audioSourceEffectPlayer.clip = aduioJump;
         audioSourceEffectPlayer.Play();
+        anim.SetBool("IsJumping", true);
         jumpCooldown = true;
         isHit = false;
         verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
