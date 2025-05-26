@@ -32,7 +32,7 @@ public class RedpointControl : MonoBehaviour
             {
                 if (b.ball.activeSelf)
                 {
-                    if (Vector3.Distance(transform.position, b.ball.transform.position) <= 100f)
+                    if (Vector3.Distance(transform.position, b.ball.transform.position) <= 50f)
                     {
                         b.redPoint.SetActive(true);
                     }
