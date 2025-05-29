@@ -2598,6 +2598,10 @@ MonoBehaviour:
   musicVol: 0
   effectVol: 0
   playerMovement: {fileID: 0}
+  continueGame: 0
+  isOpenDoorGreen: 0
+  isOpenDoorGreenYellow: 0
+  isOpenDoorBoss: 0
 --- !u!4 &1562798669
 Transform:
   m_ObjectHideFlags: 0

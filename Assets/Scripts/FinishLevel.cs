@@ -38,7 +38,7 @@ public class FinishLevel : MonoBehaviour
         {
             mustOpen = true;
         }
-        else if (this.name == "FinishLevelDoor2")
+        else if (this.name == "FinishLevelDoorBoss")
         {
             mustOpen = true;
         }

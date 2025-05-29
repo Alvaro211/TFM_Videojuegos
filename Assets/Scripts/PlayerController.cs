@@ -25,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip aduioJump;
 
     public List<Enemy> listEnemy = new List<Enemy>();
-    public List<GameObject> listDoor = new List<GameObject>();
     public List<GameObject> listSong = new List<GameObject>();
     public AudioSource audioSourceMusic;
 
