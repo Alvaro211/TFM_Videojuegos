@@ -29,6 +29,26 @@ public class FinishLevel : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
+        bool mustOpen = false;
+        if (this.name == "FinishLevelDoor1")
+        {
+            mustOpen = true;
+        }
+        else if (this.name == "FinishLevelDoor2")
+        {
+            mustOpen = true;
+        }
+        else if (this.name == "FinishLevelDoor2")
+        {
+            mustOpen = true;
+        }
+
+        if (mustOpen)
+        {
+            dooranimgreen.SetBool("IsOpened", true);
+            doorcollision.SetActive(false);
+        }
+
     }
 
     // Update is called once per frame
@@ -129,6 +149,18 @@ public class FinishLevel : MonoBehaviour
             {
                 SoundDoor(true);
                 doorOpen = true;
+
+                if(this.name == "FinishLevelDoor1")
+                {
+                    GameManager.instance.isOpenDoorGreen = true;
+                }else if (this.name == "FinishLevelDoor2")
+                {
+                    GameManager.instance.isOpenDoorGreenYellow = true;
+                }
+                else if (this.name == "FinishLevelDoor2")
+                {
+                    GameManager.instance.isOpenDoorBoss = true;
+                }
             }
             else
             {

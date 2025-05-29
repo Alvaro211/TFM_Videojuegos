@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,11 +20,13 @@ public class PlayerMovement : MonoBehaviour
     public GameObject menuPause;
     public float cooldownBall;
     public RawImage[] notes;
-    public RawImage iconBall;
+    public UnityEngine.UI.Slider sliderBall;
     //public RawImage[] imagesBall;
     public AudioClip aduioJump;
 
     public List<Enemy> listEnemy = new List<Enemy>();
+    public List<GameObject> listDoor = new List<GameObject>();
+    public List<GameObject> listSong = new List<GameObject>();
     public AudioSource audioSourceMusic;
 
     public GameObject imagePrefab;  // Arrastra aquí el prefab en el Inspector
@@ -41,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isPressJumping;
     private float launchForce = 5f; // Fuerza con la que se lanza la bola
+
+    private bool updateSliderBall = false;
+    private float timerSliderBall = 0f;
 
     private Vector3 startPosition;
     private float verticalVelocity;
@@ -78,12 +84,26 @@ public class PlayerMovement : MonoBehaviour
 
     public CinemachineAnimation cineMachine;
 
+    private bool noteGreen = false;
+    private bool noteYellow = false;
+    private bool noteBlue = false;
+    private bool noteRed = false;
+
     void Start()
     {
+        sequence = new List<AudioClip>();
+
+        GameManager.instance.playerMovement = this;
+        if (GameManager.instance.Load())
+        {
+            ContinueGame();
+        }
+        else
+            startPosition = transform.position;
+
         controller = GetComponent<CharacterController>();
         audioSourceEffectPlayer = GetComponent<AudioSource>();
-        startPosition = transform.position; // Guarda la posición inicial
-        sequence = new List<AudioClip>();
+        
         ballLauch = false;
 
         foreach (RawImage image in notes)
@@ -127,9 +147,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = false;
             anim.SetBool("IsWalking", false);
-           
-
-
         }
             
 
@@ -183,6 +200,18 @@ public class PlayerMovement : MonoBehaviour
         {
             audioSourceMusic.pitch = 1;
         }
+
+        if (updateSliderBall && !menuPause.activeSelf)
+        {
+            timerSliderBall += Time.deltaTime;
+            sliderBall.value = Mathf.Clamp01(timerSliderBall / cooldownBall);
+
+            if (timerSliderBall >= cooldownBall)
+            {
+                updateSliderBall = false;
+                timerSliderBall = 0f; 
+            }
+        }
     }
 
     public void OnEnable()
@@ -190,6 +219,69 @@ public class PlayerMovement : MonoBehaviour
         souning = false;
     }
 
+    private void ContinueGame()
+    {
+        if (GameManager.instance.continueGame)
+        {
+            if (noteGreen)
+            {
+                ObjectSong script = listSong[0].GetComponent<ObjectSong>();
+
+                SpawnImage(script.color);
+
+                AudioSource audio = listSong[0].GetComponent<AudioSource>();
+
+                sequence.Add(audio.clip);
+
+                Transform child = listSong[0].transform.GetChild(0);
+                child.gameObject.SetActive(false);
+            }
+
+            if (noteRed)
+            {
+                ObjectSong script = listSong[1].GetComponent<ObjectSong>();
+
+                SpawnImage(script.color);
+
+                AudioSource audio = listSong[1].GetComponent<AudioSource>();
+
+                sequence.Add(audio.clip);
+
+                Transform child = listSong[1].transform.GetChild(0);
+                child.gameObject.SetActive(false);
+            }
+
+            if (noteYellow)
+            {
+                ObjectSong script = listSong[2].GetComponent<ObjectSong>();
+
+                SpawnImage(script.color);
+
+                AudioSource audio = listSong[2].GetComponent<AudioSource>();
+
+                sequence.Add(audio.clip);
+
+                Transform child = listSong[2].transform.GetChild(0);
+                child.gameObject.SetActive(false);
+            }
+
+            if (noteBlue)
+            {
+                ObjectSong script = listSong[3].GetComponent<ObjectSong>();
+
+                SpawnImage(script.color);
+
+                AudioSource audio = listSong[3].GetComponent<AudioSource>();
+
+                sequence.Add(audio.clip);
+
+                Transform child = listSong[3].transform.GetChild(0);
+                child.gameObject.SetActive(false);
+            }
+
+            this.transform.position = startPosition;
+        }
+    }
     public void DirKeysPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         inputValues = obj.ReadValue<Vector2>();
@@ -235,17 +327,21 @@ public class PlayerMovement : MonoBehaviour
 
                 layout.gameObject.SetActive(true);
                 sprite.gameObject.SetActive(true);
+                sliderBall.gameObject.SetActive(true);
                 this.transform.position = positionEscape;
 
                 if (hotspot != null)
                     hotspot.ShowControl();
                 if (finishLevel != null)
                     finishLevel.ShowControl();
+
+                GameManager.instance.SaveMusic();
             }
             else
             {
                 layout.gameObject.SetActive(false);
                 sprite.gameObject.SetActive(false);
+                sliderBall.gameObject.SetActive(false);
                 positionEscape = this.transform.position;
 
                 menuPause.gameObject.SetActive(true);
@@ -447,6 +543,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Ajustar la posición de todas las imágenes
         UpdateImagePositions();
+
+        if(color.a == 150)
+        {
+
+        }
     }
 
     private void UpdateImagePositions()
@@ -553,39 +654,10 @@ public class PlayerMovement : MonoBehaviour
             }
 
             StartCoroutine(HideBall(newBall));
-            StartCoroutine(ImagenBall());
+            updateSliderBall = true;
         }
     }
-
-    private IEnumerator ImagenBall()
-    {
-        int i = 0;
-        if(iconBall.texture.name != "iconoBall4")
-            iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
-        
-        yield return new WaitForSeconds(cooldownBall/4);
-
-        i++;
-        if (iconBall.texture.name != "iconoBall4")
-            iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
-
-        yield return new WaitForSeconds(cooldownBall/4);
-
-        i++;
-        if (iconBall.texture.name != "iconoBall4")
-            iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
-
-        yield return new WaitForSeconds(cooldownBall/4);
-
-        i++;
-        if (iconBall.texture.name != "iconoBall4")
-            iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
-
-        yield return new WaitForSeconds(cooldownBall/4);
-
-        i++;
-        iconBall.texture = Resources.Load<Texture2D>("iconoBall" + i.ToString());
-    }
+    
 
     Vector3 GetMouseWorldPosition()
     {
@@ -603,8 +675,19 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator HideBall(GameObject newBall)
     {
-        yield return new WaitForSeconds(cooldownBall);
-        newBall.gameObject.SetActive(false);
+        float elapsed = 0f;
+
+        while (elapsed < cooldownBall)
+        {
+            if (!menuPause.activeSelf) // Solo contar si el menú no está activo
+            {
+                elapsed += Time.deltaTime;
+            }
+
+            yield return null; // Esperar al siguiente frame
+        }
+
+        newBall.SetActive(false);
 
         BallBounceHandler ballScript = newBall.GetComponent<BallBounceHandler>();
         ballScript.TurnOffLight();
@@ -646,8 +729,6 @@ public class PlayerMovement : MonoBehaviour
             isOnHotSpot = false;
             hotspot.HideControl();
             hotspot = null;
-           
-
         }
         else if (other.tag == "FloorObjectSong" && objectSong != null)
         {
@@ -674,6 +755,7 @@ public class PlayerMovement : MonoBehaviour
             hotspot = other.GetComponent<HotSpot>();
             hotspot.ShowControl();
             startPosition = transform.position;
+            GameManager.instance.Save();
         }
         else if(other.tag == "FloorObjectSong")
         {
@@ -702,9 +784,14 @@ public class PlayerMovement : MonoBehaviour
             SphereCollider colliderBall = other.gameObject.GetComponent<SphereCollider>();
             ballLauch = false;
 
-            //indexBallImage--;
-            //imagesBall[indexBallImage].gameObject.SetActive(true);
+            
             if (colliderBall != null) colliderBall.isTrigger = false;
+
+            
+            updateSliderBall = false;
+            timerSliderBall = 0f;
+            sliderBall.value = 1f;
+
         }else if (other.gameObject.CompareTag("FinishLevel"))
         {
             isOnFinishLevel = true;
@@ -738,6 +825,23 @@ public class PlayerMovement : MonoBehaviour
                 sequence.Add(objectSong.audioSource.clip);
 
                 //objectSong.HideControl();
+
+                if(other.gameObject.name == "BolaCancionGreen")
+                {
+                    noteGreen = true;
+                }
+                if (other.gameObject.name == "BolaCancionRed")
+                {
+                    noteRed = true;
+                }
+                if (other.gameObject.name == "BolaCancionYellow")
+                {
+                    noteYellow = true;
+                }
+                if (other.gameObject.name == "BolaCancionBlue")
+                {
+                    noteBlue = true;
+                }
             }
         }else if (other.gameObject.CompareTag("DefeatBoss"))
         {
@@ -770,5 +874,54 @@ public class PlayerMovement : MonoBehaviour
         {
             Dead();
         }
+    }
+
+    public Vector3 GetStartPosition()
+    {
+        return startPosition;
+    }
+
+    public bool GetNoteGreen()
+    {
+        return noteGreen;
+    }
+
+    public bool GetNoteBlue()
+    {
+        return noteBlue;
+    }
+
+    public bool GetNoteRed()
+    {
+        return noteRed;
+    }
+
+    public bool GetNoteYellow()
+    {
+        return noteYellow;
+    }
+    public void SetStartPosition(Vector3 position)
+    {
+        startPosition = position;
+    }
+
+    public void SetNoteGreen(bool note)
+    {
+        noteGreen = note;
+    }
+
+    public void SetNoteBlue(bool note)
+    {
+        noteBlue = note;
+    }
+
+    public void SetNoteRed(bool note)
+    {
+        noteRed = note;
+    }
+
+    public void SetNoteYellow(bool note)
+    {
+        noteYellow = note;
     }
 }
