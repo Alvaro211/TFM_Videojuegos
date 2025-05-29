@@ -30,7 +30,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6718422512334753019}
-  - {fileID: 5874329288559065940}
   - {fileID: 8698000071484275961}
   - {fileID: 6501006168761109937}
   m_Father: {fileID: 0}
@@ -240,7 +239,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5874329288559065940}
   m_Father: {fileID: 9216105337399143975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8998773102043922051
@@ -331,6 +331,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   control: {fileID: 784547635916059642}
   player: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!82 &2899925836272710693
 AudioSource:
   m_ObjectHideFlags: 0
@@ -456,11 +457,11 @@ Transform:
   m_GameObject: {fileID: 6840247755021933094}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.37499905, y: 0.09, z: -0.25}
+  m_LocalPosition: {x: -0.37499905, y: 1, z: -0.24999976}
   m_LocalScale: {x: 2.5, y: 1, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9216105337399143975}
+  m_Father: {fileID: 6718422512334753019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9181958712426255596
 MeshFilter:

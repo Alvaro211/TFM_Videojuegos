@@ -188,6 +188,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   masterMixer: {fileID: 24100000, guid: f8757647a04f3b340a4b200fc424afe7, type: 2}
+  musicVolumMenu: {fileID: 0}
+  effectVolumMenu: {fileID: 0}
+  helpMenu: {fileID: 0}
+  musicVolumPlay: {fileID: 0}
+  effectVolumPlay: {fileID: 0}
+  helpPlay: {fileID: 0}
 --- !u!4 &50963776
 Transform:
   m_ObjectHideFlags: 0
@@ -2586,8 +2592,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helpControls: 1
+  canMove: 1
   playerMovePlatform: 0
   defeatBoss: 0
+  musicVol: 0
+  effectVol: 0
+  playerMovement: {fileID: 0}
 --- !u!4 &1562798669
 Transform:
   m_ObjectHideFlags: 0
@@ -3287,6 +3297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 1690458438}
   options: {fileID: 2043094266}
+  audio: {fileID: 50963775}
 --- !u!114 &1814082539
 MonoBehaviour:
   m_ObjectHideFlags: 0

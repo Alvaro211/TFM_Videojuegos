@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 
@@ -6,6 +7,17 @@ public class ControlMenu : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject options;
+
+    public SoundManager audio;
+
+    public void Start()
+    {
+        int index = SceneManager.GetActiveScene().buildIndex;
+        if (index == 0)
+            audio.AudioMenu();
+        else if (index == 1)
+            audio.AudioPlay();
+    }
     public void Play()
     {
         SceneManager.LoadScene(1);
@@ -21,11 +33,18 @@ public class ControlMenu : MonoBehaviour
     {
         mainMenu.gameObject.SetActive(true);
         options.gameObject.SetActive(false);
+
+        GameManager.instance.SaveMusicMenu();
     }
 
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
 }

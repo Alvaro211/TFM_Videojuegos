@@ -11,6 +11,8 @@ public class ObjectSong : MonoBehaviour
 
     public GameObject player;
 
+    public Color color;
+
     private bool isSouning;
 
     // Start is called before the first frame update
