@@ -22,6 +22,8 @@ public class CinemachineAnimation : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera4;
     public List<Light> lightsLevel4 = new List<Light>();
 
+    public Transform canvas;
+
     private void Start()
     {
         var dolly = virtualCamera1.GetCinemachineComponent<CinemachineTrackedDolly>();
@@ -97,6 +99,7 @@ public class CinemachineAnimation : MonoBehaviour
     private void OnTimelineFinishedLevel1(PlayableDirector pd)
     {
         TurnOffLightsLevel1();
+        canvas.gameObject.SetActive(true);
     }
 
     public void TurnOffLightsLevel1()
@@ -138,6 +141,7 @@ public class CinemachineAnimation : MonoBehaviour
 
     private void OnTimelineFinishedLevel2(PlayableDirector pd)
     {
+        canvas.gameObject.SetActive(true);
         TurnOffLightsLevel2();
     }
 
@@ -179,6 +183,7 @@ public class CinemachineAnimation : MonoBehaviour
 
     private void OnTimelineFinishedLevel3(PlayableDirector pd)
     {
+        canvas.gameObject.SetActive(true);
         TurnOffLightsLevel3();
     }
 
@@ -220,6 +225,7 @@ public class CinemachineAnimation : MonoBehaviour
 
     private void OnTimelineFinishedLevel4(PlayableDirector pd)
     {
+        canvas.gameObject.SetActive(true);
         TurnOffLightsLevel4();
     }
 

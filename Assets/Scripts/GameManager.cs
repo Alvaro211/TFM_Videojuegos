@@ -61,7 +61,8 @@ public class GameManager : MonoBehaviour
             sharedData.isOpenDoorBoss = isOpenDoorBoss;
             sharedData.continueGame = true;
         }else
-            sharedData.continueGame = false;
+        sharedData.continueGame = false;
+
         sharedData.helpControls = helpControls;
         sharedData.musicVolume = musicVol;
         sharedData.effectVolume = effectVol;

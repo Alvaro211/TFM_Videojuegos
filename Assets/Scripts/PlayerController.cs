@@ -876,16 +876,19 @@ public class PlayerMovement : MonoBehaviour
             GameManager.instance.defeatBoss = true;
         }else if (other.gameObject.CompareTag("Animation2"))
         {
+            canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel2();
             Destroy(other.gameObject);
         }
         else if (other.gameObject.CompareTag("Animation3"))
         {
+            canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel3();
             Destroy(other.gameObject);
         }
         else if (other.gameObject.CompareTag("Animation4"))
         {
+            canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel4();
             Destroy(other.gameObject);
         }

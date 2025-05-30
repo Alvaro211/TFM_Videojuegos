@@ -23,6 +23,12 @@ public class ControlMenu : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void PlayNewGame()
+    {
+        GameManager.instance.continueGame = false;
+        SceneManager.LoadScene(1);
+    }
+
     public void ShowOptions()
     {
         mainMenu.gameObject.SetActive(false);
