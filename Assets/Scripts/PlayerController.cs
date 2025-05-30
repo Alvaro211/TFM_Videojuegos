@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float cooldownBall;
     public RawImage[] notes;
     public UnityEngine.UI.Slider sliderBall;
-    //public RawImage[] imagesBall;
+    public RawImage imageDamage;
     public AudioClip aduioJump;
 
     public List<Enemy> listEnemy = new List<Enemy>();
@@ -710,7 +710,29 @@ public class PlayerMovement : MonoBehaviour
         controller.enabled = false;
         transform.position = startPosition;
         controller.enabled = true;
+        imageDamage.gameObject.SetActive(true);
+        StartCoroutine(TrasparentDamage(3f));
+    }
 
+    private IEnumerator TrasparentDamage(float duration)
+    {
+        Color startColor = imageDamage.color;
+        float startAlpha = startColor.a;
+
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            float normalizedTime = t / duration;
+            Color newColor = startColor;
+            newColor.a = Mathf.Lerp(startAlpha, 0f, normalizedTime);
+            imageDamage.color = newColor;
+            yield return null;
+        }
+
+        imageDamage.gameObject.SetActive(false);
+
+        Color finalColor = imageDamage.color;
+        finalColor.a = 1f;
+        imageDamage.color = finalColor;
     }
 
     private bool CheckEnemyAround()

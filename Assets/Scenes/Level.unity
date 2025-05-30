@@ -28320,7 +28320,7 @@ GameObject:
   - component: {fileID: 859095616}
   - component: {fileID: 859095615}
   m_Layer: 5
-  m_Name: Bola1
+  m_Name: "Da\xF1o"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28335,14 +28335,14 @@ RectTransform:
   m_GameObject: {fileID: 859095613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.1731, y: 4.1731, z: 4.1731}
+  m_LocalScale: {x: 80, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 998425725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -63, y: -60}
+  m_AnchoredPosition: {x: -391.49, y: -226.84}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &859095615
@@ -28365,7 +28365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 4d83bd82d12d8684a82b8d4a59b2d786, type: 3}
+  m_Texture: {fileID: 2800000, guid: b49cddab8899a844a9bb864d00ecce30, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -56514,6 +56514,7 @@ MonoBehaviour:
   - {fileID: 1238685474}
   - {fileID: 300011350}
   sliderBall: {fileID: 674922795}
+  imageDamage: {fileID: 859095615}
   aduioJump: {fileID: 8300000, guid: 5406a44e362eae14fa45087bc850857b, type: 3}
   listEnemy:
   - {fileID: 2132533458}
