@@ -202,13 +202,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (updateSliderBall && !menuPause.activeSelf)
         {
+            sliderBall.gameObject.SetActive(true);
             timerSliderBall += Time.deltaTime;
             sliderBall.value = Mathf.Clamp01(timerSliderBall / cooldownBall);
 
             if (timerSliderBall >= cooldownBall)
             {
                 updateSliderBall = false;
-                timerSliderBall = 0f; 
+                timerSliderBall = 0f;
+                sliderBall.gameObject.SetActive(false);
             }
         }
     }
@@ -536,6 +538,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject newImage = Instantiate(imagePrefab, canvasTransform);
         RawImage image = newImage.GetComponent<RawImage>();
         TextMeshProUGUI text = newImage.GetComponentInChildren<TextMeshProUGUI>();
+        color.a = 1;
         image.color = color;
         text.text = (spawnedImages.Count + 1).ToString();
         spawnedImages.Add(newImage);
@@ -560,6 +563,10 @@ public class PlayerMovement : MonoBehaviour
 
             // Posición en la parte baja del Canvas
             rectTransform.anchoredPosition = new Vector2(startX + (i * spacing), -yOffset);
+
+            Vector3 localPos = rectTransform.localPosition;
+            localPos.z = -25;
+            rectTransform.localPosition = localPos;
         }
     }
 
