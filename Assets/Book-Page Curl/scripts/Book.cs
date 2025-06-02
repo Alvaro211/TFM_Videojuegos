@@ -13,11 +13,13 @@ public enum FlipMode
 }
 [ExecuteInEditMode]
 public class Book : MonoBehaviour {
+    public PlayerMovement player;
     public Canvas canvas;
     [SerializeField]
     RectTransform BookPanel;
     public Sprite background;
     public Sprite[] bookPages;
+    public Sprite[] bookPageWritten;
     public bool interactable=true;
     public bool enableShadowEffect=true;
     //represent the index of the sprite shown in the right page

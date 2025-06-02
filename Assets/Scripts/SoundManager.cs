@@ -91,9 +91,9 @@ public class SoundManager : MonoBehaviour
         SetEffect(GameManager.instance.effectVol);
         SetMusic(GameManager.instance.musicVol);
 
-        effectVolumMenu.value = GameManager.instance.effectVol;
-        musicVolumMenu.value = GameManager.instance.musicVol;
-        helpMenu.isOn = GameManager.instance.helpControls;
+        effectVolumPlay.value = GameManager.instance.effectVol;
+        musicVolumPlay.value = GameManager.instance.musicVol;
+        helpPlay.isOn = GameManager.instance.helpControls;
     }
 
     public void SetMusic(float soundLevel)
