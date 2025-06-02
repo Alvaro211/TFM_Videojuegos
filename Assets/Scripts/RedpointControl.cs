@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 public class RedpointControl : MonoBehaviour
 {
     public Transform player;
 
     public BallTarget[] all;
-
+    public Toggle t;
     void Start()
     {
         foreach (var b in all)
@@ -15,6 +16,7 @@ public class RedpointControl : MonoBehaviour
             b.redPoint.SetActive(false);
         }
     }
+
 
     // Update is called once per frame
     void Update()
@@ -26,7 +28,7 @@ public class RedpointControl : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.V))
+        if (t.isOn)
         {
             foreach (var b in all)
             {
@@ -52,7 +54,7 @@ public class RedpointControl : MonoBehaviour
 
     IEnumerator Fade()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.3f);
         foreach (var a in all)
         {
             a.redPoint.SetActive(false);
