@@ -369,9 +369,25 @@ public class PlayerMovement : MonoBehaviour
         if (diary.activeSelf)
         {
             diary.SetActive(false);
+
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    hijo.gameObject.SetActive(true);
+                }
+            }
         }
         else
         {
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    hijo.gameObject.SetActive(false);
+                }
+            }
+
             diary.SetActive(true);
         }
     }
