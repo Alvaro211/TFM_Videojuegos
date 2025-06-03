@@ -20,6 +20,7 @@ TagManager:
   - Animation2
   - Animation3
   - Animation4
+  - Collectionable
   layers:
   - Default
   - TransparentFX

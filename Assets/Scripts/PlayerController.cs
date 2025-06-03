@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     public UnityEngine.UI.Slider sliderBall;
     public RawImage imageDamage;
     public AudioClip aduioJump;
+    public GameObject diary;
 
     public List<Enemy> listEnemy = new List<Enemy>();
     public List<GameObject> listSong = new List<GameObject>();
@@ -88,6 +89,8 @@ public class PlayerMovement : MonoBehaviour
     private bool noteBlue = false;
     private bool noteRed = false;
 
+    public Book book;
+
     void Start()
     {
         sequence = new List<AudioClip>();
@@ -128,7 +131,9 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Sound4.performed += Sound4Performed;
         inputMap.Player.Sound5.performed += Sound5Performed;
         inputMap.Player.Sound6.performed += Sound6Performed;
+        inputMap.Player.Diary.performed += DiaryPerformed;
     }
+
 
     void Update()
     {
@@ -356,13 +361,35 @@ public class PlayerMovement : MonoBehaviour
     }
     public void InterectCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-
-       
-        
            anim.SetBool("IsHitting", false);
-        
+    }
 
+    public void DiaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (diary.activeSelf)
+        {
+            diary.SetActive(false);
 
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    hijo.gameObject.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    hijo.gameObject.SetActive(false);
+                }
+            }
+
+            diary.SetActive(true);
+        }
     }
 
     public void InterectPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -891,6 +918,16 @@ public class PlayerMovement : MonoBehaviour
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel4();
             Destroy(other.gameObject);
+        }else if (other.gameObject.CompareTag("Collectionable"))
+        {
+            Colleccionable collecionable = other.GetComponent<Colleccionable>();
+
+            int index = collecionable.indexCollecionable * 2 + 1;
+
+            book.bookPages[index] = book.bookPageWritten[index];
+            book.bookPages[index+1] = book.bookPageWritten[index+1];
+
+            other.gameObject.SetActive(false);
         }
     }
 
