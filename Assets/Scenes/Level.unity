@@ -47411,7 +47411,7 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[0]
@@ -47421,30 +47421,35 @@ PrefabInstance:
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: bc19c72b98b8d5640959b4b426a8e64d,
+      objectReference: {fileID: 21300000, guid: 5d37f004031f3324db46e282c2e9976f,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: bc19c72b98b8d5640959b4b426a8e64d,
+      objectReference: {fileID: 21300000, guid: b5a56f731cebbb14e84f74c99eb955fd,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[3]
       value: 
-      objectReference: {fileID: 21300000, guid: bc19c72b98b8d5640959b4b426a8e64d,
+      objectReference: {fileID: 21300000, guid: c539a935a238ebd4eb326c00a474b423,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[4]
       value: 
-      objectReference: {fileID: 21300000, guid: bc19c72b98b8d5640959b4b426a8e64d,
+      objectReference: {fileID: 21300000, guid: bdea5ae85941d674b808fbb96dbb9320,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[5]
       value: 
-      objectReference: {fileID: 21300000, guid: bc19c72b98b8d5640959b4b426a8e64d,
+      objectReference: {fileID: 21300000, guid: ec79b838c007e3448857cd05a7b3d1c6,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300000, guid: 9cd29a4dad57b3d46950ca380f0bfab9,
+        type: 3}
+    - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
+      propertyPath: bookPageWritten.Array.data[7]
       value: 
       objectReference: {fileID: 21300000, guid: bc19c72b98b8d5640959b4b426a8e64d,
         type: 3}
