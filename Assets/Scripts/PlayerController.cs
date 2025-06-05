@@ -311,8 +311,8 @@ public class PlayerMovement : MonoBehaviour
         isPressJumping = true;
 
         if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
-            Jump();
-        
+            StartCoroutine(Jump());
+
 
     }
 
@@ -598,16 +598,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Método para aplicar el salto
-    void Jump()
+    IEnumerator Jump()
     {
         audioSourceEffectPlayer.clip = aduioJump;
         audioSourceEffectPlayer.Play();
         anim.SetBool("IsJumping", true);
+        yield return new WaitForSeconds(0.2f);
         jumpCooldown = true;
         isHit = false;
-        verticalVelocity = Mathf.Sqrt(jumpForce * -2f *gravityScale);
+        verticalVelocity = Mathf.Sqrt(jumpForce * -2f * gravityScale);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
-        
+
     }
 
     void EnableJumpCooldown()
