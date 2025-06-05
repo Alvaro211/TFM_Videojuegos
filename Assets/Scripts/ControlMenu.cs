@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class ControlMenu : MonoBehaviour
@@ -10,11 +11,17 @@ public class ControlMenu : MonoBehaviour
 
     public SoundManager audio;
 
+    public Image imageContinue;
+
     public void Start()
     {
         int index = SceneManager.GetActiveScene().buildIndex;
         if (index == 0)
+        {
             audio.AudioMenu();
+            if (!GameManager.instance.continueGame)
+                imageContinue.color = new Color(100, 100, 100);
+        }
         else if (index == 1)
             audio.AudioPlay();
     }
