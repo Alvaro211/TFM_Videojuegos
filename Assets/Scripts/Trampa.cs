@@ -2,33 +2,37 @@ using UnityEngine;
 
 public class AutoSpikeTrap : MonoBehaviour
 {
-    public GameObject spikes; // 地刺对象
-    public float riseSpeed = 2f; // 地刺升起速度
-    public float fallSpeed = 2f; // 地刺下降速度
-    public float stayTime = 1f; // 地刺停留时间
-    public float triggerInterval = 2f; // 触发间隔时间
+    public float riseSpeed = 2f;         // Velocidad al subir (escalar)
+    public float fallSpeed = 2f;         // Velocidad al bajar (encoger)
+    public float stayTime = 1f;          // Tiempo que se mantiene arriba
+    public float triggerInterval = 2f;   // Tiempo entre activaciones
 
     private bool isRising = false;
     private bool isFalling = false;
     private float timer = 0f;
     private float triggerTimer = 0f;
 
-    private Vector3 initialPosition;
-    private Vector3 targetPosition;
+    private float targetScaleY = 1f;         // Escala m醲ima
+    private float initialScaleY = 0f;        // Escala inicial (m韓ima)
 
     void Start()
     {
-        // 记录地刺的初始位置
-        initialPosition = spikes.transform.position;
-        // 计算地刺升起后的目标位置
-        targetPosition = initialPosition + new Vector3(0, 2f, 0);
+        // Al inicio, escala todos los cilindros a 0 (escondidos)
+        foreach (Transform child in transform)
+        {
+            if (child.name.Contains("Cylinder")) // o "Cilindro" si usas espa駉l
+            {
+                Vector3 scale = child.localScale;
+                scale.y = initialScaleY;
+                child.localScale = scale;
+            }
+        }
     }
 
     void Update()
     {
         triggerTimer += Time.deltaTime;
 
-        // 检查是否到了触发时间
         if (triggerTimer >= triggerInterval)
         {
             isRising = true;
@@ -37,9 +41,30 @@ public class AutoSpikeTrap : MonoBehaviour
 
         if (isRising)
         {
-            // 地刺升起
-            spikes.transform.position = Vector3.MoveTowards(spikes.transform.position, targetPosition, riseSpeed * Time.deltaTime);
-            if (spikes.transform.position == targetPosition)
+            bool allReached = true;
+
+            foreach (Transform child in transform)
+            {
+                if (child.name.Contains("Cylinder"))
+                {
+                    Vector3 scale = child.localScale;
+                    scale.y = Mathf.MoveTowards(scale.y, targetScaleY, riseSpeed * Time.deltaTime);
+                    child.localScale = scale;
+
+                    if (scale.y < targetScaleY)
+                        allReached = false;
+                }
+
+                    Animator anim = child.GetComponent<Animator>();
+                    if (anim != null)
+                    {
+                        anim.SetBool("isUp", true);
+                    }
+
+            }
+
+
+            if (allReached)
             {
                 isRising = false;
                 timer = 0f;
@@ -47,7 +72,6 @@ public class AutoSpikeTrap : MonoBehaviour
         }
         else if (!isFalling)
         {
-            // 地刺停留
             timer += Time.deltaTime;
             if (timer >= stayTime)
             {
@@ -56,9 +80,29 @@ public class AutoSpikeTrap : MonoBehaviour
         }
         else if (isFalling)
         {
-            // 地刺下降
-            spikes.transform.position = Vector3.MoveTowards(spikes.transform.position, initialPosition, fallSpeed * Time.deltaTime);
-            if (spikes.transform.position == initialPosition)
+            bool allHidden = true;
+
+            foreach (Transform child in transform)
+            {
+                if (child.name.Contains("Cylinder"))
+                {
+                    Vector3 scale = child.localScale;
+                    scale.y = Mathf.MoveTowards(scale.y, initialScaleY, fallSpeed * Time.deltaTime);
+                    child.localScale = scale;
+
+                    if (scale.y > initialScaleY)
+                        allHidden = false;
+                }
+
+                    Animator anim = child.GetComponent<Animator>();
+                    if (anim != null)
+                    {
+                        anim.SetBool("isUp", false);
+                    }
+
+            }
+
+            if (allHidden)
             {
                 isFalling = false;
             }

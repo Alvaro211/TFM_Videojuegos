@@ -10325,7 +10325,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 579, y: 25.328758, z: -22}
+  m_LocalPosition: {x: 767, y: 22.328758, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23838,7 +23838,7 @@ PrefabInstance:
     - target: {fileID: 7920912498698920374, guid: a135e9828f20eef4fa99fad94216c67d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.53
+      value: -11.360002
       objectReference: {fileID: 0}
     - target: {fileID: 7920912498698920374, guid: a135e9828f20eef4fa99fad94216c67d,
         type: 3}
@@ -25901,7 +25901,7 @@ PrefabInstance:
         type: 3}
       propertyPath: dooranimgreen
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 714476278}
     - target: {fileID: 268116400848133406, guid: 3e7814a738a94ff4794f5b780d343494,
         type: 3}
       propertyPath: doorcollision
@@ -26689,8 +26689,18 @@ PrefabInstance:
       objectReference: {fileID: 1873175336}
     - target: {fileID: 6861252374323740896, guid: 778a66d40c772ce4a8c6036e3c6a7c9f,
         type: 3}
+      propertyPath: waitTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861252374323740896, guid: 778a66d40c772ce4a8c6036e3c6a7c9f,
+        type: 3}
       propertyPath: horizontal
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6881929674820694962, guid: 778a66d40c772ce4a8c6036e3c6a7c9f,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -51432,7 +51442,7 @@ Transform:
   m_GameObject: {fileID: 1547773805}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -68, y: 17.730446, z: 0}
+  m_LocalPosition: {x: 120, y: 14.730446, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -57105,7 +57115,7 @@ Transform:
   m_GameObject: {fileID: 1716474883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 579, y: 22.307999, z: -7}
+  m_LocalPosition: {x: 767, y: 19.307999, z: -7}
   m_LocalScale: {x: 0.36, y: 0.36, z: 0.36}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -57134,7 +57144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   gravityScale: -9.8
-  jumpForce: 2.7
+  jumpForce: 3.2
   audioSourceSequence: {fileID: 2024507661}
   audioSourceEffectPlayer: {fileID: 0}
   poolBall: {fileID: 422646103}

@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     private bool chasingBall = false;
     private bool chasingPlayer = false;
 
+    private SpriteRenderer sprite;
+
     public  Animator anim;
 
     private Transform player;
@@ -38,14 +40,21 @@ public class Enemy : MonoBehaviour
         GameObject playerObj = GameObject.Find("Jugador");
         if (playerObj != null)
             player = playerObj.transform;
-        else
-            Debug.LogWarning("No se encontró el objeto llamado 'Jugador'");
+
+        sprite = this.gameObject.GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
     {
+        if (sprite != null)
+        {
+            sprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
         if (player != null && !chasingBall)
         {
+            
+
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer <= searchRadius)
             {
@@ -65,6 +74,7 @@ public class Enemy : MonoBehaviour
 
         if (!chasingBall && !chasingPlayer) // Solo patrullar si no está yendo a la bola
         {
+
             if (!waiting && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && agent.velocity.magnitude == 0)
             {
                 StartCoroutine(ChangeDirection());
@@ -82,8 +92,11 @@ public class Enemy : MonoBehaviour
         // Cambiar destino
         if (!chasingBall && !chasingPlayer)
         {
+
             agent.SetDestination(movingForward ? startPosition : targetPosition);
             movingForward = !movingForward;
+
+            ComprobarDireccionSprite();
         }
 
         waiting = false;
@@ -100,6 +113,9 @@ public class Enemy : MonoBehaviour
             {
                 chasingBall = true; // Se dirige a la bola
                 agent.SetDestination(hit.position);
+
+                ComprobarDireccionSprite();
+
                 StartCoroutine(WaitBallAndReturn());
             }
         }
@@ -118,6 +134,8 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator WaitPlayerAndReturn()
     {
+        ComprobarDireccionSprite();
+
         yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
         chasingBall = false;
         chasingPlayer = false;
@@ -132,6 +150,17 @@ public class Enemy : MonoBehaviour
         // Después de esperar, vuelve a su ruta original
         yield return new WaitForSeconds(hasSeenPlayer ? 0.5f : waitTime); // Espera antes de comenzar el patrullaje
         agent.SetDestination(movingForward ? startPosition : targetPosition);
+        ComprobarDireccionSprite();
         movingForward = !movingForward;
+    }
+
+    private void ComprobarDireccionSprite()
+    {
+        float directionToPlayer = agent.destination.x - transform.position.x;
+
+        if ((directionToPlayer > 0 && sprite.flipX) || (directionToPlayer < 0 && !sprite.flipX))
+        {
+            sprite.flipX = !sprite.flipX;
+        }
     }
 }
