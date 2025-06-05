@@ -39,7 +39,7 @@ public class Vibration : MonoBehaviour
         }
     }
 
-    public void VibrarMando(float intensidad, float duracion)
+    void VibrarMando(float intensidad, float duracion)
     {
         // Verifica si hay un Gamepad conectado
         if (Gamepad.current != null)
