@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     private bool chasingBall = false;
     private bool chasingPlayer = false;
 
+    public  Animator anim;
+
     private Transform player;
 
     void Start()
@@ -51,6 +53,7 @@ public class Enemy : MonoBehaviour
                 if (agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
                 {
                     chasingPlayer = true;
+                    anim.SetBool("IsChasing",true);
                     agent.SetDestination(player.position);
                     agent.speed = 10;
                     StartCoroutine(WaitPlayerAndReturn());
@@ -108,6 +111,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(5f); // Espera 3 segundos en la bola
         chasingBall = false;
         chasingPlayer = false;
+        anim.SetBool("IsChasing", false);
         agent.ResetPath();  
         StartCoroutine(ContinuePatrol(false));
     }
@@ -117,6 +121,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
         chasingBall = false;
         chasingPlayer = false;
+        anim.SetBool("IsChasing", false);
         agent.speed = 5f;
         agent.ResetPath();
         StartCoroutine(ContinuePatrol(true));
