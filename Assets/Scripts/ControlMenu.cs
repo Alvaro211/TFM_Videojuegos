@@ -20,14 +20,15 @@ public class ControlMenu : MonoBehaviour
         {
             audio.AudioMenu();
             if (!GameManager.instance.continueGame)
-                imageContinue.color = new Color(100, 100, 100);
+                imageContinue.color = new Color(0.33f, 0.33f, 0.33f);
         }
         else if (index == 1)
             audio.AudioPlay();
     }
     public void Play()
     {
-        SceneManager.LoadScene(1);
+        if(GameManager.instance.continueGame)
+            SceneManager.LoadScene(1);
     }
 
     public void PlayNewGame()

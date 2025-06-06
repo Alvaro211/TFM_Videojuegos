@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public PlayerMovement playerMovement;
     private MyData sharedData;
 
-    public bool continueGame;
+    public bool continueGame = false;
     public bool isOpenDoorGreen = false;
     public bool isOpenDoorGreenYellow = false;
     public bool isOpenDoorBoss = false;
