@@ -10550,7 +10550,7 @@ Camera:
   far clip plane: 1000
   field of view: 80
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -10575,7 +10575,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 585.6, y: 23.320759, z: -22}
+  m_LocalPosition: {x: 579.6, y: 25.420757, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13523,7 +13523,7 @@ Transform:
   m_GameObject: {fileID: 389898925}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 6.955, y: -0.0023, z: 2.9010527}
+  m_LocalPosition: {x: 6.955, y: 0, z: 0.932}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31925,7 +31925,7 @@ PrefabInstance:
     - target: {fileID: 1833951815549216200, guid: 3e7814a738a94ff4794f5b780d343494,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1978035979592981038, guid: 3e7814a738a94ff4794f5b780d343494,
         type: 3}
@@ -31961,6 +31961,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FinishLevelDoorBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 2040993448451172061, guid: 3e7814a738a94ff4794f5b780d343494,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2514183285031496519, guid: 3e7814a738a94ff4794f5b780d343494,
         type: 3}
@@ -51821,13 +51826,13 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 11
+  m_Priority: 15
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 1716474887}
   m_Follow: {fileID: 1716474887}
   m_Lens:
     FieldOfView: 80
-    OrthographicSize: 5
+    OrthographicSize: 10
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -51853,7 +51858,7 @@ Transform:
   m_GameObject: {fileID: 1547773805}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -61.400024, y: 15.722446, z: 0}
+  m_LocalPosition: {x: -67.400024, y: 17.822445, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -55820,7 +55825,7 @@ PrefabInstance:
     - target: {fileID: 1833951815549216200, guid: 3e7814a738a94ff4794f5b780d343494,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2040993448451172061, guid: 3e7814a738a94ff4794f5b780d343494,
         type: 3}
@@ -57543,7 +57548,7 @@ Transform:
   m_GameObject: {fileID: 1716474883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 585.6, y: 20.3, z: -7}
+  m_LocalPosition: {x: 579.6, y: 22.4, z: -7}
   m_LocalScale: {x: 0.36, y: 0.36, z: 0.36}
   m_ConstrainProportionsScale: 1
   m_Children:

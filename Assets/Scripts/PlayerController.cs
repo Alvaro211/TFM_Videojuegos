@@ -333,7 +333,10 @@ public class PlayerMovement : MonoBehaviour
 
                 layout.gameObject.SetActive(true);
                 sprite.gameObject.SetActive(true);
-                sliderBall.gameObject.SetActive(true);
+
+                if(sliderBall.value != 1)
+                    sliderBall.gameObject.SetActive(true);
+
                 this.transform.position = positionEscape;
 
                 if (hotspot != null)
