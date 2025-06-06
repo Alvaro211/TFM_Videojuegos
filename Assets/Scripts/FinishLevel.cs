@@ -30,15 +30,15 @@ public class FinishLevel : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         bool mustOpen = false;
-        if (this.name == "FinishLevelDoor1")
+        if (GameManager.instance.isOpenDoorGreen && this.name == "FinishLevelDoor1")
         {
             mustOpen = true;
         }
-        else if (this.name == "FinishLevelDoor2")
+        else if (GameManager.instance.isOpenDoorGreenYellow && this.name == "FinishLevelDoor2")
         {
             mustOpen = true;
         }
-        else if (this.name == "FinishLevelDoorBoss")
+        else if (GameManager.instance.isOpenDoorBoss && this.name == "FinishLevelDoorBoss")
         {
             mustOpen = true;
         }
@@ -88,7 +88,8 @@ public class FinishLevel : MonoBehaviour
             doorcollision.SetActive(false);
             // StartCoroutine(RotateOverTime());
 
-            cineMachine.PlayTimelineLevel1();
+            if(this.name == "FinishLevelDoor1")
+                cineMachine.PlayTimelineLevel1();
         }
         else
         {

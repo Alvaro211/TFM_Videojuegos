@@ -934,6 +934,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        float d = Vector3.Dot(hit.normal, Vector3.down);
+        if (d < 0.1f && d > -0.1f)
+        {
+            Debug.Log(d);
+            currentVelocity.x = 0;
+        }
+
         if (Vector3.Dot(hit.normal, Vector3.down) > 0.5f)
         {
             isHit = true;
