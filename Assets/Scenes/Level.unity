@@ -6306,6 +6306,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrampaPinchos (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1685771296318389089, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}
       propertyPath: m_SortingOrder
@@ -8917,6 +8922,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrampaPinchos (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1685771296318389089, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}
@@ -14976,6 +14986,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrampaPinchos (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1685771296318389089, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}
@@ -28107,6 +28122,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrampaPinchos (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1685771296318389089, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}
       propertyPath: m_SortingOrder
@@ -32410,6 +32430,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrampaPinchos (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1685771296318389089, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}
@@ -39631,6 +39656,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrampaPinchos (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1812351756979144135, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -40778,6 +40808,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrampaPinchos (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1685771296318389089, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}
@@ -57435,6 +57470,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrampaPinchos (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4561702114960536769, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -58585,6 +58625,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrampaPinchos (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1685771296318389089, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}
@@ -63291,6 +63336,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrampaPinchos (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336164832892262884, guid: f1b27ca3b5140774098c2e4ddd4060b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1685771296318389089, guid: f1b27ca3b5140774098c2e4ddd4060b0,
         type: 3}

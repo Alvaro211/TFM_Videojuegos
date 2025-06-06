@@ -14,6 +14,9 @@ public class AutoSpikeTrap : MonoBehaviour
 
     private float targetScaleY = 1f;         // Escala máxima
     private float initialScaleY = 0f;        // Escala inicial (mínima)
+    
+    private bool allReached = false;
+    private bool allHidden = false;
 
     void Start()
     {
@@ -27,50 +30,50 @@ public class AutoSpikeTrap : MonoBehaviour
                 child.localScale = scale;
             }
         }
+
     }
 
     void Update()
     {
         triggerTimer += Time.deltaTime;
 
-        if (triggerTimer >= triggerInterval)
+        if (triggerTimer >= triggerInterval && !allReached)
         {
             isRising = true;
-            triggerTimer = 0f;
         }
 
         if (isRising)
         {
-            bool allReached = true;
+            allReached = false;
 
             foreach (Transform child in transform)
             {
                 if (child.name.Contains("Cylinder"))
                 {
                     Vector3 scale = child.localScale;
-                    scale.y = Mathf.MoveTowards(scale.y, targetScaleY, riseSpeed * Time.deltaTime);
+                    scale.y = Mathf.MoveTowards(scale.y, targetScaleY, riseSpeed * Time.deltaTime/3);
                     child.localScale = scale;
 
-                    if (scale.y < targetScaleY)
-                        allReached = false;
+                    if (scale.y >= targetScaleY)
+                        allReached = true;
                 }
 
                     Animator anim = child.GetComponent<Animator>();
-                    if (anim != null)
+                    if (anim != null && !anim.GetBool("isUp"))
                     {
                         anim.SetBool("isUp", true);
                     }
-
             }
 
 
             if (allReached)
             {
                 isRising = false;
+                triggerTimer = 0f;
                 timer = 0f;
             }
         }
-        else if (!isFalling)
+        else if (!isFalling && allReached)
         {
             timer += Time.deltaTime;
             if (timer >= stayTime)
@@ -80,22 +83,22 @@ public class AutoSpikeTrap : MonoBehaviour
         }
         else if (isFalling)
         {
-            bool allHidden = true;
+            allHidden = false;
 
             foreach (Transform child in transform)
             {
                 if (child.name.Contains("Cylinder"))
                 {
                     Vector3 scale = child.localScale;
-                    scale.y = Mathf.MoveTowards(scale.y, initialScaleY, fallSpeed * Time.deltaTime);
+                    scale.y = Mathf.MoveTowards(scale.y, initialScaleY, fallSpeed * Time.deltaTime/3);
                     child.localScale = scale;
 
-                    if (scale.y > initialScaleY)
-                        allHidden = false;
+                    if (scale.y <= initialScaleY)
+                        allHidden = true;
                 }
 
                     Animator anim = child.GetComponent<Animator>();
-                    if (anim != null)
+                    if (anim != null && anim.GetBool("isUp"))
                     {
                         anim.SetBool("isUp", false);
                     }
@@ -105,6 +108,7 @@ public class AutoSpikeTrap : MonoBehaviour
             if (allHidden)
             {
                 isFalling = false;
+                allReached = false;
             }
         }
     }
