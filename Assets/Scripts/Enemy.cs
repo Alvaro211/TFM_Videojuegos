@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public float waitTime = 2f;         // Tiempo de espera en cada punto
     public float searchRadius = 10;
     public bool horizontal = false;
+    public bool isStunned = false;
 
     private NavMeshAgent agent;
     private Vector3 startPosition;
@@ -50,6 +51,13 @@ public class Enemy : MonoBehaviour
         {
             sprite.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
+
+        if (chasingBall && (agent.destination.x - transform.position.x) < 0.3f)
+        {
+            isStunned = true;
+        }
+        else
+            isStunned = false;
 
         if (player != null && !chasingBall)
         {

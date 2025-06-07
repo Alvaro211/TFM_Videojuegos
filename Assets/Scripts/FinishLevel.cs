@@ -88,8 +88,11 @@ public class FinishLevel : MonoBehaviour
             doorcollision.SetActive(false);
             // StartCoroutine(RotateOverTime());
 
-            if(this.name == "FinishLevelDoor1")
+            if (this.name == "FinishLevelDoor1")
+            {
+                GameManager.instance.canMove = false;
                 cineMachine.PlayTimelineLevel1();
+            }
         }
         else
         {

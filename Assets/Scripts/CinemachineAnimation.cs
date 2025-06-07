@@ -100,6 +100,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         TurnOffLightsLevel1();
         canvas.gameObject.SetActive(true);
+        GameManager.instance.canMove = true;
     }
 
     public void TurnOffLightsLevel1()
@@ -143,6 +144,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         canvas.gameObject.SetActive(true);
         TurnOffLightsLevel2();
+        GameManager.instance.canMove = true;
     }
 
     public void TurnOffLightsLevel2()
@@ -185,6 +187,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         canvas.gameObject.SetActive(true);
         TurnOffLightsLevel3();
+        GameManager.instance.canMove = true;
     }
 
     public void TurnOffLightsLevel3()
@@ -227,6 +230,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         canvas.gameObject.SetActive(true);
         TurnOffLightsLevel4();
+        GameManager.instance.canMove = true;
     }
 
     public void TurnOffLightsLevel4()

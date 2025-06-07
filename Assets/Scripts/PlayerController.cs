@@ -165,12 +165,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Move the player
-        if (isMoving)
+        if (isMoving && GameManager.instance.canMove)
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
             anim.SetBool("IsWalking", true);
-
-           
         }
         else
         {
@@ -188,7 +186,9 @@ public class PlayerMovement : MonoBehaviour
             verticalVelocity = -30;
 
         currentVelocity.y = verticalVelocity;
-        controller.Move(currentVelocity * Time.deltaTime);
+
+        if(GameManager.instance.canMove)
+            controller.Move(currentVelocity * Time.deltaTime);
 
         if(transform.position.y < -1.5f)
         {
@@ -402,16 +402,6 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("IsHitting", true);
 
-            /* bool correct = CheckSequence();
-             if (correct)
-             {
-                 StartCoroutine(finishLevel.RotateOverTime());
-                 finishLevel.HideControl();
-                 finishLevel.doorOpen = true;
-             }
-             finishLevel.SoundDoor(correct);*/
-
-
         }
         else if ( isOnHotSpot && hotspot != null)
         {
@@ -438,8 +428,6 @@ public class PlayerMovement : MonoBehaviour
         if (!ballLauch)
         {
             LaunchBall();
-            //imagesBall[indexBallImage].gameObject.SetActive(false);
-           // indexBallImage++;
         }
     }
 
@@ -453,7 +441,6 @@ public class PlayerMovement : MonoBehaviour
             
             sequence.Add(objectSong.audioSource.clip);
 
-            //objectSong.HideControl();
         }
     }
 
@@ -509,8 +496,6 @@ public class PlayerMovement : MonoBehaviour
     public void Sound4Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         sound = 3;
-       /* if (bossLight != null)
-            bossLight.TriggerLightFade();*/
 
         if (sequence.Count > sound && !souning)
         {
@@ -638,19 +623,9 @@ public class PlayerMovement : MonoBehaviour
     public bool CheckSequence()
     {
         if (sequence.Count == 0) return false;
-
-        /*for (int i = 0; i < sequence.Count; i++)
-        {
-            for (int j = 0; j < finishLevel.audioClips.Count; j++)
-            {
-                if (sequence[i] == null)
-                    return false;
-                if (sequence[i].name.Equals(finishLevel.audioClips[j].name))
-                    break;
-            }
-        }*/
         return finishLevel.audioClips.All(item => sequence.Any(audio => audio.name == item.name)); ;
     }
+
     void LaunchBall()
     {
         if (poolBall != null)
@@ -863,8 +838,11 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Enemy"))
         {
-            Dead();
-        }else if (other.gameObject.CompareTag("PlatformMove"))
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            if (enemy != null && !enemy.isStunned)
+                Dead();
+        }
+        else if (other.gameObject.CompareTag("PlatformMove"))
         {
             if (other.gameObject.TryGetComponent<PlatformMove>(out PlatformMove mover))
             {
@@ -907,18 +885,21 @@ public class PlayerMovement : MonoBehaviour
             GameManager.instance.defeatBoss = true;
         }else if (other.gameObject.CompareTag("Animation2"))
         {
+            GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel2();
             Destroy(other.gameObject);
         }
         else if (other.gameObject.CompareTag("Animation3"))
         {
+            GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel3();
             Destroy(other.gameObject);
         }
         else if (other.gameObject.CompareTag("Animation4"))
         {
+            GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel4();
             Destroy(other.gameObject);
@@ -951,7 +932,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (hit.gameObject.CompareTag("Enemy"))
         {
-            Dead();
+            Enemy enemy = hit.gameObject.GetComponent<Enemy>();
+            if(enemy != null && !enemy.isStunned)
+                Dead();
         }
     }
 
