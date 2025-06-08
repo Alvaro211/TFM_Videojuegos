@@ -40,7 +40,7 @@ public class RedpointControl : MonoBehaviour
         {
             foreach (var b in all)
             {
-                if (b.ball.activeSelf)
+                if (b.ball.transform.GetChild(0).GetChild(0).gameObject.activeSelf)
                 {
                     if (Vector3.Distance(transform.position, b.ball.transform.position) <= 50f)
                     {

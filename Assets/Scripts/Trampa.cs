@@ -59,7 +59,7 @@ public class AutoSpikeTrap : MonoBehaviour
                 }
 
                     Animator anim = child.GetComponent<Animator>();
-                    if (anim != null && !anim.GetBool("isUp"))
+                    if (anim != null && child.gameObject.activeInHierarchy && !anim.GetBool("isUp"))
                     {
                         anim.SetBool("isUp", true);
                     }
@@ -98,7 +98,7 @@ public class AutoSpikeTrap : MonoBehaviour
                 }
 
                     Animator anim = child.GetComponent<Animator>();
-                    if (anim != null && anim.GetBool("isUp"))
+                    if (anim != null && child.gameObject.activeInHierarchy && anim.GetBool("isUp"))
                     {
                         anim.SetBool("isUp", false);
                     }
