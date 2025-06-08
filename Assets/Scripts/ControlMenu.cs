@@ -21,6 +21,8 @@ public class ControlMenu : MonoBehaviour
             audio.AudioMenu();
             if (!GameManager.instance.continueGame)
                 imageContinue.color = new Color(0.33f, 0.33f, 0.33f);
+            else
+                imageContinue.color = new Color(1f, 1f, 1f);
         }
         else if (index == 1)
             audio.AudioPlay();

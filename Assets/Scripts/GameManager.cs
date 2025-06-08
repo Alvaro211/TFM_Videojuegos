@@ -60,8 +60,9 @@ public class GameManager : MonoBehaviour
             sharedData.isOpenDoorGreenYellow = isOpenDoorGreenYellow;
             sharedData.isOpenDoorBoss = isOpenDoorBoss;
             sharedData.continueGame = true;
+            continueGame = true;
         }else
-        sharedData.continueGame = false;
+            sharedData.continueGame = false;
 
         sharedData.helpControls = helpControls;
         sharedData.musicVolume = musicVol;
@@ -91,8 +92,11 @@ public class GameManager : MonoBehaviour
                 isOpenDoorBoss = sharedData.isOpenDoorBoss;
                 continueGame = sharedData.continueGame;
             }
-            else
-                continueGame = false;
+
+            if(sharedData != null && sharedData.continueGame != null)
+            {
+                continueGame = sharedData.continueGame;
+            }
 
             helpControls = sharedData.helpControls;
             musicVol = sharedData.musicVolume;
@@ -140,7 +144,7 @@ public class GameManager : MonoBehaviour
         "/MyGameData.dat");
         MyData sharedData2 = new MyData();
 
-        if (sharedData.continueGame)
+        if (sharedData != null && sharedData.continueGame && playerMovement != null)
         {
             Vector3 position = playerMovement.GetStartPosition();
             sharedData2.player.positiónX = position.x;
