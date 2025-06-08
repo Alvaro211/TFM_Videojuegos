@@ -15,6 +15,14 @@ public class RedpointControl : MonoBehaviour
         {
             b.redPoint.SetActive(false);
         }
+        t.onValueChanged.AddListener((b) =>
+        {
+            StopAllCoroutines();
+            foreach (var a in all)
+            {
+                a.redPoint.SetActive(b);
+            }
+        });
     }
 
 
@@ -24,7 +32,7 @@ public class RedpointControl : MonoBehaviour
         foreach (var a in all)
         {
 
-            a.redPoint.transform.position = player.position + (a.ball.transform.position - player.position) .normalized* 1.5f;
+            a.redPoint.transform.position = player.position + (a.ball.transform.position - player.position) .normalized* 3f;
         }
 
 
@@ -38,7 +46,8 @@ public class RedpointControl : MonoBehaviour
                     {
                         b.redPoint.SetActive(true);
                     }
-                    else{
+                    else
+                    {
                         b.redPoint.SetActive(false);
                     }
                 }
@@ -47,14 +56,38 @@ public class RedpointControl : MonoBehaviour
                     b.redPoint.SetActive(false);
                 }
             }
-            StopAllCoroutines();
-            StartCoroutine(Fade());
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                foreach (var b in all)
+                {
+                    if (b.ball.activeSelf)
+                    {
+                        if (Vector3.Distance(transform.position, b.ball.transform.position) <= 50f)
+                        {
+                            b.redPoint.SetActive(true);
+                        }
+                        else
+                        {
+                            b.redPoint.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        b.redPoint.SetActive(false);
+                    }
+                }
+                StopAllCoroutines();
+                StartCoroutine(Fade());
+            }
         }
     }
 
     IEnumerator Fade()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(2f);
         foreach (var a in all)
         {
             a.redPoint.SetActive(false);
