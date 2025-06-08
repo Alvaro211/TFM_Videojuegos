@@ -2734,6 +2734,7 @@ MonoBehaviour:
   isOpenDoorGreen: 0
   isOpenDoorGreenYellow: 0
   isOpenDoorBoss: 0
+  newGame: 0
 --- !u!4 &1562798669
 Transform:
   m_ObjectHideFlags: 0
