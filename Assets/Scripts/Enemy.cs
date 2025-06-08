@@ -95,7 +95,11 @@ public class Enemy : MonoBehaviour
         if (chasingBall || chasingPlayer) yield break;
 
         waiting = true; // Evita múltiples llamadas
+      
+
+
         yield return new WaitForSeconds(waitTime); // Espera antes de cambiar dirección
+       
 
         // Cambiar destino
         if (!chasingBall && !chasingPlayer)
@@ -108,6 +112,7 @@ public class Enemy : MonoBehaviour
         }
 
         waiting = false;
+        
     }
 
     public void MoveToBall(Vector3 ballPosition)
@@ -121,6 +126,7 @@ public class Enemy : MonoBehaviour
             {
                 chasingBall = true; // Se dirige a la bola
                 agent.SetDestination(hit.position);
+              
 
                 ComprobarDireccionSprite();
 
@@ -136,6 +142,8 @@ public class Enemy : MonoBehaviour
         chasingBall = false;
         chasingPlayer = false;
         anim.SetBool("IsChasing", false);
+       
+       
         agent.ResetPath();  
         StartCoroutine(ContinuePatrol(false));
     }
@@ -148,6 +156,7 @@ public class Enemy : MonoBehaviour
         chasingBall = false;
         chasingPlayer = false;
         anim.SetBool("IsChasing", false);
+        anim.SetBool("IsIdle", true);
         agent.speed = 5f;
         agent.ResetPath();
         StartCoroutine(ContinuePatrol(true));
@@ -156,6 +165,7 @@ public class Enemy : MonoBehaviour
     private IEnumerator ContinuePatrol(bool hasSeenPlayer)
     {
         // Después de esperar, vuelve a su ruta original
+        anim.SetBool("IsIdle", false);
         yield return new WaitForSeconds(hasSeenPlayer ? 0.5f : waitTime); // Espera antes de comenzar el patrullaje
         agent.SetDestination(movingForward ? startPosition : targetPosition);
         ComprobarDireccionSprite();
