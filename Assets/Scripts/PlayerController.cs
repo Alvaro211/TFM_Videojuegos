@@ -331,13 +331,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 menuPause.gameObject.SetActive(false);
 
-                layout.gameObject.SetActive(true);
+                GameManager.instance.canMove = true;
+                Time.timeScale = 1;
                 sprite.gameObject.SetActive(true);
 
                 if(sliderBall.value != 1)
                     sliderBall.gameObject.SetActive(true);
-
-                this.transform.position = positionEscape;
 
                 if (hotspot != null)
                     hotspot.ShowControl();
@@ -348,10 +347,9 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                layout.gameObject.SetActive(false);
-                sprite.gameObject.SetActive(false);
+                GameManager.instance.canMove = false;
+                Time.timeScale = 0;
                 sliderBall.gameObject.SetActive(false);
-                positionEscape = this.transform.position;
 
                 menuPause.gameObject.SetActive(true);
                 if (hotspot != null)
