@@ -102,12 +102,16 @@ public class PlayerMovement : MonoBehaviour
             controller = GetComponent<CharacterController>();
 
             GameManager.instance.playerMovement = this;
-            if (GameManager.instance.Load())
+            if (GameManager.instance.newGame)
             {
+                GameManager.instance.Load();
                 ContinueGame();
             }
             else
+            {
+                GameManager.instance.newGame = false;
                 startPosition = transform.position;
+            }
 
             
             audioSourceEffectPlayer = GetComponent<AudioSource>();

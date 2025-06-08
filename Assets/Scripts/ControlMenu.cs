@@ -35,7 +35,7 @@ public class ControlMenu : MonoBehaviour
 
     public void PlayNewGame()
     {
-        GameManager.instance.continueGame = false;
+        GameManager.instance.newGame = false;
         SceneManager.LoadScene(1);
     }
 
