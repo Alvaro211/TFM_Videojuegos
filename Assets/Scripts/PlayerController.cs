@@ -886,7 +886,7 @@ public class PlayerMovement : MonoBehaviour
         else if(other.tag == "FloorObjectSong")
         {
             isNearObjectSong = true;
-           other.transform.parent.gameObject.SetActive(false);
+            //other.transform.parent.gameObject.SetActive(false);
             objectSong = other.GetComponent<ObjectSong>();
             //objectSong.ShowControl();
         }else if(other.tag == "EntryBoss" && !onBoss)

@@ -26,6 +26,9 @@ public class Enemy : MonoBehaviour
 
     private Transform player;
 
+    private Coroutine currentRoutine;
+    private string currentRoutineName = "";
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -52,6 +55,11 @@ public class Enemy : MonoBehaviour
             sprite.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
+        if (!chasingBall && !chasingPlayer)
+        {
+            anim.SetBool("IsIdle", agent.remainingDistance <= agent.stoppingDistance);
+        }
+
         if (chasingBall && (agent.destination.x - transform.position.x) < 0.3f)
         {
             isStunned = true;
@@ -73,20 +81,41 @@ public class Enemy : MonoBehaviour
                     anim.SetBool("IsChasing",true);
                     agent.SetDestination(player.position);
                     agent.speed = 10;
-                    StartCoroutine(WaitPlayerAndReturn());
+                    if (currentRoutine != null)
+                        StopCoroutine(currentRoutine);
+                    currentRoutine = StartCoroutine(WaitPlayerAndReturn());
+                    currentRoutineName = "WaitPlayerAndReturn";
                     return;
                 }
             }
         }
 
+        if (!chasingBall && !chasingPlayer)
+        {
+            anim.SetBool("IsIdle", agent.remainingDistance <= agent.stoppingDistance);
+        }
+
 
         if (!chasingBall && !chasingPlayer) // Solo patrullar si no est?yendo a la bola
         {
-
-            if (!waiting && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && agent.velocity.magnitude == 0)
+            if (/*!waiting && !agent.pathPending && */agent.remainingDistance <= agent.stoppingDistance /*&& agent.velocity.magnitude == 0*/)
             {
-                StartCoroutine(ChangeDirection());
+                anim.SetBool("IsIdle", true);
+                if (currentRoutine != null && currentRoutineName != "ChangeDirection") { 
+                    StopCoroutine(currentRoutine);
+                }
+
+                if (currentRoutineName != "ChangeDirection")
+                {
+                    currentRoutine = StartCoroutine(ChangeDirection());
+                    currentRoutineName = "ChangeDirection";
+                }
             }
+        }
+
+        if (!chasingBall && !chasingPlayer)
+        {
+            anim.SetBool("IsIdle", agent.remainingDistance <= agent.stoppingDistance);
         }
     }
 
@@ -95,8 +124,9 @@ public class Enemy : MonoBehaviour
         if (chasingBall || chasingPlayer) yield break;
 
         waiting = true; // Evita múltiples llamadas
-      
 
+
+        
 
         yield return new WaitForSeconds(waitTime); // Espera antes de cambiar dirección
        
@@ -104,7 +134,7 @@ public class Enemy : MonoBehaviour
         // Cambiar destino
         if (!chasingBall && !chasingPlayer)
         {
-
+            anim.SetBool("IsIdle", false);
             agent.SetDestination(movingForward ? startPosition : targetPosition);
             movingForward = !movingForward;
 
@@ -112,7 +142,8 @@ public class Enemy : MonoBehaviour
         }
 
         waiting = false;
-        
+
+        currentRoutineName = "";
     }
 
     public void MoveToBall(Vector3 ballPosition)
@@ -125,12 +156,18 @@ public class Enemy : MonoBehaviour
             if (NavMesh.SamplePosition(ballPosition, out hit, 1.0f, NavMesh.AllAreas))
             {
                 chasingBall = true; // Se dirige a la bola
+
+                anim.SetBool("IsChasing", true);
+                anim.SetBool("IsIdle", false);
                 agent.SetDestination(hit.position);
               
 
                 ComprobarDireccionSprite();
 
-                StartCoroutine(WaitBallAndReturn());
+                if (currentRoutine != null)
+                    StopCoroutine(currentRoutine);
+                currentRoutine = StartCoroutine(WaitBallAndReturn());
+                currentRoutineName = "WaitBallAndReturn";
             }
         }
     }
@@ -138,14 +175,20 @@ public class Enemy : MonoBehaviour
     private IEnumerator WaitBallAndReturn()
     {
         yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
+        anim.SetBool("IsConfuse", true);
         yield return new WaitForSeconds(5f); // Espera 3 segundos en la bola
         chasingBall = false;
         chasingPlayer = false;
         anim.SetBool("IsChasing", false);
-       
-       
-        agent.ResetPath();  
-        StartCoroutine(ContinuePatrol(false));
+        anim.SetBool("IsIdle", true);
+        anim.SetBool("IsConfuse", false);
+
+
+        agent.ResetPath();
+        if (currentRoutine != null)
+            StopCoroutine(currentRoutine);
+        currentRoutine = StartCoroutine(ContinuePatrol(false));
+        currentRoutineName = "ContinuePatrol";
     }
 
     private IEnumerator WaitPlayerAndReturn()
@@ -155,11 +198,14 @@ public class Enemy : MonoBehaviour
         yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
         chasingBall = false;
         chasingPlayer = false;
-        anim.SetBool("IsChasing", false);
         anim.SetBool("IsIdle", true);
+        anim.SetBool("IsChasing", false);
         agent.speed = 5f;
         agent.ResetPath();
-        StartCoroutine(ContinuePatrol(true));
+        if (currentRoutine != null)
+            StopCoroutine(currentRoutine);
+        currentRoutine = StartCoroutine(ContinuePatrol(true));
+        currentRoutineName = "ContinuePatrol";
     }
 
     private IEnumerator ContinuePatrol(bool hasSeenPlayer)
@@ -181,4 +227,6 @@ public class Enemy : MonoBehaviour
             sprite.flipX = !sprite.flipX;
         }
     }
+
+   
 }
