@@ -17,6 +17,7 @@ public class HotSpot : MonoBehaviour
 
     void Start()
     {
+    
         audioSource = GetComponent<AudioSource>();
 
         int currentIndex = 0;

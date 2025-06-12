@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     private bool noteRed = false;
 
     public Book book;
-
+    public GameObject wenhao;
         void Start()
         {
             GameManager.instance.canMove = true;
@@ -748,7 +748,15 @@ public class PlayerMovement : MonoBehaviour
 
                     newBall.transform.position = transform.position + new Vector3(-2, 1, 0);
             }
+            Enemy[] enemies = FindObjectsOfType<Enemy>();
+            foreach(var e in enemies)
+            {
+                GameObject obj = Instantiate(wenhao);
+                obj.GetComponent<CameraForward>().target = e.transform;
 
+                Destroy(obj, cooldownBall);
+               
+            }
             StartCoroutine(HideBall(newBall));
             updateSliderBall = true;
         }

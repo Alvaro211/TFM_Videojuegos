@@ -38,7 +38,7 @@ public class PoolBolaLuminosa : MonoBehaviour
         {
             if (!obj.activeInHierarchy)
             {
-                return obj; // Devuelve el primero que esté inactivo
+                return obj; // Devuelve el primero que est?inactivo
             }
         }
         return null; // Si no hay inactivos, devuelve null

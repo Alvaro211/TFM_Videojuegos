@@ -29,7 +29,7 @@ TagManager:
   - Water
   - UI
   - ZoneRedBall
-  - 
+  - point
   - 
   - 
   - 
@@ -63,4 +63,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2258800327
+    locked: 0
+  - name: point
+    uniqueID: 4005652627
     locked: 0

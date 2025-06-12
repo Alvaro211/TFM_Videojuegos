@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public float patrolDistance = 8f; // Distancia que avanzará en Z
+    public float patrolDistance = 8f; // Distancia que avanzar?en Z
     public float waitTime = 2f;         // Tiempo de espera en cada punto
     public float searchRadius = 10;
     public bool horizontal = false;
@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
         }
 
 
-        if (!chasingBall && !chasingPlayer) // Solo patrullar si no está yendo a la bola
+        if (!chasingBall && !chasingPlayer) // Solo patrullar si no est?yendo a la bola
         {
 
             if (!waiting && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && agent.velocity.magnitude == 0)
