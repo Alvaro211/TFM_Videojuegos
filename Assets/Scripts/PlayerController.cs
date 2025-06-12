@@ -92,360 +92,401 @@ public class PlayerMovement : MonoBehaviour
 
     public Book book;
 
-        void Start()
+    void Start()
+    {
+        GameManager.instance.canMove = true;
+        Time.timeScale = 1f;
+
+        sequence = new List<AudioClip>();
+
+        controller = GetComponent<CharacterController>();
+
+        GameManager.instance.playerMovement = this;
+        if (GameManager.instance.newGame)
         {
-            GameManager.instance.canMove = true;
-            Time.timeScale = 1f;
-
-            sequence = new List<AudioClip>();
-
-            controller = GetComponent<CharacterController>();
-
-            GameManager.instance.playerMovement = this;
-            if (GameManager.instance.newGame)
-            {
-                GameManager.instance.Load();
-                ContinueGame();
-            }
-            else
-            {
-                GameManager.instance.newGame = false;
-                startPosition = transform.position;
-            }
+            GameManager.instance.Load();
+            ContinueGame();
+        }
+        else
+        {
+            GameManager.instance.newGame = false;
+            startPosition = transform.position;
+        }
 
             
-            audioSourceEffectPlayer = GetComponent<AudioSource>();
+        audioSourceEffectPlayer = GetComponent<AudioSource>();
         
-            ballLauch = false;
+        ballLauch = false;
 
-            foreach (RawImage image in notes)
-            {
-                image.color = Color.white;      
-            }
+        foreach (RawImage image in notes)
+        {
+            image.color = Color.white;      
+        }
 
+        inputMap = new PlayerMap();
+        inputMap.Enable();
+
+        inputMap.Player.Movement.performed += DirKeysPerformed;
+        inputMap.Player.Movement.canceled += DirKeysPerformed;
+        inputMap.Player.Interact.performed += InterectPerformed;
+        inputMap.Player.Interact.canceled += InterectCanceled;
+        inputMap.Player.Sequence.performed += SequencePerformed;
+        inputMap.Player.Sphere.performed += SpherePerformed;
+        inputMap.Player.Jump.performed += JumpPerformed;
+        inputMap.Player.Jump.canceled += JumpCanceled;
+        inputMap.Player.Options.performed += OptionsPerformed;
+        inputMap.Player.Sound1.performed += Sound1Performed;
+        inputMap.Player.Sound2.performed += Sound2Performed;
+        inputMap.Player.Sound3.performed += Sound3Performed;
+        inputMap.Player.Sound4.performed += Sound4Performed;
+        inputMap.Player.Sound5.performed += Sound5Performed;
+        inputMap.Player.Sound6.performed += Sound6Performed;
+        inputMap.Player.Diary.performed += DiaryPerformed;
+    }
+
+    private void OnDestroy()
+    {
+        if (inputMap != null)
+        {
+            inputMap.Player.Movement.performed -= DirKeysPerformed;
+            inputMap.Player.Movement.canceled -= DirKeysPerformed;
+            inputMap.Player.Interact.performed -= InterectPerformed;
+            inputMap.Player.Interact.canceled -= InterectCanceled;
+            inputMap.Player.Sequence.performed += SequencePerformed;
+            inputMap.Player.Sphere.performed -= SpherePerformed;
+            inputMap.Player.Jump.performed -= JumpPerformed;
+            inputMap.Player.Jump.canceled -= JumpCanceled;
+            inputMap.Player.Options.performed -= OptionsPerformed;
+            inputMap.Player.Sound1.performed -= Sound1Performed;
+            inputMap.Player.Sound2.performed -= Sound2Performed;
+            inputMap.Player.Sound3.performed -= Sound3Performed;
+            inputMap.Player.Sound4.performed -= Sound4Performed;
+            inputMap.Player.Sound5.performed -= Sound5Performed;
+            inputMap.Player.Sound6.performed -= Sound6Performed;
+            inputMap.Player.Diary.performed -= DiaryPerformed;
+        }
+    }
+
+    private void OnEnable()
+    {
+        souning = false;
+
+        /*  if (inputMap == null)
             inputMap = new PlayerMap();
-            inputMap.Enable();
 
-            inputMap.Player.Movement.performed += DirKeysPerformed;
-            inputMap.Player.Movement.canceled += DirKeysPerformed;
-            inputMap.Player.Interact.performed += InterectPerformed;
-            inputMap.Player.Interact.canceled += InterectCanceled;
-            inputMap.Player.Sequence.performed += SequencePerformed;
-            inputMap.Player.Sphere.performed += SpherePerformed;
-            inputMap.Player.Jump.performed += JumpPerformed;
-            inputMap.Player.Jump.canceled += JumpCanceled;
-            inputMap.Player.Options.performed += OptionsPerformed;
-            inputMap.Player.Sound1.performed += Sound1Performed;
-            inputMap.Player.Sound2.performed += Sound2Performed;
-            inputMap.Player.Sound3.performed += Sound3Performed;
-            inputMap.Player.Sound4.performed += Sound4Performed;
-            inputMap.Player.Sound5.performed += Sound5Performed;
-            inputMap.Player.Sound6.performed += Sound6Performed;
-            inputMap.Player.Diary.performed += DiaryPerformed;
-        }
+        inputMap.Enable();
 
-        private void OnDestroy()
+        inputMap.Player.Movement.performed += DirKeysPerformed;
+        inputMap.Player.Movement.canceled += DirKeysPerformed;
+        inputMap.Player.Interact.performed += InterectPerformed;
+        inputMap.Player.Interact.canceled += InterectCanceled;
+        inputMap.Player.Sequence.performed += SequencePerformed;
+        inputMap.Player.Sphere.performed += SpherePerformed;
+        inputMap.Player.Jump.performed += JumpPerformed;
+        inputMap.Player.Jump.canceled += JumpCanceled;
+        inputMap.Player.Options.performed += OptionsPerformed;
+        inputMap.Player.Sound1.performed += Sound1Performed;
+        inputMap.Player.Sound2.performed += Sound2Performed;
+        inputMap.Player.Sound3.performed += Sound3Performed;
+        inputMap.Player.Sound4.performed += Sound4Performed;
+        inputMap.Player.Sound5.performed += Sound5Performed;
+        inputMap.Player.Sound6.performed += Sound6Performed;
+        inputMap.Player.Diary.performed += DiaryPerformed;*/
+    }
+
+    private void OnDisable()
+    {
+        if (inputMap != null)
         {
-            if (inputMap != null)
-            {
-                inputMap.Player.Movement.performed -= DirKeysPerformed;
-                inputMap.Player.Movement.canceled -= DirKeysPerformed;
-                inputMap.Player.Interact.performed -= InterectPerformed;
-                inputMap.Player.Interact.canceled -= InterectCanceled;
-                inputMap.Player.Sequence.performed += SequencePerformed;
-                inputMap.Player.Sphere.performed -= SpherePerformed;
-                inputMap.Player.Jump.performed -= JumpPerformed;
-                inputMap.Player.Jump.canceled -= JumpCanceled;
-                inputMap.Player.Options.performed -= OptionsPerformed;
-                inputMap.Player.Sound1.performed -= Sound1Performed;
-                inputMap.Player.Sound2.performed -= Sound2Performed;
-                inputMap.Player.Sound3.performed -= Sound3Performed;
-                inputMap.Player.Sound4.performed -= Sound4Performed;
-                inputMap.Player.Sound5.performed -= Sound5Performed;
-                inputMap.Player.Sound6.performed -= Sound6Performed;
-                inputMap.Player.Diary.performed -= DiaryPerformed;
-            }
+            inputMap.Player.Movement.performed -= DirKeysPerformed;
+            inputMap.Player.Movement.canceled -= DirKeysPerformed;
+            inputMap.Player.Interact.performed -= InterectPerformed;
+            inputMap.Player.Interact.canceled -= InterectCanceled;
+            inputMap.Player.Sequence.performed -= SequencePerformed;
+            inputMap.Player.Sphere.performed -= SpherePerformed;
+            inputMap.Player.Jump.performed -= JumpPerformed;
+            inputMap.Player.Jump.canceled -= JumpCanceled;
+            inputMap.Player.Options.performed -= OptionsPerformed;
+            inputMap.Player.Sound1.performed -= Sound1Performed;
+            inputMap.Player.Sound2.performed -= Sound2Performed;
+            inputMap.Player.Sound3.performed -= Sound3Performed;
+            inputMap.Player.Sound4.performed -= Sound4Performed;
+            inputMap.Player.Sound5.performed -= Sound5Performed;
+            inputMap.Player.Sound6.performed -= Sound6Performed;
+            inputMap.Player.Diary.performed -= DiaryPerformed;
         }
+    }
 
-        private void OnEnable()
+    void Update()
+    {
+        if(inputValues.x == 1)
         {
-            souning = false;
 
-          /*  if (inputMap == null)
-                inputMap = new PlayerMap();
-
-            inputMap.Enable();
-
-            inputMap.Player.Movement.performed += DirKeysPerformed;
-            inputMap.Player.Movement.canceled += DirKeysPerformed;
-            inputMap.Player.Interact.performed += InterectPerformed;
-            inputMap.Player.Interact.canceled += InterectCanceled;
-            inputMap.Player.Sequence.performed += SequencePerformed;
-            inputMap.Player.Sphere.performed += SpherePerformed;
-            inputMap.Player.Jump.performed += JumpPerformed;
-            inputMap.Player.Jump.canceled += JumpCanceled;
-            inputMap.Player.Options.performed += OptionsPerformed;
-            inputMap.Player.Sound1.performed += Sound1Performed;
-            inputMap.Player.Sound2.performed += Sound2Performed;
-            inputMap.Player.Sound3.performed += Sound3Performed;
-            inputMap.Player.Sound4.performed += Sound4Performed;
-            inputMap.Player.Sound5.performed += Sound5Performed;
-            inputMap.Player.Sound6.performed += Sound6Performed;
-            inputMap.Player.Diary.performed += DiaryPerformed;*/
         }
-
-        private void OnDisable()
-        {
-            if (inputMap != null)
-            {
-                inputMap.Player.Movement.performed -= DirKeysPerformed;
-                inputMap.Player.Movement.canceled -= DirKeysPerformed;
-                inputMap.Player.Interact.performed -= InterectPerformed;
-                inputMap.Player.Interact.canceled -= InterectCanceled;
-                inputMap.Player.Sequence.performed -= SequencePerformed;
-                inputMap.Player.Sphere.performed -= SpherePerformed;
-                inputMap.Player.Jump.performed -= JumpPerformed;
-                inputMap.Player.Jump.canceled -= JumpCanceled;
-                inputMap.Player.Options.performed -= OptionsPerformed;
-                inputMap.Player.Sound1.performed -= Sound1Performed;
-                inputMap.Player.Sound2.performed -= Sound2Performed;
-                inputMap.Player.Sound3.performed -= Sound3Performed;
-                inputMap.Player.Sound4.performed -= Sound4Performed;
-                inputMap.Player.Sound5.performed -= Sound5Performed;
-                inputMap.Player.Sound6.performed -= Sound6Performed;
-                inputMap.Player.Diary.performed -= DiaryPerformed;
-            }
-        }
-
-        void Update()
-        {
-            if(inputValues.x == 1)
-            {
-
-            }
         
-            moveInput.x = inputValues.x;
-            moveInput.Normalize(); // Evita moverse más rápido en diagonal
+        moveInput.x = inputValues.x;
+        moveInput.Normalize(); // Evita moverse más rápido en diagonal
 
-            if (moveInput.magnitude > 0.1f)
-            {
-                isMoving = true;
-                anim.SetBool("IsWalking", true);
+        if (moveInput.magnitude > 0.1f)
+        {
+            isMoving = true;
+            anim.SetBool("IsWalking", true);
             
-            }
+        }
 
-            else
-            {
-                isMoving = false;
-                anim.SetBool("IsWalking", false);
-            }
+        else
+        {
+            isMoving = false;
+            anim.SetBool("IsWalking", false);
+        }
             
 
-            // Si está tocando el suelo (Floor), desactivamos la gravedad
-            if (!controller.isGrounded)
+        // Si está tocando el suelo (Floor), desactivamos la gravedad
+        if (!controller.isGrounded)
+        {
+
+            if (anim.GetBool("IsFalling"))
             {
-                if (isPressJumping)
-                    verticalVelocity += (gravityScale - gravityScale/3) * Time.deltaTime;
-                else
-                    verticalVelocity += gravityScale * Time.deltaTime;
+                // Lanzamos un raycast para ver si está cerca del suelo
+                RaycastHit hit;
+                Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.45f, LayerMask.GetMask("Default"));
 
-            }
-
-            //Move the player
-            if (isMoving && GameManager.instance.canMove)
-            {
-                currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
-                anim.SetBool("IsWalking", true);
-            }
-            else
-            {
-                //Player inertia
-                currentVelocity = Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * 5f);
-            }
-
-            if(isHit && verticalVelocity > 0)
-            {
-                verticalVelocity = 0;
-            
-            }
-
-            if (verticalVelocity < -30)
-                verticalVelocity = -30;
-
-            currentVelocity.y = verticalVelocity;
-
-            if(GameManager.instance.canMove)
-                controller.Move(currentVelocity * Time.deltaTime);
-
-            if(transform.position.y < -1.5f)
-            {
-                Dead();
-            }
-
-            if (CheckEnemyAround()) {
-
-                //audioSourceMusic.pitch = Mathf.Lerp(1.0f, 0.7f, Time.deltaTime * 2);
-                audioSourceMusic.pitch = 0.5f;
-            }
-            else if(audioSourceMusic.pitch != 1)
-            {
-                audioSourceMusic.pitch = 1;
-            }
-
-            if (updateSliderBall && !menuPause.activeSelf)
-            {
-                sliderBall.gameObject.SetActive(true);
-                timerSliderBall += Time.deltaTime;
-                sliderBall.value = Mathf.Clamp01(timerSliderBall / cooldownBall);
-
-                if (timerSliderBall >= cooldownBall)
+                if (hit.collider != null)
                 {
-                    updateSliderBall = false;
-                    timerSliderBall = 0f;
-                    sliderBall.gameObject.SetActive(false);
+                    anim.SetBool("IsJumping", false);
+                    anim.SetBool("IsFalling", false);
+                }
+                else
+                {
+                    anim.SetBool("IsJumping", true);
+                    anim.SetBool("IsFalling", true);
                 }
             }
+            else
+            {
+                anim.SetBool("IsJumping", true);
+                anim.SetBool("IsFalling", true);
+            }
+                
+
+
+            if (isPressJumping)
+                verticalVelocity += (gravityScale - gravityScale/3) * Time.deltaTime;
+            else
+                verticalVelocity += gravityScale * Time.deltaTime;
+
         }
+        else
+        {
+
+            if (jumpCooldown)
+            {
+                anim.SetBool("IsJumping", true);
+                anim.SetBool("IsFalling", true);
+            }
+            else
+            {
+                anim.SetBool("IsJumping", false);
+                anim.SetBool("IsFalling", false);
+            }
+        }
+          
+
+        //Move the player
+        if (isMoving && GameManager.instance.canMove)
+        {
+            currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
+            anim.SetBool("IsWalking", true);
+        }
+        else
+        {
+            //Player inertia
+            currentVelocity = Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * 5f);
+        }
+
+        if(isHit && verticalVelocity > 0)
+        {
+            verticalVelocity = 0;
+            
+        }
+
+        if (verticalVelocity < -30)
+            verticalVelocity = -30;
+
+
+        currentVelocity.y = verticalVelocity;
+
+        if(GameManager.instance.canMove)
+            controller.Move(currentVelocity * Time.deltaTime);
+
+        if(transform.position.y < -1.5f)
+        {
+            Dead();
+        }
+
+        if (CheckEnemyAround()) {
+
+            //audioSourceMusic.pitch = Mathf.Lerp(1.0f, 0.7f, Time.deltaTime * 2);
+            audioSourceMusic.pitch = 0.5f;
+        }
+        else if(audioSourceMusic.pitch != 1)
+        {
+            audioSourceMusic.pitch = 1;
+        }
+
+        if (updateSliderBall && !menuPause.activeSelf)
+        {
+            sliderBall.gameObject.SetActive(true);
+            timerSliderBall += Time.deltaTime;
+            sliderBall.value = Mathf.Clamp01(timerSliderBall / cooldownBall);
+
+            if (timerSliderBall >= cooldownBall)
+            {
+                updateSliderBall = false;
+                timerSliderBall = 0f;
+                sliderBall.gameObject.SetActive(false);
+            }
+        }
+    }
 
     
 
-        private void ContinueGame()
+    private void ContinueGame()
+    {
+        if (GameManager.instance.continueGame)
         {
-            if (GameManager.instance.continueGame)
+            if (noteGreen)
             {
-                if (noteGreen)
-                {
-                    ObjectSong script = listSong[0].GetComponent<ObjectSong>();
+                ObjectSong script = listSong[0].GetComponent<ObjectSong>();
 
-                    SpawnImage(script.color);
+                SpawnImage(script.color);
 
-                    AudioSource audio = listSong[0].GetComponent<AudioSource>();
+                AudioSource audio = listSong[0].GetComponent<AudioSource>();
 
-                    sequence.Add(audio.clip);
+                sequence.Add(audio.clip);
 
-                    Transform child = listSong[0].transform.GetChild(0);
-                    child.gameObject.SetActive(false);
-                }
+                Transform child = listSong[0].transform.GetChild(0);
+                child.gameObject.SetActive(false);
+            }
 
-                if (noteRed)
-                {
-                    ObjectSong script = listSong[1].GetComponent<ObjectSong>();
+            if (noteRed)
+            {
+                ObjectSong script = listSong[1].GetComponent<ObjectSong>();
 
-                    SpawnImage(script.color);
+                SpawnImage(script.color);
 
-                    AudioSource audio = listSong[1].GetComponent<AudioSource>();
+                AudioSource audio = listSong[1].GetComponent<AudioSource>();
 
-                    sequence.Add(audio.clip);
+                sequence.Add(audio.clip);
 
-                    Transform child = listSong[1].transform.GetChild(0);
-                    child.gameObject.SetActive(false);
-                }
+                Transform child = listSong[1].transform.GetChild(0);
+                child.gameObject.SetActive(false);
+            }
 
-                if (noteYellow)
-                {
-                    ObjectSong script = listSong[2].GetComponent<ObjectSong>();
+            if (noteYellow)
+            {
+                ObjectSong script = listSong[2].GetComponent<ObjectSong>();
 
-                    SpawnImage(script.color);
+                SpawnImage(script.color);
 
-                    AudioSource audio = listSong[2].GetComponent<AudioSource>();
+                AudioSource audio = listSong[2].GetComponent<AudioSource>();
 
-                    sequence.Add(audio.clip);
+                sequence.Add(audio.clip);
 
-                    Transform child = listSong[2].transform.GetChild(0);
-                    child.gameObject.SetActive(false);
-                }
+                Transform child = listSong[2].transform.GetChild(0);
+                child.gameObject.SetActive(false);
+            }
 
-                if (noteBlue)
-                {
-                    ObjectSong script = listSong[3].GetComponent<ObjectSong>();
+            if (noteBlue)
+            {
+                ObjectSong script = listSong[3].GetComponent<ObjectSong>();
 
-                    SpawnImage(script.color);
+                SpawnImage(script.color);
 
-                    AudioSource audio = listSong[3].GetComponent<AudioSource>();
+                AudioSource audio = listSong[3].GetComponent<AudioSource>();
 
-                    sequence.Add(audio.clip);
+                sequence.Add(audio.clip);
 
-                    Transform child = listSong[3].transform.GetChild(0);
-                    child.gameObject.SetActive(false);
-                }
+                Transform child = listSong[3].transform.GetChild(0);
+                child.gameObject.SetActive(false);
+            }
 
-                controller.enabled = false;
-                this.transform.position = startPosition;
-                controller.enabled = true;
+            controller.enabled = false;
+            this.transform.position = startPosition;
+            controller.enabled = true;
+        }
+    }
+    public void DirKeysPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        inputValues = obj.ReadValue<Vector2>();
+
+        if (inputValues.x > 0 && !mirandoDerecha)
+        {
+            mirandoDerecha = !mirandoDerecha;
+            transform.Rotate(0f, 180f, 0f);
+        }
+        else if (inputValues.x < 0 && mirandoDerecha)
+        {
+            mirandoDerecha = !mirandoDerecha;
+            transform.Rotate(0f, 180f, 0f);
+        }
+    }
+
+
+
+    public void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        isPressJumping = true;
+
+        if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
+            StartCoroutine(Jump());
+
+
+    }
+
+
+    public void JumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        isPressJumping = false;
+    }
+
+    public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        if (!plataformaMovimiento)
+        {
+            if (menuPause.activeSelf)
+            {
+                menuPause.gameObject.SetActive(false);
+
+                GameManager.instance.canMove = true;
+                Time.timeScale = 1;
+                sprite.gameObject.SetActive(true);
+
+                if(sliderBall.value != 1)
+                    sliderBall.gameObject.SetActive(true);
+
+                if (hotspot != null)
+                    hotspot.ShowControl();
+                if (finishLevel != null)
+                    finishLevel.ShowControl();
+
+                GameManager.instance.SaveMusic();
+            }
+            else
+            {
+                GameManager.instance.canMove = false;
+                Time.timeScale = 0;
+                sliderBall.gameObject.SetActive(false);
+
+                menuPause.gameObject.SetActive(true);
+                if (hotspot != null)
+                    hotspot.HideControl();
+                if (finishLevel != null)
+                    finishLevel.HideControl();
+
             }
         }
-        public void DirKeysPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
-            inputValues = obj.ReadValue<Vector2>();
-
-            if (inputValues.x > 0 && !mirandoDerecha)
-            {
-                mirandoDerecha = !mirandoDerecha;
-                transform.Rotate(0f, 180f, 0f);
-            }
-            else if (inputValues.x < 0 && mirandoDerecha)
-            {
-                mirandoDerecha = !mirandoDerecha;
-                transform.Rotate(0f, 180f, 0f);
-            }
-        }
-
-
-
-        public void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
-            isPressJumping = true;
-
-            if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
-                StartCoroutine(Jump());
-
-
-        }
-
-
-        public void JumpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
-            isPressJumping = false;
-            anim.SetBool("IsJumping", false);
-        }
-
-        public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-        {
-            if (!plataformaMovimiento)
-            {
-                if (menuPause.activeSelf)
-                {
-                    menuPause.gameObject.SetActive(false);
-
-                    GameManager.instance.canMove = true;
-                    Time.timeScale = 1;
-                    sprite.gameObject.SetActive(true);
-
-                    if(sliderBall.value != 1)
-                        sliderBall.gameObject.SetActive(true);
-
-                    if (hotspot != null)
-                        hotspot.ShowControl();
-                    if (finishLevel != null)
-                        finishLevel.ShowControl();
-
-                    GameManager.instance.SaveMusic();
-                }
-                else
-                {
-                    GameManager.instance.canMove = false;
-                    Time.timeScale = 0;
-                    sliderBall.gameObject.SetActive(false);
-
-                    menuPause.gameObject.SetActive(true);
-                    if (hotspot != null)
-                        hotspot.HideControl();
-                    if (finishLevel != null)
-                        finishLevel.HideControl();
-
-                }
-            }
-        }
+    }
     public void InterectCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
            anim.SetBool("IsHitting", false);
@@ -674,11 +715,14 @@ public class PlayerMovement : MonoBehaviour
     {
         audioSourceEffectPlayer.clip = aduioJump;
         audioSourceEffectPlayer.Play();
+        yield return null;
         anim.SetBool("IsJumping", true);
-        yield return new WaitForSeconds(0.2f);
+        anim.SetBool("IsFalling", true);
         jumpCooldown = true;
+        yield return new WaitForSeconds(0.1f);
         isHit = false;
-        verticalVelocity = Mathf.Sqrt(jumpForce * -2f * gravityScale);
+        if(controller.isGrounded)
+            verticalVelocity = Mathf.Sqrt(jumpForce * -2f * gravityScale);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
 
     }
