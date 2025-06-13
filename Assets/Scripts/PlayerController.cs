@@ -977,7 +977,7 @@ public class PlayerMovement : MonoBehaviour
         else if (other.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            if (enemy != null && !enemy.isStunned)
+            if (enemy == null || !enemy.isStunned)
                 Dead();
         }
         else if (other.gameObject.CompareTag("PlatformMove"))
