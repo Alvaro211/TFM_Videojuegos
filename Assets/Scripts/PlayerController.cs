@@ -249,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 // Lanzamos un raycast para ver si está cerca del suelo
                 RaycastHit hit;
-                Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.45f, LayerMask.GetMask("Default"));
+                Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.5f, LayerMask.GetMask("Default"));
 
                 if (hit.collider != null)
                 {

@@ -58963,7 +58963,6 @@ MonoBehaviour:
   anim: {fileID: 1716474894}
   cineMachine: {fileID: 1213133950}
   book: {fileID: 1414163933}
-  wenhao: {fileID: 1972768399596795930, guid: d8563094cf2082e419f2934a311632d8, type: 3}
 --- !u!54 &1716474889
 Rigidbody:
   m_ObjectHideFlags: 0
