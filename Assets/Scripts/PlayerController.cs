@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     public SpriteRenderer sprite;
     public GameObject layout;
+    public GameObject wenhao;
 
     private CharacterController controller;
     private Vector3 moveInput;
@@ -91,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
     private bool noteRed = false;
 
     public Book book;
-    public GameObject wenhao;
+    
         void Start()
         {
             GameManager.instance.canMove = true;
@@ -757,6 +758,7 @@ public class PlayerMovement : MonoBehaviour
                 Destroy(obj, cooldownBall);
                
             }
+
             StartCoroutine(HideBall(newBall));
             updateSliderBall = true;
         }
