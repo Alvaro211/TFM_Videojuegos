@@ -90,9 +90,12 @@ public class PlayerMovement : MonoBehaviour
     private bool noteBlue = false;
     private bool noteRed = false;
 
+    private bool isReseting = false;
+    private float timeReset = 0f;
+
     public Book book;
-        void Start()
-        {
+    void Start()
+    {
             GameManager.instance.canMove = true;
             Time.timeScale = 1f;
 
@@ -142,6 +145,8 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Sound5.performed += Sound5Performed;
         inputMap.Player.Sound6.performed += Sound6Performed;
         inputMap.Player.Diary.performed += DiaryPerformed;
+        inputMap.Player.Reset.performed += ResetPerformed;
+        inputMap.Player.Reset.canceled += ResetCanceled;
     }
 
     private void OnDestroy()
@@ -164,6 +169,8 @@ public class PlayerMovement : MonoBehaviour
             inputMap.Player.Sound5.performed -= Sound5Performed;
             inputMap.Player.Sound6.performed -= Sound6Performed;
             inputMap.Player.Diary.performed -= DiaryPerformed;
+            inputMap.Player.Reset.performed -= ResetPerformed;
+            inputMap.Player.Reset.canceled -= ResetCanceled;
         }
     }
 
@@ -192,6 +199,8 @@ public class PlayerMovement : MonoBehaviour
             inputMap.Player.Sound5.performed -= Sound5Performed;
             inputMap.Player.Sound6.performed -= Sound6Performed;
             inputMap.Player.Diary.performed -= DiaryPerformed;
+            inputMap.Player.Reset.performed -= ResetPerformed;
+            inputMap.Player.Reset.canceled -= ResetCanceled;
         }
     }
 
@@ -277,7 +286,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             //Player inertia
-            currentVelocity = Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * 5f);
+            currentVelocity = Vector3.Lerp(currentVelocity, Vector3.zero, Time.deltaTime * 15f);
         }
 
         if(isHit && verticalVelocity > 0)
@@ -322,6 +331,19 @@ public class PlayerMovement : MonoBehaviour
                 timerSliderBall = 0f;
                 sliderBall.gameObject.SetActive(false);
             }
+        }
+
+        if (isReseting && controller.isGrounded && !isMoving) {
+            timeReset += Time.deltaTime;
+
+            if(timeReset > 1)
+            {
+                this.transform.position = startPosition;
+            }
+        }
+        else
+        {
+            timeReset = 0f;
         }
     }
 
@@ -494,6 +516,16 @@ public class PlayerMovement : MonoBehaviour
 
             diary.SetActive(true);
         }
+    }
+
+    public void ResetPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        isReseting = true;
+    }
+
+    public void ResetCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        isReseting = false;
     }
 
     public void InterectPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -897,7 +929,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-         if (other.tag == "HotSpot") {
+        if (other.tag == "HotSpot") {
             isOnHotSpot = true;
             hotspot = other.GetComponent<HotSpot>();
             hotspot.ShowControl();

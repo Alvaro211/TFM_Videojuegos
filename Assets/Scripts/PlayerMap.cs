@@ -152,6 +152,15 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""e65caa2a-ba3b-4e0a-bc8c-e4a08bb7140a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -440,6 +449,17 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""action"": ""Diary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a375a217-82f8-4c35-a065-a4f16506843a"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -462,6 +482,7 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         m_Player_Sound5 = m_Player.FindAction("Sound5", throwIfNotFound: true);
         m_Player_Sound6 = m_Player.FindAction("Sound6", throwIfNotFound: true);
         m_Player_Diary = m_Player.FindAction("Diary", throwIfNotFound: true);
+        m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -537,6 +558,7 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sound5;
     private readonly InputAction m_Player_Sound6;
     private readonly InputAction m_Player_Diary;
+    private readonly InputAction m_Player_Reset;
     public struct PlayerActions
     {
         private @PlayerMap m_Wrapper;
@@ -555,6 +577,7 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         public InputAction @Sound5 => m_Wrapper.m_Player_Sound5;
         public InputAction @Sound6 => m_Wrapper.m_Player_Sound6;
         public InputAction @Diary => m_Wrapper.m_Player_Diary;
+        public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -606,6 +629,9 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @Diary.started += instance.OnDiary;
             @Diary.performed += instance.OnDiary;
             @Diary.canceled += instance.OnDiary;
+            @Reset.started += instance.OnReset;
+            @Reset.performed += instance.OnReset;
+            @Reset.canceled += instance.OnReset;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -652,6 +678,9 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @Diary.started -= instance.OnDiary;
             @Diary.performed -= instance.OnDiary;
             @Diary.canceled -= instance.OnDiary;
+            @Reset.started -= instance.OnReset;
+            @Reset.performed -= instance.OnReset;
+            @Reset.canceled -= instance.OnReset;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -685,5 +714,6 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         void OnSound5(InputAction.CallbackContext context);
         void OnSound6(InputAction.CallbackContext context);
         void OnDiary(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
     }
 }

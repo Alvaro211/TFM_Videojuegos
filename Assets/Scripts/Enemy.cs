@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
                     chasingPlayer = true;
                     anim.SetBool("IsChasing",true);
                     agent.SetDestination(player.position);
-                    agent.speed = 10;
+                    agent.speed = 7;
                     if (currentRoutine != null)
                         StopCoroutine(currentRoutine);
                     currentRoutine = StartCoroutine(WaitPlayerAndReturn());
@@ -200,7 +200,7 @@ public class Enemy : MonoBehaviour
         chasingPlayer = false;
         anim.SetBool("IsIdle", true);
         anim.SetBool("IsChasing", false);
-        agent.speed = 5f;
+        agent.speed = 3f;
         agent.ResetPath();
         if (currentRoutine != null)
             StopCoroutine(currentRoutine);
