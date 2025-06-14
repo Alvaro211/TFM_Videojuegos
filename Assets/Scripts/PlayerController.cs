@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
         GameManager.instance.playerMovement = this;
 
-        if (/*GameManager.instance.newGame*/true)
+        if (GameManager.instance.newGame)
         {
             GameManager.instance.newGame = false;
             startPosition = transform.position;
