@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public bool isOpenDoorGreenYellow = false;
     public bool isOpenDoorBoss = false;
 
-    public bool newGame = false;
+    public bool newGame = true;
 
     private void Awake()
     {

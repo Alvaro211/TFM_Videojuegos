@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
         GameManager.instance.playerMovement = this;
 
-        if (GameManager.instance.newGame)
+        if (/*GameManager.instance.newGame*/true)
         {
             GameManager.instance.newGame = false;
             startPosition = transform.position;
@@ -769,7 +769,7 @@ public class PlayerMovement : MonoBehaviour
                     newBall.transform.position = transform.position + new Vector3(-2, 1, 0);
             }
             Enemy[] enemies = FindObjectsOfType<Enemy>();
-            foreach(var e in enemies)
+           /* foreach(var e in enemies)
             {
                 GameObject obj = Instantiate(wenhao);
                 obj.GetComponent<CameraForward>().target = e.transform;
