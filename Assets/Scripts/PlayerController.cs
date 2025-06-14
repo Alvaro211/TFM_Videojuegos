@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
 
     public SpriteRenderer sprite;
     public GameObject layout;
-    public GameObject wenhao;
 
     private CharacterController controller;
     private Vector3 moveInput;
@@ -794,7 +793,7 @@ public class PlayerMovement : MonoBehaviour
                     newBall.transform.position = transform.position + new Vector3(-2, 1, 0);
             }
             Enemy[] enemies = FindObjectsOfType<Enemy>();
-            /*foreach(var e in enemies)
+            foreach(var e in enemies)
             {
                 GameObject obj = Instantiate(wenhao);
                 obj.GetComponent<CameraForward>().target = e.transform;

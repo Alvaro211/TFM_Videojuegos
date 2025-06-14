@@ -15,6 +15,6 @@ public class CameraForward : MonoBehaviour
     void Update()
     {
         transform.position
-               = target.position+Vector3.up*3f;
+               = target.position+Vector3.up*4f;
     }
 }
