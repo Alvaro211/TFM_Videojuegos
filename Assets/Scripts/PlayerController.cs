@@ -204,14 +204,15 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput.magnitude > 0.1f)
         {
             isMoving = true;
-            anim.SetBool("IsWalking", true);
+            if(GameManager.instance.canMove)
+                anim.SetBool("IsWalking", true);
             
         }
-
         else
         {
             isMoving = false;
-            anim.SetBool("IsWalking", false);
+            if (GameManager.instance.canMove)
+                anim.SetBool("IsWalking", false);
         }
             
 
@@ -272,7 +273,6 @@ public class PlayerMovement : MonoBehaviour
         if (isMoving)
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
-            anim.SetBool("IsWalking", true);
         }
         else
         {
@@ -828,6 +828,7 @@ public class PlayerMovement : MonoBehaviour
         controller.enabled = false;
         transform.position = startPosition;
         controller.enabled = true;
+        currentVelocity = Vector3.zero;
         imageDamage.gameObject.SetActive(true);
         StartCoroutine(TrasparentDamage(3f));
     }
@@ -998,6 +999,7 @@ public class PlayerMovement : MonoBehaviour
             GameManager.instance.defeatBoss = true;
         }else if (other.gameObject.CompareTag("Animation2"))
         {
+            anim.SetBool("IsWalking", false);
             GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel2();
@@ -1005,6 +1007,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Animation3"))
         {
+            anim.SetBool("IsWalking", false);
             GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel3();
@@ -1012,6 +1015,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Animation4"))
         {
+            anim.SetBool("IsWalking", false);
             GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel4();
