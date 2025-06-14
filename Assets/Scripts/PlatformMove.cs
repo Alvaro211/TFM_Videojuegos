@@ -20,7 +20,7 @@ public class PlatformMove : MonoBehaviour
     private Vector3 initialPosition;
     private Vector3 positionToReturn;
     private Vector3 targetPosition;
-    private bool isMoved = false;
+    private bool isMoved = true;
     private bool isMoving = false;
 
     private Renderer objRenderer;
@@ -117,6 +117,7 @@ public class PlatformMove : MonoBehaviour
 
     public void ResetEffect()
     {
+        isMoved = !isMoved;
         corutine = StartCoroutine(ResetPlatform());
         if (inActivatedMaterial != null && objRenderer != null)
         {

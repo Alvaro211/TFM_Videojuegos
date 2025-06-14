@@ -92,7 +92,6 @@ public class PlayerMovement : MonoBehaviour
     private bool noteRed = false;
 
     public Book book;
-    public GameObject wenhao;
         void Start()
         {
             GameManager.instance.canMove = true;
@@ -103,15 +102,16 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
 
         GameManager.instance.playerMovement = this;
+
         if (GameManager.instance.newGame)
-        {
-            GameManager.instance.Load();
-            ContinueGame();
-        }
-        else
         {
             GameManager.instance.newGame = false;
             startPosition = transform.position;
+        }
+        else
+        {
+            GameManager.instance.Load();
+            ContinueGame();
         }
 
             
@@ -171,28 +171,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         souning = false;
-
-        /*  if (inputMap == null)
-            inputMap = new PlayerMap();
-
-        inputMap.Enable();
-
-        inputMap.Player.Movement.performed += DirKeysPerformed;
-        inputMap.Player.Movement.canceled += DirKeysPerformed;
-        inputMap.Player.Interact.performed += InterectPerformed;
-        inputMap.Player.Interact.canceled += InterectCanceled;
-        inputMap.Player.Sequence.performed += SequencePerformed;
-        inputMap.Player.Sphere.performed += SpherePerformed;
-        inputMap.Player.Jump.performed += JumpPerformed;
-        inputMap.Player.Jump.canceled += JumpCanceled;
-        inputMap.Player.Options.performed += OptionsPerformed;
-        inputMap.Player.Sound1.performed += Sound1Performed;
-        inputMap.Player.Sound2.performed += Sound2Performed;
-        inputMap.Player.Sound3.performed += Sound3Performed;
-        inputMap.Player.Sound4.performed += Sound4Performed;
-        inputMap.Player.Sound5.performed += Sound5Performed;
-        inputMap.Player.Sound6.performed += Sound6Performed;
-        inputMap.Player.Diary.performed += DiaryPerformed;*/
     }
 
     private void OnDisable()
@@ -220,10 +198,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(inputValues.x == 1)
-        {
-
-        }
         
         moveInput.x = inputValues.x;
         moveInput.Normalize(); // Evita moverse más rápido en diagonal
@@ -291,10 +265,12 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetBool("IsFalling", false);
             }
         }
-          
+
+        if (!GameManager.instance.canMove)
+            moveInput.x = 0;
 
         //Move the player
-        if (isMoving && GameManager.instance.canMove)
+        if (isMoving)
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
             anim.SetBool("IsWalking", true);
@@ -317,7 +293,7 @@ public class PlayerMovement : MonoBehaviour
 
         currentVelocity.y = verticalVelocity;
 
-        if(GameManager.instance.canMove)
+       // if(GameManager.instance.canMove)
             controller.Move(currentVelocity * Time.deltaTime);
 
         if(transform.position.y < -1.5f)
@@ -801,7 +777,7 @@ public class PlayerMovement : MonoBehaviour
 
                 Destroy(obj, cooldownBall);
                
-            }
+            }*/
             StartCoroutine(HideBall(newBall));
             updateSliderBall = true;
         }

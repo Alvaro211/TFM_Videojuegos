@@ -29,13 +29,16 @@ public class ControlMenu : MonoBehaviour
     }
     public void Play()
     {
-        if(GameManager.instance.continueGame)
+        if (GameManager.instance.continueGame)
+        {
+            GameManager.instance.newGame = false;
             SceneManager.LoadScene(1);
+        }
     }
 
     public void PlayNewGame()
     {
-        GameManager.instance.newGame = false;
+        GameManager.instance.newGame = true;
         SceneManager.LoadScene(1);
     }
 
@@ -51,6 +54,11 @@ public class ControlMenu : MonoBehaviour
         options.gameObject.SetActive(false);
 
         GameManager.instance.SaveMusicMenu();
+    }
+
+    public void HideOptionsPlay()
+    {
+        options.gameObject.SetActive(false);
     }
 
     public void Exit()
