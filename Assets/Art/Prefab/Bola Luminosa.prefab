@@ -741,6 +741,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2538dfd922769b64fbb9e6dabfade989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bounceCount: 0
   ascendSpeed: 1
+  isAscending: 0
   velocityX: 0
   velocityY: 0

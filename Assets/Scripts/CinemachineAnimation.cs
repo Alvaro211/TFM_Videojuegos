@@ -24,6 +24,13 @@ public class CinemachineAnimation : MonoBehaviour
 
     public Transform canvas;
 
+    public GameObject ball;
+    public GameObject enemy;
+    public GameObject enemyAnimation1;
+
+    private GameObject enemyInstanciate;
+    private GameObject ballInstanciate;
+
     private void Start()
     {
         var dolly = virtualCamera1.GetCinemachineComponent<CinemachineTrackedDolly>();
@@ -93,7 +100,22 @@ public class CinemachineAnimation : MonoBehaviour
             GameManager.instance.canMove = false;
             TurnOnLightsLevel1();
             directorLevel1.Play();
+            enemyAnimation1.SetActive(false);
+            enemyInstanciate = Instantiate(enemy, new Vector3(792, 17, -8), Quaternion.identity);
+            Enemy enemyScrupt = enemyInstanciate.GetComponent<Enemy>();
+            enemyScrupt.patrolDistance = 0;
+            enemyInstanciate.SetActive(true);
+            Invoke("ShowBallAndEnemy", 9f);
         }
+    }
+
+    private void ShowBallAndEnemy()
+    {
+        ballInstanciate = Instantiate(ball, new Vector3(784, 18.5f, -8), Quaternion.identity);
+
+        Rigidbody rb = ballInstanciate.GetComponent<Rigidbody>();
+        rb.velocity = new Vector3(0, -10, 0);
+        rb.isKinematic = false;
     }
 
     private void OnTimelineFinishedLevel1(PlayableDirector pd)
@@ -101,6 +123,11 @@ public class CinemachineAnimation : MonoBehaviour
         TurnOffLightsLevel1();
         canvas.gameObject.SetActive(true);
         GameManager.instance.canMove = true;
+
+
+        enemyInstanciate.SetActive(false);
+        enemyAnimation1.SetActive(true);
+        ballInstanciate.SetActive(false);
     }
 
     public void TurnOffLightsLevel1()

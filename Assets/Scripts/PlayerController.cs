@@ -44,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
     private HotSpot hotspot;
 
     private bool isPressJumping;
-    private float launchForce = 5f; // Fuerza con la que se lanza la bola
 
     private bool updateSliderBall = false;
     private float timerSliderBall = 0f;
@@ -55,8 +54,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isHit = false;
     private Vector3 currentVelocity;
     private bool jumpCooldown;
-    private int currentIndex = 0;
-    // private int indexBallImage = 0;
     private bool ballLauch;
     private bool onBoss = false;
     private BossLight bossLight;

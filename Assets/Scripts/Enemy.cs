@@ -16,7 +16,6 @@ public class Enemy : MonoBehaviour
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private bool movingForward = true; 
-    private bool waiting = false;
     private bool chasingBall = false;
     private bool chasingPlayer = false;
 
@@ -46,6 +45,8 @@ public class Enemy : MonoBehaviour
             player = playerObj.transform;
 
         sprite = this.gameObject.GetComponentInChildren<SpriteRenderer>();
+
+        anim = this.transform.GetChild(0).transform.GetComponent<Animator>();
     }
 
     void Update()
@@ -123,25 +124,19 @@ public class Enemy : MonoBehaviour
     {
         if (chasingBall || chasingPlayer) yield break;
 
-        waiting = true; // Evita múltiples llamadas
-
-
-        
-
         yield return new WaitForSeconds(waitTime); // Espera antes de cambiar dirección
        
 
         // Cambiar destino
         if (!chasingBall && !chasingPlayer)
         {
-            anim.SetBool("IsIdle", false);
+            if(patrolDistance != 0)
+                anim.SetBool("IsIdle", false);
             agent.SetDestination(movingForward ? startPosition : targetPosition);
             movingForward = !movingForward;
 
             ComprobarDireccionSprite();
         }
-
-        waiting = false;
 
         currentRoutineName = "";
     }
