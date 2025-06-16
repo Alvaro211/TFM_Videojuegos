@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
     private List<GameObject> spawnedImages = new List<GameObject>();
     private int sound = -1;
 
-    private PlatformMove plataformaMovimiento;
+    private PlatformMove movingPlatform;
     private Vector3 positionEscape;
 
     //Animaciones
@@ -243,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
                     anim.SetBool("IsFalling", true);
                 }
             }
-            else
+            else if(movingPlatform == null)
             {
                 anim.SetBool("IsJumping", true);
                 anim.SetBool("IsFalling", true);
@@ -447,7 +447,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (!plataformaMovimiento)
+        if (!movingPlatform)
         {
             if (menuPause.activeSelf)
             {
@@ -586,9 +586,9 @@ public class PlayerMovement : MonoBehaviour
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
 
-            if (plataformaMovimiento != null)
+            if (movingPlatform != null)
             {
-                plataformaMovimiento.MovePlatform(1);
+                movingPlatform.MovePlatform(1);
             }
         }
     }
@@ -604,9 +604,9 @@ public class PlayerMovement : MonoBehaviour
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
 
-            if (plataformaMovimiento != null)
+            if (movingPlatform != null)
             {
-                plataformaMovimiento.MovePlatform(2);
+                movingPlatform.MovePlatform(2);
             }
         }
     }
@@ -726,7 +726,7 @@ public class PlayerMovement : MonoBehaviour
         jumpCooldown = true;
         yield return new WaitForSeconds(0.1f);
         isHit = false;
-        if(controller.isGrounded)
+        if(controller.isGrounded || movingPlatform != null)
             verticalVelocity = Mathf.Sqrt(jumpForce * -2f * gravityScale);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
 
@@ -917,10 +917,10 @@ public class PlayerMovement : MonoBehaviour
             isOnFinishLevel = false;
             finishLevel.HideControl();
             finishLevel.ClearSequence();
-        }else if (other.gameObject.CompareTag("PlatformMove") && plataformaMovimiento != null)
+        }else if (other.gameObject.CompareTag("PlatformMove") && movingPlatform != null)
         {
-            plataformaMovimiento.ResetEffect();
-            plataformaMovimiento = null;
+            movingPlatform.ResetEffect();
+            movingPlatform = null;
         }
     }
 
@@ -989,8 +989,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (other.gameObject.TryGetComponent<PlatformMove>(out PlatformMove mover))
             {
-                plataformaMovimiento = mover;
-                plataformaMovimiento.ActivateEffect();
+                movingPlatform = mover;
+                movingPlatform.ActivateEffect();
             }
         }
         else if (other.gameObject.CompareTag("ObjetoCancion"))
