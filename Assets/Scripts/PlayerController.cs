@@ -91,10 +91,15 @@ public class PlayerMovement : MonoBehaviour
     private float timeReset = 0f;
 
     public Book book;
+
+    public bool[] hearingSound;
+
     void Start()
     {
-            GameManager.instance.canMove = true;
-            Time.timeScale = 1f;
+        GameManager.instance.canMove = true;
+        Time.timeScale = 1f;
+
+        hearingSound = new bool[4];
 
         sequence = new List<AudioClip>();
 
@@ -921,6 +926,25 @@ public class PlayerMovement : MonoBehaviour
         {
             movingPlatform.ResetEffect();
             movingPlatform = null;
+        }if (other.CompareTag("HearingSound"))
+        {
+            HeardSound heard = other.GetComponent<HeardSound>();
+            if (heard != null)
+            {
+                hearingSound[heard.heardSound] = false;
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("HearingSound"))
+        {
+            HeardSound heard = other.GetComponent<HeardSound>();
+            if (heard != null)
+            {
+                hearingSound[heard.heardSound] = true;
+            }
         }
     }
 

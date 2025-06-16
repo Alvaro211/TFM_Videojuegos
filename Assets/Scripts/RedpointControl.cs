@@ -9,6 +9,8 @@ public class RedpointControl : MonoBehaviour
 
     public BallTarget[] all;
     public Toggle t;
+
+    private PlayerMovement movement;
     void Start()
     {
         foreach (var b in all)
@@ -23,12 +25,15 @@ public class RedpointControl : MonoBehaviour
                 a.redPoint.SetActive(b);
             }
         });
+
+        movement = player.GetComponent<PlayerMovement>();
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        int i = 0;
         foreach (var a in all)
         {
 
@@ -42,7 +47,7 @@ public class RedpointControl : MonoBehaviour
             {
                 if (b.ball.transform.GetChild(0).GetChild(0).gameObject.activeSelf)
                 {
-                    if (Vector3.Distance(transform.position, b.ball.transform.position) <= 50f)
+                    if (movement.hearingSound[i])
                     {
                         b.redPoint.SetActive(true);
                     }
@@ -55,6 +60,8 @@ public class RedpointControl : MonoBehaviour
                 {
                     b.redPoint.SetActive(false);
                 }
+
+                i++;
             }
         }
         else
@@ -63,9 +70,9 @@ public class RedpointControl : MonoBehaviour
             {
                 foreach (var b in all)
                 {
-                    if (b.ball.activeSelf)
+                    if (b.ball.transform.GetChild(0).GetChild(0).gameObject.activeSelf)
                     {
-                        if (Vector3.Distance(transform.position, b.ball.transform.position) <= 50f)
+                        if (movement.hearingSound[i])
                         {
                             b.redPoint.SetActive(true);
                         }
@@ -78,6 +85,8 @@ public class RedpointControl : MonoBehaviour
                     {
                         b.redPoint.SetActive(false);
                     }
+
+                    i++;
                 }
                 StopAllCoroutines();
                 StartCoroutine(Fade());

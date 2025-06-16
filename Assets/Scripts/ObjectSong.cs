@@ -12,21 +12,24 @@ public class ObjectSong : MonoBehaviour
     public GameObject player;
 
     public Color color;
+    public int indexSound;
 
     private bool isSouning;
+    private PlayerMovement movement;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>(); // Obtiene el AudioSource del mismo GameObject
         isSouning = false;
+
+        movement = player.GetComponent<PlayerMovement>();
     }
 
     private void Update()
     {
-        float distancia = Vector3.Distance(transform.position, player.transform.position);
-       // Debug.Log("Distancia al jugador: " + distancia);
-        if (!isSouning && distancia < 40f)
+        
+        if (!isSouning && movement.hearingSound[indexSound])
         {
             StartCoroutine(SoundItemCoorutine());
         }

@@ -21,6 +21,7 @@ TagManager:
   - Animation3
   - Animation4
   - Collectionable
+  - HearingSound
   layers:
   - Default
   - TransparentFX
