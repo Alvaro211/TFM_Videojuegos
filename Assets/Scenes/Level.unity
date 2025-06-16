@@ -2521,6 +2521,11 @@ PrefabInstance:
       propertyPath: color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3048619763883720908, guid: bc2b315902cf9af4ea83c4eb4901215a,
+        type: 3}
+      propertyPath: indexSound
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5419106627249601146, guid: bc2b315902cf9af4ea83c4eb4901215a,
         type: 3}
       propertyPath: m_Radius
@@ -35760,6 +35765,11 @@ PrefabInstance:
       propertyPath: color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3048619763883720908, guid: bc2b315902cf9af4ea83c4eb4901215a,
+        type: 3}
+      propertyPath: indexSound
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5419106627249601146, guid: bc2b315902cf9af4ea83c4eb4901215a,
         type: 3}
       propertyPath: m_Radius
@@ -67084,6 +67094,11 @@ PrefabInstance:
         type: 3}
       propertyPath: color.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048619763883720908, guid: bc2b315902cf9af4ea83c4eb4901215a,
+        type: 3}
+      propertyPath: indexSound
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5419106627249601146, guid: bc2b315902cf9af4ea83c4eb4901215a,
         type: 3}
