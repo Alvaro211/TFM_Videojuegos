@@ -94,8 +94,12 @@ public class PlayerMovement : MonoBehaviour
 
     public bool[] hearingSound;
 
+    public GameObject helpBall;
+    private Vector3 originPositionHelpBall;
+
     void Start()
     {
+        
         GameManager.instance.canMove = true;
         Time.timeScale = 1f;
 
@@ -128,6 +132,8 @@ public class PlayerMovement : MonoBehaviour
             image.color = Color.white;      
         }
 
+        originPositionHelpBall = helpBall.transform.position;
+
         inputMap = new PlayerMap();
         inputMap.Enable();
 
@@ -137,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Interact.canceled += InterectCanceled;
         inputMap.Player.Sequence.performed += SequencePerformed;
         inputMap.Player.Sphere.performed += SpherePerformed;
+        inputMap.Player.Sphere.canceled += SphereCanceled;
         inputMap.Player.Jump.performed += JumpPerformed;
         inputMap.Player.Jump.canceled += JumpCanceled;
         inputMap.Player.Options.performed += OptionsPerformed;
@@ -161,6 +168,7 @@ public class PlayerMovement : MonoBehaviour
             inputMap.Player.Interact.canceled -= InterectCanceled;
             inputMap.Player.Sequence.performed += SequencePerformed;
             inputMap.Player.Sphere.performed -= SpherePerformed;
+            inputMap.Player.Sphere.canceled -= SphereCanceled;
             inputMap.Player.Jump.performed -= JumpPerformed;
             inputMap.Player.Jump.canceled -= JumpCanceled;
             inputMap.Player.Options.performed -= OptionsPerformed;
@@ -191,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
             inputMap.Player.Interact.canceled -= InterectCanceled;
             inputMap.Player.Sequence.performed -= SequencePerformed;
             inputMap.Player.Sphere.performed -= SpherePerformed;
+            inputMap.Player.Sphere.canceled -= SphereCanceled;
             inputMap.Player.Jump.performed -= JumpPerformed;
             inputMap.Player.Jump.canceled -= JumpCanceled;
             inputMap.Player.Options.performed -= OptionsPerformed;
@@ -347,6 +356,42 @@ public class PlayerMovement : MonoBehaviour
         {
             timeReset = 0f;
         }
+
+        if (helpBall.activeInHierarchy)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            Plane plane = new Plane(Vector3.up, new Vector3(0, helpBall.transform.position.y, 0));
+
+            if (plane.Raycast(ray, out float enter))
+            {
+                Vector3 hitPoint = ray.GetPoint(enter);
+                Vector3 direction = hitPoint - transform.position;
+
+                float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg / 2f;
+                angle = Mathf.Clamp(angle, -40f, 40f);
+                helpBall.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+                Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+                float distanceFromCenter = Vector2.Distance(Input.mousePosition, screenCenter);
+
+                float maxScreenDistance = screenCenter.magnitude;
+                float t = distanceFromCenter / maxScreenDistance;
+
+                float minScale = 0.2f;
+                float maxScale = 0.6f;
+                float finalScale = Mathf.Lerp(minScale, maxScale, t);
+
+                float playerYRotation = transform.rotation.eulerAngles.y;
+                if ((playerYRotation == 0 && hitPoint.x < transform.position.x) || (playerYRotation == 180 && hitPoint.x > transform.position.x))
+                {
+                    finalScale = minScale/2;
+                    helpBall.transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+
+                helpBall.transform.localScale = new Vector3(finalScale, 1, 1);
+            }
+        }
     }
 
     
@@ -438,7 +483,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isPressJumping = true;
 
-        if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown)
+        if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown && GameManager.instance.canMove)
             StartCoroutine(Jump());
 
 
@@ -557,13 +602,19 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(finishLevel.PlaySoundsInSequence(audioSourceSequence));
         }
     }
-
+    
     public void SpherePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        helpBall.SetActive(true);
+    }
+
+    public void SphereCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         if (!ballLauch)
         {
             LaunchBall();
         }
+        helpBall.SetActive(false);
     }
 
     public void TakeSoundPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -768,10 +819,22 @@ public class PlayerMovement : MonoBehaviour
     {
         if (poolBall != null)
         {
-            ballLauch = true;
-
             // Obtener la posición del ratón en el mundo
             Vector3 mousePosition = GetMouseWorldPosition();
+            float directionToMouseX = mousePosition.x - transform.position.x;
+
+            // Obtener rotación en Y del jugador
+            float playerYRotation = transform.rotation.eulerAngles.y;
+
+            // Si está rotado hacia la derecha (0°) pero el ratón está a la izquierda, cancelar
+            if (playerYRotation == 0 && directionToMouseX < 0)
+                return;
+
+            // Si está rotado hacia la izquierda (180°) pero el ratón está a la derecha, cancelar
+            if (playerYRotation == 180 && directionToMouseX > 0)
+                return;
+
+            ballLauch = true;
 
             // Crear la bola desde el pool
             GameObject newBall = poolBall.GetInactivePrefab();
@@ -788,6 +851,12 @@ public class PlayerMovement : MonoBehaviour
                 // Calcular dirección hacia el ratón
                 Vector3 direction = (mousePosition - transform.position).normalized;
                 direction.z = 0;
+
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                angle = Mathf.Clamp(angle, -40f, 40f);
+                float angleRad = angle * Mathf.Deg2Rad;
+                direction = new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0).normalized;
+
                 ballBuounce.velocityY = direction.y;
                 ballBuounce.velocityX = direction.x;
                 ballBuounce.bounceCount = 0;
