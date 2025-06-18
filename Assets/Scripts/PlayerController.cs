@@ -23,7 +23,10 @@ public class PlayerMovement : MonoBehaviour
     public RawImage[] notes;
     public UnityEngine.UI.Slider sliderBall;
     public RawImage imageDamage;
-    public AudioClip aduioJump;
+    public AudioClip audioJump;
+    public AudioClip audioThrowBall;
+    public AudioClip audioDead;
+    public AudioClip audioTakeNote;
     public GameObject diary;
 
     public List<Enemy> listEnemy = new List<Enemy>();
@@ -246,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
                 RaycastHit hit;
                 Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.5f, LayerMask.GetMask("Default"));
 
-                if (hit.collider != null)
+                if (hit.collider != null && !jumpCooldown && verticalVelocity < 0)
                 {
                     anim.SetBool("IsJumping", false);
                     anim.SetBool("IsFalling", false);
@@ -257,7 +260,7 @@ public class PlayerMovement : MonoBehaviour
                     anim.SetBool("IsFalling", true);
                 }
             }
-            else if(movingPlatform == null)
+            else if(movingPlatform == null && Time.timeScale == 1)
             {
                 anim.SetBool("IsJumping", true);
                 anim.SetBool("IsFalling", true);
@@ -369,9 +372,30 @@ public class PlayerMovement : MonoBehaviour
                 Debug.DrawLine(ray.origin, hitPoint, Color.red);
                 Vector3 direction = hitPoint - transform.position;
 
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                angle = Mathf.Clamp(angle, -40f, 40f);
-                helpBall.transform.rotation = Quaternion.Euler(0, 0, angle);
+                float rawAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                float playerYRotation = transform.rotation.eulerAngles.y;
+                float finalAngle = rawAngle;
+
+                // Mirando a la izquierda
+                if (Mathf.Abs(playerYRotation - 180f) < 1f)
+                {
+                    helpBall.GetComponent<SpriteRenderer>().flipY = true;
+                    if (rawAngle > -140f && rawAngle < 140f)
+                    {
+                        if (rawAngle >= 0)
+                            finalAngle = 140f;
+                        else
+                            finalAngle = -140f;
+                    }
+                }
+                // Mirando a la derecha
+                else
+                {
+                    finalAngle = Mathf.Clamp(rawAngle, -40f, 40f);
+                }
+
+                helpBall.transform.rotation = Quaternion.Euler(0, 0, finalAngle);
 
                 Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
                 float distanceFromCenter = Vector2.Distance(Input.mousePosition, screenCenter);
@@ -379,13 +403,12 @@ public class PlayerMovement : MonoBehaviour
                 float maxScreenDistance = screenCenter.magnitude;
                 float t = distanceFromCenter / maxScreenDistance;
 
-                float minScale = 0.2f;
-                float maxScale = 0.6f;
+                float minScale = 0.15f;
+                float maxScale = 0.45f;
                 float finalScale = Mathf.Lerp(minScale, maxScale, t);
 
-                float playerYRotation = transform.rotation.eulerAngles.y;
-                if ((playerYRotation < 0.1f && playerYRotation > -0.1f && hitPoint.x < transform.position.x+4) || //+4 por la distancia del srpite
-                    (playerYRotation < 180.1f && playerYRotation > 179.9f && hitPoint.x > transform.position.x+4))
+                if ((playerYRotation < 0.1f && playerYRotation > -0.1f && hitPoint.x < transform.position.x + 4) || //+4 por la distancia del srpite
+                    (playerYRotation < 180.1f && playerYRotation > 179.9f && hitPoint.x > transform.position.x - 3))
                 {
                     finalScale = minScale/2;
                     helpBall.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -776,7 +799,7 @@ public class PlayerMovement : MonoBehaviour
     // Método para aplicar el salto
     IEnumerator Jump()
     {
-        audioSourceEffectPlayer.clip = aduioJump;
+        audioSourceEffectPlayer.clip = audioJump;
         audioSourceEffectPlayer.Play();
         yield return null;
         anim.SetBool("IsJumping", true);
@@ -854,31 +877,36 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 rawDirection = (mousePosition - transform.position).normalized;
                 rawDirection.z = 0;
 
-                // Calcula ángulo y limita
+                // Calcula el ángulo del disparo
                 float rawAngle = Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg;
 
-                float minAngle, maxAngle;
-
-                if (playerYRotation < 1f || playerYRotation > 359f) // mirando a la derecha
+                // Si está mirando a la izquierda (rotación Y cercana a 180)
+                if (Mathf.Abs(playerYRotation - 180f) < 1f)
                 {
-                    minAngle = -40f;
-                    maxAngle = 40f;
+                    // Si está fuera del rango permitido hacia la izquierda, lo forzamos
+                    if (rawAngle > -140f && rawAngle < 140f)
+                    {
+                        // Si está por encima, lo forzamos a 140
+                        if (rawAngle >= 0)
+                            rawAngle = 140f;
+                        else // Si está por debajo, lo forzamos a -140
+                            rawAngle = -140f;
+                    }
                 }
                 else
                 {
-                    minAngle = 140f;
-                    maxAngle = 220f;
+                    // Está mirando a la derecha: limitar entre -40 y 40
+                    rawAngle = Mathf.Clamp(rawAngle, -40f, 40f);
                 }
 
-                float clampedAngle = Mathf.Clamp(rawAngle, minAngle, maxAngle);
-                Debug.Log(rawAngle + "      " + clampedAngle);
-
-                // Reconstruye dirección solo si hay que limitar
-                float angleRad = clampedAngle * Mathf.Deg2Rad;
+                // Reconstruye la dirección
+                float angleRad = rawAngle * Mathf.Deg2Rad;
                 Vector3 direction = new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0).normalized;
 
+
+
                 // Importante: si el ángulo original era < -40 o > 40, reemplaza; si no, usa raw
-                if (Mathf.Abs(clampedAngle - Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg) < 0.1f)
+                if (Mathf.Abs(angleRad - Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg) < 0.1f)
                     direction = rawDirection;
 
                 ballBuounce.velocityY = direction.y;
@@ -894,6 +922,9 @@ public class PlayerMovement : MonoBehaviour
                 else
 
                     newBall.transform.position = transform.position + new Vector3(-2, 1, 0);
+
+                audioSourceEffectPlayer.clip = audioJump;
+                audioSourceEffectPlayer.Play();
             }
 
 
@@ -953,7 +984,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dead()
     {
-        
+        audioSourceEffectPlayer.clip = audioDead;
+        audioSourceEffectPlayer.Play();
+
         controller.enabled = false;
         transform.position = startPosition;
         controller.enabled = true;
@@ -1123,9 +1156,10 @@ public class PlayerMovement : MonoBehaviour
 
                 sequence.Add(objectSong.audioSource.clip);
 
-                //objectSong.HideControl();
+                audioSourceEffectPlayer.clip = audioTakeNote;
+                audioSourceEffectPlayer.Play();
 
-                if(other.gameObject.name == "BolaCancionGreen")
+                if (other.gameObject.name == "BolaCancionGreen")
                 {
                     noteGreen = true;
                 }

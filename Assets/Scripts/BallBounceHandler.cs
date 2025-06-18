@@ -22,10 +22,12 @@ public class BallBounceHandler : MonoBehaviour
 
     private List<Light> lightBounce = new List<Light>();
 
+    private AudioSource audio;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<SphereCollider>();
+        audio = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -53,6 +55,8 @@ public class BallBounceHandler : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        audio.Play();
+
         if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("HotSpot"))
         {
 
@@ -68,17 +72,6 @@ public class BallBounceHandler : MonoBehaviour
             // Verificar si la colisión vino desde abajo (normal apunta hacia arriba)
             if (Vector3.Dot(contactNormal, Vector3.up) < 0.5f)
             {
-                /* rb.isKinematic = false;
-                 rb.constraints = RigidbodyConstraints.None;
-
-
-                 Debug.Log(velocity);
-
-                 Vector3 reactionForce = -contactNormal.normalized * 10f; // fuerza manual de prueba
-                 transform.position += reactionForce * 0.1f;
-                 rb.AddForce(reactionForce, ForceMode.Impulse);
-
-                 Debug.Log(" Fuerza aplicada: " + reactionForce);*/
                 velocity.x = -velocity.x;
                 rb.velocity = velocity * 0.7f;
 
