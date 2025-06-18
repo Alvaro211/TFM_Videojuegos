@@ -9,10 +9,12 @@ public class Colleccionable : MonoBehaviour
     public int indexCollecionable;
 
     private Vector3 startPos;
+    private AudioSource audio;
 
     void Start()
     {
         startPos = transform.position;
+        audio = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -20,5 +22,11 @@ public class Colleccionable : MonoBehaviour
         // Movimiento vertical tipo onda senoidal
         float yOffset = Mathf.Sin(Time.time * frequency) * amplitude;
         transform.position = startPos + new Vector3(0f, yOffset, 0f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            audio.Play();
     }
 }

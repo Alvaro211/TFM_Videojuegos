@@ -61842,7 +61842,8 @@ MonoBehaviour:
   audioJump: {fileID: 8300000, guid: 5406a44e362eae14fa45087bc850857b, type: 3}
   audioThrowBall: {fileID: 8300000, guid: 8cab76f00029c10458089cfc5665f4e8, type: 3}
   audioDead: {fileID: 8300000, guid: 854ab912d4e253440ab036051146357a, type: 3}
-  audioTakeNote: {fileID: 0}
+  audioTakeNote: {fileID: 8300000, guid: 3cecd82a9cd33cf43998b3c57613555e, type: 3}
+  audioOpenDiary: {fileID: 8300000, guid: 3cecd82a9cd33cf43998b3c57613555e, type: 3}
   diary: {fileID: 1414163932}
   listEnemy:
   - {fileID: 2132533458}

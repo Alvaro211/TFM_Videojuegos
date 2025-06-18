@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip audioThrowBall;
     public AudioClip audioDead;
     public AudioClip audioTakeNote;
+    public AudioClip audioOpenDiary;
     public GameObject diary;
 
     public List<Enemy> listEnemy = new List<Enemy>();
@@ -564,6 +565,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void DiaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
+        audioSourceEffectPlayer.clip = audioOpenDiary;
+        audioSourceEffectPlayer.Play();
+
         if (diary.activeSelf)
         {
             diary.SetActive(false);

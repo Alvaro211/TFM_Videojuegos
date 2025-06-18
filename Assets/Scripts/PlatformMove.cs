@@ -25,6 +25,7 @@ public class PlatformMove : MonoBehaviour
 
     private Renderer objRenderer;
     private Coroutine corutine;
+    private AudioSource audio;
 
     private void Start()
     {
@@ -33,6 +34,7 @@ public class PlatformMove : MonoBehaviour
         positionToReturn = initialPosition;
 
         objRenderer = platform.GetComponent<Renderer>();
+        audio = GetComponent<AudioSource>();
     }
 
 
@@ -40,6 +42,8 @@ public class PlatformMove : MonoBehaviour
     public void MovePlatform(int index)
     {
         if (isMoving || (index == 1 && !activatedPlatform1) || (index == 2 && activatedPlatform1)) return; // Evita activar el movimiento si ya se está moviendo
+
+        audio.Play();
 
         isMoved = !isMoved;
         targetPosition = isMoved
