@@ -361,14 +361,15 @@ public class PlayerMovement : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            Plane plane = new Plane(Vector3.up, new Vector3(0, helpBall.transform.position.y, 0));
+            Plane plane = new Plane(Vector3.forward, -7f);
 
             if (plane.Raycast(ray, out float enter))
             {
                 Vector3 hitPoint = ray.GetPoint(enter);
+                Debug.DrawLine(ray.origin, hitPoint, Color.red);
                 Vector3 direction = hitPoint - transform.position;
 
-                float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg / 2f;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 angle = Mathf.Clamp(angle, -40f, 40f);
                 helpBall.transform.rotation = Quaternion.Euler(0, 0, angle);
 
@@ -383,7 +384,8 @@ public class PlayerMovement : MonoBehaviour
                 float finalScale = Mathf.Lerp(minScale, maxScale, t);
 
                 float playerYRotation = transform.rotation.eulerAngles.y;
-                if ((playerYRotation == 0 && hitPoint.x < transform.position.x) || (playerYRotation == 180 && hitPoint.x > transform.position.x))
+                if ((playerYRotation < 0.1f && playerYRotation > -0.1f && hitPoint.x < transform.position.x+4) || //+4 por la distancia del srpite
+                    (playerYRotation < 180.1f && playerYRotation > 179.9f && hitPoint.x > transform.position.x+4))
                 {
                     finalScale = minScale/2;
                     helpBall.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -848,14 +850,36 @@ public class PlayerMovement : MonoBehaviour
             if (rb != null && ballBuounce != null)
             {
                 rb.isKinematic = false;
-                // Calcular dirección hacia el ratón
-                Vector3 direction = (mousePosition - transform.position).normalized;
-                direction.z = 0;
 
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                angle = Mathf.Clamp(angle, -40f, 40f);
-                float angleRad = angle * Mathf.Deg2Rad;
-                direction = new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0).normalized;
+                Vector3 rawDirection = (mousePosition - transform.position).normalized;
+                rawDirection.z = 0;
+
+                // Calcula ángulo y limita
+                float rawAngle = Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg;
+
+                float minAngle, maxAngle;
+
+                if (playerYRotation < 1f || playerYRotation > 359f) // mirando a la derecha
+                {
+                    minAngle = -40f;
+                    maxAngle = 40f;
+                }
+                else
+                {
+                    minAngle = 140f;
+                    maxAngle = 220f;
+                }
+
+                float clampedAngle = Mathf.Clamp(rawAngle, minAngle, maxAngle);
+                Debug.Log(rawAngle + "      " + clampedAngle);
+
+                // Reconstruye dirección solo si hay que limitar
+                float angleRad = clampedAngle * Mathf.Deg2Rad;
+                Vector3 direction = new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0).normalized;
+
+                // Importante: si el ángulo original era < -40 o > 40, reemplaza; si no, usa raw
+                if (Mathf.Abs(clampedAngle - Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg) < 0.1f)
+                    direction = rawDirection;
 
                 ballBuounce.velocityY = direction.y;
                 ballBuounce.velocityX = direction.x;
@@ -871,6 +895,8 @@ public class PlayerMovement : MonoBehaviour
 
                     newBall.transform.position = transform.position + new Vector3(-2, 1, 0);
             }
+
+
             Enemy[] enemies = FindObjectsOfType<Enemy>();
            /* foreach(var e in enemies)
             {
