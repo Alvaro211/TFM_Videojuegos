@@ -12,6 +12,8 @@ public class CubeFalling : MonoBehaviour
     private Vector3 fastCubeStartPos;
     private bool fastCubeFalling = true;
     private bool isWaiting = false;
+    private bool sound = false;
+    private AudioSource audio;
 
     void Start()
     {
@@ -21,7 +23,7 @@ public class CubeFalling : MonoBehaviour
             fastCubeRb.useGravity = false;
             fastCubeRb.freezeRotation = true;
             fastCubeStartPos = gameObject.transform.position;
-           
+            audio = GetComponent<AudioSource>();
         }
     }
 
@@ -31,6 +33,13 @@ public class CubeFalling : MonoBehaviour
         {
             if (fastCubeFalling)
             {
+                if (sound)
+                {
+                    sound = false;
+                    audio.Play();
+                }
+
+
                 fastCubeRb.velocity = new Vector3(0, -fastCubeSpeed, 0);
                 if (fastCubeStartPos.y - fastCubeRb.transform.position.y >= fallDistance)
                 {
@@ -56,5 +65,6 @@ public class CubeFalling : MonoBehaviour
         yield return new WaitForSeconds(waitTime); // Espera 1 segundo
         fastCubeFalling = true;
         isWaiting = false;
+        sound = true;
     }
 }

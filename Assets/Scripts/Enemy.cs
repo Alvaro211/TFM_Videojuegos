@@ -23,10 +23,17 @@ public class Enemy : MonoBehaviour
 
     public  Animator anim;
 
+    public AudioClip audioIdle;
+    public AudioClip audioChasing;
+
     private Transform player;
 
     private Coroutine currentRoutine;
     private string currentRoutineName = "";
+
+    private AudioSource audio;
+    private bool firstChasingEnemy = true;
+    private bool firstUpdate = true;
 
     void Start()
     {
@@ -47,10 +54,18 @@ public class Enemy : MonoBehaviour
         sprite = this.gameObject.GetComponentInChildren<SpriteRenderer>();
 
         anim = this.transform.GetChild(0).transform.GetComponent<Animator>();
+
+        audio =  GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        if (firstUpdate) { 
+            firstUpdate = false;
+            StartCoroutine(AudioEnemy());
+        }
+
+
         if (sprite != null)
         {
             sprite.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -70,7 +85,10 @@ public class Enemy : MonoBehaviour
 
         if (player != null && !chasingBall)
         {
-            
+            if (firstChasingEnemy)
+            {
+               
+            }
 
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer <= searchRadius)
@@ -223,5 +241,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
-   
+   private IEnumerator AudioEnemy()
+   {
+        if (chasingPlayer || chasingBall)
+        {
+            audio.Stop();
+            audio.clip = audioChasing;
+            audio.Play();
+
+            yield return new WaitWhile(() => audio.isPlaying);
+        }
+        else
+        {
+            audio.clip = audioIdle;
+            audio.Play();
+            yield return new WaitWhile(() => audio.isPlaying || chasingPlayer || chasingBall);
+        }
+
+        yield return new WaitForSeconds(0.2f);
+
+        StartCoroutine(AudioEnemy());
+    }   
 }

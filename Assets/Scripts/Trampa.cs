@@ -12,18 +12,19 @@ public class AutoSpikeTrap : MonoBehaviour
     private float timer = 0f;
     private float triggerTimer = 0f;
 
-    private float targetScaleY = 1f;         // Escala máxima
-    private float initialScaleY = 0f;        // Escala inicial (mínima)
+    private float targetScaleY = 1f;         // Escala mï¿½xima
+    private float initialScaleY = 0f;        // Escala inicial (mï¿½nima)
     
     private bool allReached = false;
     private bool allHidden = false;
+    private bool firstUp = true;
 
     void Start()
     {
         // Al inicio, escala todos los cilindros a 0 (escondidos)
         foreach (Transform child in transform)
         {
-            if (child.name.Contains("Cylinder")) // o "Cilindro" si usas español
+            if (child.name.Contains("Cylinder")) // o "Cilindro" si usas espaï¿½ol
             {
                 Vector3 scale = child.localScale;
                 scale.y = initialScaleY;
@@ -44,6 +45,10 @@ public class AutoSpikeTrap : MonoBehaviour
 
         if (isRising)
         {
+            if (firstUp) { 
+                firstUp = false;
+                GetComponent<AudioSource>().Play();
+            }
             allReached = false;
 
             foreach (Transform child in transform)
@@ -75,6 +80,7 @@ public class AutoSpikeTrap : MonoBehaviour
         }
         else if (!isFalling && allReached)
         {
+            firstUp = true;
             timer += Time.deltaTime;
             if (timer >= stayTime)
             {

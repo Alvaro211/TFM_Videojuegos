@@ -100,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject helpBall;
     private Vector3 originPositionHelpBall;
+    private bool cooldownHideOptions = false;
 
     void Start()
     {
@@ -261,7 +262,7 @@ public class PlayerMovement : MonoBehaviour
                     anim.SetBool("IsFalling", true);
                 }
             }
-            else if(movingPlatform == null && Time.timeScale == 1)
+            else if(movingPlatform == null && Time.timeScale == 1 && !cooldownHideOptions) //se añade cooldwonHide para evitar un glitch de animacion con el menu de opciones
             {
                 anim.SetBool("IsJumping", true);
                 anim.SetBool("IsFalling", true);
@@ -289,6 +290,8 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetBool("IsFalling", false);
             }
         }
+
+        
 
         if (!GameManager.instance.canMove)
             moveInput.x = 0;
@@ -353,7 +356,7 @@ public class PlayerMovement : MonoBehaviour
 
             if(timeReset > 1)
             {
-                this.transform.position = startPosition;
+                this.transform.position = startPosition + new Vector3(0, 1, 0);
             }
         }
         else
@@ -483,7 +486,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             controller.enabled = false;
-            this.transform.position = startPosition;
+            this.transform.position = startPosition + new Vector3(0, 1, 0);
             controller.enabled = true;
         }
     }
@@ -530,7 +533,6 @@ public class PlayerMovement : MonoBehaviour
                 menuPause.gameObject.SetActive(false);
 
                 GameManager.instance.canMove = true;
-                Time.timeScale = 1;
                 sprite.gameObject.SetActive(true);
 
                 if(sliderBall.value != 1)
@@ -542,6 +544,9 @@ public class PlayerMovement : MonoBehaviour
                     finishLevel.ShowControl();
 
                 GameManager.instance.SaveMusic();
+                cooldownHideOptions = true;
+                Time.timeScale = 1;
+                StartCoroutine(ResetCooldownOptions());
             }
             else
             {
@@ -558,6 +563,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+    public IEnumerator ResetCooldownOptions()
+    {
+        yield return new WaitForSeconds(0.1f);
+        cooldownHideOptions = false;
+    }
+
     public void InterectCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
            anim.SetBool("IsHitting", false);
@@ -992,7 +1004,7 @@ public class PlayerMovement : MonoBehaviour
         audioSourceEffectPlayer.Play();
 
         controller.enabled = false;
-        transform.position = startPosition;
+        transform.position = startPosition + new Vector3(0, 1, 0);
         controller.enabled = true;
         currentVelocity = Vector3.zero;
         imageDamage.gameObject.SetActive(true);
