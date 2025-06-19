@@ -13,6 +13,7 @@ public class PlatformMove : MonoBehaviour
     public float moveSpeed = 2f;        // Velocidad en unidades por segundo
 
     public GameObject platform;
+    public SpriteRenderer sprite;
     public Material activatedMaterial;
     public Material inActivatedMaterial;
     public List<Light> lights;
@@ -35,6 +36,11 @@ public class PlatformMove : MonoBehaviour
 
         objRenderer = platform.GetComponent<Renderer>();
         audio = GetComponent<AudioSource>();
+
+        if (sprite != null)
+        {
+            sprite.color = new Color(0.33f, 0.33f, 0.33f);
+        }
     }
 
 
@@ -113,6 +119,11 @@ public class PlatformMove : MonoBehaviour
             objRenderer.material = activatedMaterial;
         }
 
+        if(sprite != null)
+        {
+            sprite.color = new Color(1f, 1f, 1f);
+        }
+
         foreach(Light light in lights)
         {
             light.gameObject.SetActive(true);
@@ -127,6 +138,11 @@ public class PlatformMove : MonoBehaviour
         {
             objRenderer.material = inActivatedMaterial;
         }
+
+        if (sprite != null)
+        {
+            sprite.color = new Color(0.33f, 0.33f, 0.33f);
+        }
     }
 
     public IEnumerator ResetPlatform()
@@ -136,6 +152,11 @@ public class PlatformMove : MonoBehaviour
         if (objRenderer != null)
         {
             objRenderer.material = inActivatedMaterial;
+        }
+
+        if (sprite != null)
+        {
+            sprite.color = new Color(0.33f, 0.33f, 0.33f);
         }
 
         foreach (Light light in lights)

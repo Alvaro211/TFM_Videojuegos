@@ -18014,6 +18014,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 411058443808017725, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
         type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 1816016737}
+    - target: {fileID: 411058443808017725, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
+        type: 3}
       propertyPath: platform
       value: 
       objectReference: {fileID: 1913897710}
@@ -67725,6 +67730,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1962145855}
     m_Modifications:
+    - target: {fileID: 411058443808017725, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
+        type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 1574381786}
     - target: {fileID: 411058443808017725, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
         type: 3}
       propertyPath: platform
