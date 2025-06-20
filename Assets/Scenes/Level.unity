@@ -40953,8 +40953,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2353571312451627304, guid: 29243acfb820a2c4bbc18d922ca0c39f,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1febb7e4bcdc07f4daaf759f16a0e66b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -62000,6 +61999,7 @@ MonoBehaviour:
   audioThrowBall: {fileID: 8300000, guid: 8cab76f00029c10458089cfc5665f4e8, type: 3}
   audioDead: {fileID: 8300000, guid: 854ab912d4e253440ab036051146357a, type: 3}
   audioTakeNote: {fileID: 0}
+  audioOpenDiary: {fileID: 0}
   diary: {fileID: 1414163932}
   listEnemy:
   - {fileID: 2132533458}
