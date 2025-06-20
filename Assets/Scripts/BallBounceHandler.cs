@@ -23,7 +23,6 @@ public class BallBounceHandler : MonoBehaviour
     private List<Light> lightBounce = new List<Light>();
 
     private AudioSource audio;
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -35,7 +34,6 @@ public class BallBounceHandler : MonoBehaviour
     {
         if(!HasCollision)
             velocity = rb.velocity;
-
     }
 
     private IEnumerator AscendToHeight()
