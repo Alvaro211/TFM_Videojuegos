@@ -7410,6 +7410,12 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!212 &247501097 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1833092376467858138, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
+    type: 3}
+  m_PrefabInstance: {fileID: 470957168}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &249910231
 GameObject:
   m_ObjectHideFlags: 0
@@ -11754,6 +11760,12 @@ PrefabInstance:
       propertyPath: inActivatedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: c56483f390c7f63418e74dd1c2d9b2c8, type: 2}
+    - target: {fileID: 1833092376467858138, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ec564aec321438a4db4fe70eda799dd3,
+        type: 3}
     - target: {fileID: 3532028730376989073, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
         type: 3}
       propertyPath: m_Name
@@ -17811,6 +17823,12 @@ PrefabInstance:
       propertyPath: inActivatedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: c56483f390c7f63418e74dd1c2d9b2c8, type: 2}
+    - target: {fileID: 1833092376467858138, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ec564aec321438a4db4fe70eda799dd3,
+        type: 3}
     - target: {fileID: 3532028730376989073, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
         type: 3}
       propertyPath: m_Name
@@ -18016,7 +18034,7 @@ PrefabInstance:
         type: 3}
       propertyPath: sprite
       value: 
-      objectReference: {fileID: 1816016737}
+      objectReference: {fileID: 247501097}
     - target: {fileID: 411058443808017725, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
         type: 3}
       propertyPath: platform
@@ -18047,6 +18065,12 @@ PrefabInstance:
       propertyPath: inActivatedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: c56483f390c7f63418e74dd1c2d9b2c8, type: 2}
+    - target: {fileID: 1833092376467858138, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6e08e3f3ccb7d2f45b4bbc21106a9ffe,
+        type: 3}
     - target: {fileID: 3532028730376989073, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
         type: 3}
       propertyPath: m_Name
@@ -18468,6 +18492,12 @@ PrefabInstance:
       propertyPath: inActivatedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: c56483f390c7f63418e74dd1c2d9b2c8, type: 2}
+    - target: {fileID: 1833092376467858138, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ec564aec321438a4db4fe70eda799dd3,
+        type: 3}
     - target: {fileID: 3532028730376989073, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
         type: 3}
       propertyPath: m_Name
@@ -57398,6 +57428,12 @@ PrefabInstance:
       propertyPath: inActivatedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: c56483f390c7f63418e74dd1c2d9b2c8, type: 2}
+    - target: {fileID: 1833092376467858138, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ec564aec321438a4db4fe70eda799dd3,
+        type: 3}
     - target: {fileID: 3532028730376989073, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
         type: 3}
       propertyPath: m_Name
@@ -65194,7 +65230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1816016736
 Transform:
   m_ObjectHideFlags: 0
