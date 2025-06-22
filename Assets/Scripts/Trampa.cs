@@ -19,6 +19,11 @@ public class AutoSpikeTrap : MonoBehaviour
     private bool allHidden = false;
     private bool firstUp = true;
 
+    public Light spotlight;          // Asigna en el Inspector
+    private float maxIntensity;      // Guardamos la intensidad original
+    private float minIntensity = 10f;
+    private float lightTransitionSpeed = 100f;
+
     void Start()
     {
         // Al inicio, escala todos los cilindros a 0 (escondidos)
@@ -32,6 +37,10 @@ public class AutoSpikeTrap : MonoBehaviour
             }
         }
 
+        if (spotlight != null)
+        {
+            maxIntensity = spotlight.intensity;
+        }
     }
 
     void Update()
@@ -116,6 +125,26 @@ public class AutoSpikeTrap : MonoBehaviour
                 isFalling = false;
                 allReached = false;
             }
+        }
+
+        if (spotlight != null)
+        {
+            float targetIntensity = spotlight.intensity;
+
+            if (isRising)
+            {
+                targetIntensity = maxIntensity;
+            }
+            else if (isFalling)
+            {
+                targetIntensity = minIntensity;
+            }
+
+            spotlight.intensity = Mathf.MoveTowards(
+                spotlight.intensity,
+                targetIntensity,
+                lightTransitionSpeed * Time.deltaTime
+            );
         }
     }
 }
