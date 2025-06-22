@@ -97,6 +97,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         if (directorLevel1 != null)
         {
+            canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel1();
             directorLevel1.Play();
@@ -161,6 +162,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         if (directorLevel2 != null)
         {
+            canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel2();
             directorLevel2.Play();
@@ -204,6 +206,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         if (directorLevel3 != null)
         {
+            canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel3();
             directorLevel3.Play();
@@ -247,6 +250,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         if (directorLevel4 != null)
         {
+            canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel4();
             directorLevel4.Play();

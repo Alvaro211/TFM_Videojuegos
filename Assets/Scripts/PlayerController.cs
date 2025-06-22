@@ -9,6 +9,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -102,6 +103,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 originPositionHelpBall;
     private bool cooldownHideOptions = false;
 
+    private Quaternion rotationCanMove;
+
+    public CinemachineImpulseSource impulseSource;
     void Start()
     {
         
@@ -222,9 +226,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.canMove) {
+            rotationCanMove = transform.rotation;
+        }
+        else
+        {
+            transform.rotation = rotationCanMove;
+        }
         
         moveInput.x = inputValues.x;
-        moveInput.Normalize(); // Evita moverse más rápido en diagonal
+        moveInput.Normalize();
 
         if (moveInput.magnitude > 0.1f)
         {
@@ -526,42 +537,40 @@ public class PlayerMovement : MonoBehaviour
 
     public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (!movingPlatform)
+        if (menuPause.activeSelf)
         {
-            if (menuPause.activeSelf)
-            {
-                menuPause.gameObject.SetActive(false);
+            menuPause.gameObject.SetActive(false);
 
-                GameManager.instance.canMove = true;
-                sprite.gameObject.SetActive(true);
+            GameManager.instance.canMove = true;
+            sprite.gameObject.SetActive(true);
 
-                if(sliderBall.value != 1)
-                    sliderBall.gameObject.SetActive(true);
+            if(sliderBall.value != 1)
+                sliderBall.gameObject.SetActive(true);
 
-                if (hotspot != null)
-                    hotspot.ShowControl();
-                if (finishLevel != null)
-                    finishLevel.ShowControl();
+            if (hotspot != null)
+                hotspot.ShowControl();
+            if (finishLevel != null)
+                finishLevel.ShowControl();
 
-                GameManager.instance.SaveMusic();
-                cooldownHideOptions = true;
-                Time.timeScale = 1;
-                StartCoroutine(ResetCooldownOptions());
-            }
-            else
-            {
-                GameManager.instance.canMove = false;
-                Time.timeScale = 0;
-                sliderBall.gameObject.SetActive(false);
-
-                menuPause.gameObject.SetActive(true);
-                if (hotspot != null)
-                    hotspot.HideControl();
-                if (finishLevel != null)
-                    finishLevel.HideControl();
-
-            }
+            GameManager.instance.SaveMusic();
+            cooldownHideOptions = true;
+            Time.timeScale = 1;
+            StartCoroutine(ResetCooldownOptions());
         }
+        else
+        {
+            GameManager.instance.canMove = false;
+            Time.timeScale = 0;
+            sliderBall.gameObject.SetActive(false);
+
+            menuPause.gameObject.SetActive(true);
+            if (hotspot != null)
+                hotspot.HideControl();
+            if (finishLevel != null)
+                finishLevel.HideControl();
+
+        }
+        
     }
 
     public IEnumerator ResetCooldownOptions()
@@ -621,18 +630,48 @@ public class PlayerMovement : MonoBehaviour
        
         if (isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
         {
+            GameManager.instance.canMove = false;
             anim.SetBool("IsHitting", true);
+
+            RuntimeAnimatorController controller = anim.runtimeAnimatorController;
+            float duration = 0;
+            foreach (AnimationClip clip in controller.animationClips)
+            {
+                if (clip.name == "Hit_Animation")
+                {
+                    duration = clip.length;
+                }
+            }
+
+            Invoke("DesactiveCanMove", duration);
 
         }
         else if ( isOnHotSpot && hotspot != null)
         {
+            GameManager.instance.canMove = false;
             anim.SetBool("IsHitting", true);
-            hotspot.ActivateLights();
-           
+
+            RuntimeAnimatorController controller = anim.runtimeAnimatorController;
+            float duration = 0;
+            foreach (AnimationClip clip in controller.animationClips)
+            {
+                if (clip.name == "Hit_Animation")
+                {
+                    duration = clip.length;
+                }
+            }
+
+            hotspot.AudioPlay();
+            hotspot.Invoke("ActivateLights", duration);
+            Invoke("DesactiveCanMove", duration);
+            impulseSource.Invoke("GenerateImpulse", duration/2);
+
         }
-       
-       
-       
+    }
+
+    private void DesactiveCanMove()
+    {
+        GameManager.instance.canMove = true;
     }
 
     public void SequencePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

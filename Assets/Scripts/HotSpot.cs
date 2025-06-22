@@ -51,13 +51,17 @@ public class HotSpot : MonoBehaviour
 
     public void ActivateLights()
     {
-        audioSource.Play();
         StopAllCoroutines(); // Detener cualquier desvanecimiento previo
         SetAllLightsIntensity(20); // Encender todas las luces al máximo
         for (int i = 0; i < lights.Count; i++)
         {
             StartCoroutine(FadeOutLights(TimeLightOn - i, lights[i])); // Iniciar la reducción de intensidad
         }
+    }
+
+    public void AudioPlay()
+    {
+        audioSource.Play();
     }
 
     private IEnumerator FadeOutLights(float wait, Light[] light)
