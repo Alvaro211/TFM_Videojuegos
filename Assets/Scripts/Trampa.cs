@@ -21,8 +21,8 @@ public class AutoSpikeTrap : MonoBehaviour
 
     public Light spotlight;          // Asigna en el Inspector
     private float maxIntensity;      // Guardamos la intensidad original
-    private float minIntensity = 10f;
-    private float lightTransitionSpeed = 100f;
+    private float minIntensity = 0f;
+    private float lightTransitionSpeed = 125f;
 
     void Start()
     {

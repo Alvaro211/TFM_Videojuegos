@@ -2734,6 +2734,12 @@ MonoBehaviour:
   isOpenDoorGreen: 0
   isOpenDoorGreenYellow: 0
   isOpenDoorBoss: 0
+  isSeenCinematic2: 0
+  isSeenCinematic3: 0
+  isSeenCinematic4: 0
+  isTakeColeccionable1: 0
+  isTakeColeccionable2: 0
+  isTakeColeccionable3: 0
   newGame: 0
 --- !u!4 &1562798669
 Transform:

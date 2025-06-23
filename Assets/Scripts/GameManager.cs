@@ -25,6 +25,15 @@ public class GameManager : MonoBehaviour
     public bool isOpenDoorGreenYellow = false;
     public bool isOpenDoorBoss = false;
 
+
+    public bool isSeenCinematic2 = false;
+    public bool isSeenCinematic3 = false;
+    public bool isSeenCinematic4 = false;
+
+    public bool isTakeColeccionable1 = false;
+    public bool isTakeColeccionable2 = false;
+    public bool isTakeColeccionable3 = false;
+
     public bool newGame = true;
 
     private void Awake()
@@ -61,6 +70,14 @@ public class GameManager : MonoBehaviour
             sharedData.isOpenDoorGreen = isOpenDoorGreen;
             sharedData.isOpenDoorGreenYellow = isOpenDoorGreenYellow;
             sharedData.isOpenDoorBoss = isOpenDoorBoss;
+
+            sharedData.isSeenCinematic2 = isSeenCinematic2;
+            sharedData.isSeenCinematic3 = isSeenCinematic3;
+            sharedData.isSeenCinematic4 = isSeenCinematic4;
+            sharedData.isTakeColeccionable1 = isTakeColeccionable1;
+            sharedData.isTakeColeccionable2 = isTakeColeccionable2;
+            sharedData.isTakeColeccionable3 = isTakeColeccionable3;
+
             sharedData.continueGame = true;
             continueGame = true;
         }else
@@ -104,6 +121,13 @@ public class GameManager : MonoBehaviour
             musicVol = sharedData.musicVolume;
             effectVol = sharedData.effectVolume;
 
+            isSeenCinematic2 = sharedData.isSeenCinematic2;
+            isSeenCinematic3 = sharedData.isSeenCinematic3;
+            isSeenCinematic4 = sharedData.isSeenCinematic4;
+            isTakeColeccionable1 = sharedData.isTakeColeccionable1;
+            isTakeColeccionable2 = sharedData.isTakeColeccionable2;
+            isTakeColeccionable3 = sharedData.isTakeColeccionable3;
+
             return true;
         }
 
@@ -129,6 +153,14 @@ public class GameManager : MonoBehaviour
         sharedData.isOpenDoorGreen = isOpenDoorGreen;
         sharedData.isOpenDoorGreenYellow = isOpenDoorGreenYellow;
         sharedData.isOpenDoorBoss = isOpenDoorBoss;
+
+        sharedData.isSeenCinematic2 = isSeenCinematic2;
+        sharedData.isSeenCinematic3 = isSeenCinematic3;
+        sharedData.isSeenCinematic4 = isSeenCinematic4;
+        sharedData.isTakeColeccionable1 = isTakeColeccionable1;
+        sharedData.isTakeColeccionable2 = isTakeColeccionable2;
+        sharedData.isTakeColeccionable3 = isTakeColeccionable3;
+
         sharedData.continueGame = true;
         
         sharedData.helpControls = helpControls;
@@ -160,6 +192,7 @@ public class GameManager : MonoBehaviour
             sharedData.isOpenDoorGreen = isOpenDoorGreen;
             sharedData.isOpenDoorGreenYellow = isOpenDoorGreenYellow;
             sharedData.isOpenDoorBoss = isOpenDoorBoss;
+
             sharedData2.continueGame = true;
         }
         else

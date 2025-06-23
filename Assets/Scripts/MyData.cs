@@ -27,5 +27,13 @@ public class MyData
     public bool isOpenDoorGreen;
     public bool isOpenDoorGreenYellow;
     public bool isOpenDoorBoss;
+
+    public bool isSeenCinematic2;
+    public bool isSeenCinematic3;
+    public bool isSeenCinematic4;
+
+    public bool isTakeColeccionable1;
+    public bool isTakeColeccionable2;
+    public bool isTakeColeccionable3;
 }
 

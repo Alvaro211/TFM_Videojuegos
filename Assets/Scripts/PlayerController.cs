@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private bool updateSliderBall = false;
     private float timerSliderBall = 0f;
 
+    private int currentIndexHotSpot = 0;
     private Vector3 startPosition;
     private float verticalVelocity;
     private bool isMoving;
@@ -120,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
 
         GameManager.instance.playerMovement = this;
 
-        if (/*GameManager.instance.newGame*/ true)
+        if (GameManager.instance.newGame)
         {
             GameManager.instance.newGame = false;
             startPosition = transform.position;
@@ -646,7 +647,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke("DesactiveCanMove", duration);
 
         }
-        else if ( isOnHotSpot && hotspot != null)
+        else if ( isOnHotSpot && hotspot != null && GameManager.instance.canMove)
         {
             GameManager.instance.canMove = false;
             anim.SetBool("IsHitting", true);
@@ -662,7 +663,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             hotspot.AudioPlay();
-            hotspot.Invoke("ActivateLights", duration);
+            hotspot.Invoke("ActivateLights", (duration/3)*2);
             Invoke("DesactiveCanMove", duration);
             impulseSource.Invoke("GenerateImpulse", duration/2);
 
@@ -1137,7 +1138,10 @@ public class PlayerMovement : MonoBehaviour
             isOnHotSpot = true;
             hotspot = other.GetComponent<HotSpot>();
             hotspot.ShowControl();
-            startPosition = transform.position;
+
+            if(currentIndexHotSpot <= hotspot.numHotSpot)
+                startPosition = transform.position;
+            
             GameManager.instance.Save();
         }
         else if(other.tag == "FloorObjectSong")
@@ -1234,30 +1238,35 @@ public class PlayerMovement : MonoBehaviour
         }else if (other.gameObject.CompareTag("DefeatBoss"))
         {
             GameManager.instance.defeatBoss = true;
-        }else if (other.gameObject.CompareTag("Animation2"))
+        }else if (other.gameObject.CompareTag("Animation2") && !GameManager.instance.isSeenCinematic2)
         {
             anim.SetBool("IsWalking", false);
             GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel2();
             Destroy(other.gameObject);
+            GameManager.instance.isSeenCinematic2 = true;
         }
-        else if (other.gameObject.CompareTag("Animation3"))
+        else if (other.gameObject.CompareTag("Animation3") && !GameManager.instance.isSeenCinematic3)
         {
             anim.SetBool("IsWalking", false);
             GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel3();
             Destroy(other.gameObject);
+            GameManager.instance.isSeenCinematic3 = true;
         }
-        else if (other.gameObject.CompareTag("Animation4"))
+        else if (other.gameObject.CompareTag("Animation4") && !GameManager.instance.isSeenCinematic4)
         {
             anim.SetBool("IsWalking", false);
             GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel4();
             Destroy(other.gameObject);
-        }else if (other.gameObject.CompareTag("Collectionable"))
+            GameManager.instance.isSeenCinematic4 = true;
+
+        }
+        else if (other.gameObject.CompareTag("Collectionable"))
         {
             Colleccionable collecionable = other.GetComponent<Colleccionable>();
 
@@ -1267,6 +1276,18 @@ public class PlayerMovement : MonoBehaviour
             book.bookPages[index+1] = book.bookPageWritten[index+1];
 
             other.gameObject.SetActive(false);
+
+            if(collecionable.indexCollecionable == 0)
+            {
+                GameManager.instance.isTakeColeccionable1 = true;
+            }else if(collecionable.indexCollecionable == 1)
+            {
+                GameManager.instance.isTakeColeccionable2 = true;
+            }
+            else if (collecionable.indexCollecionable == 2)
+            {
+                GameManager.instance.isTakeColeccionable3 = true;
+            }
         }
     }
 
