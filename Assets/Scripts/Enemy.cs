@@ -15,31 +15,27 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
     private Vector3 startPosition;
     private Vector3 targetPosition;
-    private bool movingForward = true; 
+    private bool movingForward = true;
     private bool chasingBall = false;
     private bool chasingPlayer = false;
 
     private SpriteRenderer sprite;
 
-    public  Animator anim;
-
-    public AudioClip audioIdle;
-    public AudioClip audioChasing;
-
+    public Animator anim;
+    [Header("¸ÐÌ¾ºÅ")]
+    public GameObject gantan;
+    public GameObject gantanPref;
     private Transform player;
 
     private Coroutine currentRoutine;
     private string currentRoutineName = "";
 
-    private AudioSource audio;
-    private bool firstChasingEnemy = true;
-    private bool firstUpdate = true;
-
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        gantan = Resources.Load<GameObject>("GanTan");
         startPosition = transform.position; // Guarda la posición inicial
-        if(!horizontal) 
+        if (!horizontal)
             targetPosition = startPosition + new Vector3(0, 0, patrolDistance);
         else
             targetPosition = startPosition + new Vector3(patrolDistance, 0, 0);
@@ -54,18 +50,10 @@ public class Enemy : MonoBehaviour
         sprite = this.gameObject.GetComponentInChildren<SpriteRenderer>();
 
         anim = this.transform.GetChild(0).transform.GetComponent<Animator>();
-
-        audio =  GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        if (firstUpdate) { 
-            firstUpdate = false;
-            StartCoroutine(AudioEnemy());
-        }
-
-
         if (sprite != null)
         {
             sprite.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -85,10 +73,7 @@ public class Enemy : MonoBehaviour
 
         if (player != null && !chasingBall)
         {
-            if (firstChasingEnemy)
-            {
-               
-            }
+
 
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer <= searchRadius)
@@ -96,8 +81,23 @@ public class Enemy : MonoBehaviour
                 NavMeshPath path = new NavMeshPath();
                 if (agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
                 {
+                    if (gantanPref == null)
+                    {
+                        var obj = Instantiate(gantan);
+                        obj.name = "GanTan";
+                        obj.GetComponent<CameraForward>().target = transform;
+                        gantanPref = obj;
+
+                        foreach (var o in FindObjectsOfType<CameraForward>())
+                        {
+                            if (o.name != "GanTan")
+                            {
+                                Destroy(o.gameObject);
+                            }
+                        }
+                    }
                     chasingPlayer = true;
-                    anim.SetBool("IsChasing",true);
+                    anim.SetBool("IsChasing", true);
                     agent.SetDestination(player.position);
                     agent.speed = 7;
                     if (currentRoutine != null)
@@ -120,7 +120,8 @@ public class Enemy : MonoBehaviour
             if (/*!waiting && !agent.pathPending && */agent.remainingDistance <= agent.stoppingDistance /*&& agent.velocity.magnitude == 0*/)
             {
                 anim.SetBool("IsIdle", true);
-                if (currentRoutine != null && currentRoutineName != "ChangeDirection") { 
+                if (currentRoutine != null && currentRoutineName != "ChangeDirection")
+                {
                     StopCoroutine(currentRoutine);
                 }
 
@@ -143,12 +144,12 @@ public class Enemy : MonoBehaviour
         if (chasingBall || chasingPlayer) yield break;
 
         yield return new WaitForSeconds(waitTime); // Espera antes de cambiar dirección
-       
+
 
         // Cambiar destino
         if (!chasingBall && !chasingPlayer)
         {
-            if(patrolDistance != 0)
+            if (patrolDistance != 0)
                 anim.SetBool("IsIdle", false);
             agent.SetDestination(movingForward ? startPosition : targetPosition);
             movingForward = !movingForward;
@@ -169,11 +170,25 @@ public class Enemy : MonoBehaviour
             if (NavMesh.SamplePosition(ballPosition, out hit, 1.0f, NavMesh.AllAreas))
             {
                 chasingBall = true; // Se dirige a la bola
+                if (gantanPref == null)
+                {
+                    var obj = Instantiate(gantan);
+                    obj.name = "GanTan";
+                    obj.GetComponent<CameraForward>().target = transform;
+                    gantanPref = obj;
+                    foreach (var o in FindObjectsOfType<CameraForward>())
+                    {
+                        if (o.name != "GanTan")
+                        {
+                            Destroy(o.gameObject);
+                        }
+                    }
+                }
 
                 anim.SetBool("IsChasing", true);
                 anim.SetBool("IsIdle", false);
                 agent.SetDestination(hit.position);
-              
+
 
                 ComprobarDireccionSprite();
 
@@ -192,6 +207,10 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(5f); // Espera 3 segundos en la bola
         chasingBall = false;
         chasingPlayer = false;
+        if (gantanPref != null)
+        {
+            Destroy(gantanPref);
+        }
         anim.SetBool("IsChasing", false);
         anim.SetBool("IsIdle", true);
         anim.SetBool("IsConfuse", false);
@@ -211,6 +230,10 @@ public class Enemy : MonoBehaviour
         yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
         chasingBall = false;
         chasingPlayer = false;
+        if (gantanPref != null)
+        {
+            Destroy(gantanPref);
+        }
         anim.SetBool("IsIdle", true);
         anim.SetBool("IsChasing", false);
         agent.speed = 3f;
@@ -241,25 +264,5 @@ public class Enemy : MonoBehaviour
         }
     }
 
-   private IEnumerator AudioEnemy()
-   {
-        if (chasingPlayer || chasingBall)
-        {
-            audio.Stop();
-            audio.clip = audioChasing;
-            audio.Play();
 
-            yield return new WaitWhile(() => audio.isPlaying);
-        }
-        else
-        {
-            audio.clip = audioIdle;
-            audio.Play();
-            yield return new WaitWhile(() => audio.isPlaying || chasingPlayer || chasingBall);
-        }
-
-        yield return new WaitForSeconds(0.2f);
-
-        StartCoroutine(AudioEnemy());
-    }   
 }
