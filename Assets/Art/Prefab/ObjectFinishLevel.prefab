@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.278605, y: 25.450462, z: 33.84083}
-  m_Center: {x: 0.0045776367, y: 11.217936, z: -16.420414}
+  m_Size: {x: 6.023509, y: 25.450462, z: 33.84083}
+  m_Center: {x: -1.3678739, y: 11.217936, z: -16.420414}
 --- !u!1 &1833951815549216200
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +420,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: E
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5b493f745c2fa4949aa9475bfd092485, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fcd43928ef5ff034a9923cf098c55c4d, type: 2}
   m_sharedMaterial: {fileID: 2061287619472511616, guid: 5b493f745c2fa4949aa9475bfd092485,
     type: 2}
   m_fontSharedMaterials: []
@@ -488,7 +488,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_renderer: {fileID: 5733215299927240342}
   m_maskType: 0
 --- !u!1 &3198482308057616579
