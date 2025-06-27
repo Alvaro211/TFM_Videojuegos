@@ -1,4 +1,6 @@
+using System.Drawing;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AutoSpikeTrap : MonoBehaviour
 {
@@ -22,19 +24,21 @@ public class AutoSpikeTrap : MonoBehaviour
     public Light spotlight;          // Asigna en el Inspector
     private float maxIntensity;      // Guardamos la intensidad original
     private float minIntensity = 0f;
-    private float lightTransitionSpeed = 125f;
+    private float lightTransitionSpeed = 800f;
 
     void Start()
     {
         // Al inicio, escala todos los cilindros a 0 (escondidos)
         foreach (Transform child in transform)
-        {
+{
             if (child.name.Contains("Cylinder")) // o "Cilindro" si usas espa�ol
             {
                 Vector3 scale = child.localScale;
                 scale.y = initialScaleY;
                 child.localScale = scale;
             }
+
+           
         }
 
         if (spotlight != null)
@@ -127,6 +131,11 @@ public class AutoSpikeTrap : MonoBehaviour
             }
         }
 
+        Invoke("LigthTrasparecen", 0.3f);
+    }
+
+    private void LigthTrasparecen()
+    {
         if (spotlight != null)
         {
             float targetIntensity = spotlight.intensity;
