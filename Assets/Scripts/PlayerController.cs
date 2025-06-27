@@ -107,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion rotationCanMove;
 
     public CinemachineImpulseSource impulseSource;
+    public UnityEngine.UI.Image vignetteImage;
     void Start()
     {
         
@@ -364,7 +365,13 @@ public class PlayerMovement : MonoBehaviour
         if (isReseting && controller.isGrounded && !isMoving) {
             timeReset += Time.deltaTime;
 
-            if(timeReset > 1)
+            float alpha = Mathf.Lerp(0f, 0.2f, timeReset / 2);
+
+            Color color = vignetteImage.color;
+            color.a = alpha;
+            vignetteImage.color = color;
+
+            if (timeReset > 2)
             {
                 this.transform.position = startPosition + new Vector3(0, 1, 0);
             }
@@ -622,6 +629,9 @@ public class PlayerMovement : MonoBehaviour
     public void ResetCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         isReseting = false;
+        Color color = vignetteImage.color;
+        color.a = 0f; // Comienza opaco
+        vignetteImage.color = color;
     }
 
     public void InterectPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

@@ -60,7 +60,7 @@ public class AutoSpikeTrap : MonoBehaviour
         {
             if (firstUp) { 
                 firstUp = false;
-                GetComponent<AudioSource>().Play();
+                Invoke("PlaySound", 0.2f);
             }
             allReached = false;
 
@@ -132,6 +132,15 @@ public class AutoSpikeTrap : MonoBehaviour
         }
 
         Invoke("LigthTrasparecen", 0.3f);
+
+        if (isRising)
+        {
+            SetSpriteColor(UnityEngine.Color.white); // Blanco
+        }
+        else if (isFalling)
+        {
+            SetSpriteColor(UnityEngine.Color.grey);
+        }
     }
 
     private void LigthTrasparecen()
@@ -155,5 +164,22 @@ public class AutoSpikeTrap : MonoBehaviour
                 lightTransitionSpeed * Time.deltaTime
             );
         }
+    }
+
+    private void SetSpriteColor(UnityEngine.Color targetColor)
+    {
+        foreach (Transform child in transform)
+        {
+            SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = targetColor;
+            }
+        }
+    }
+
+    private void PlaySound()
+    {
+        GetComponent<AudioSource>().Play();
     }
 }
