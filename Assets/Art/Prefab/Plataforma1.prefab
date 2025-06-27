@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1245031366277011436}
   - component: {fileID: 8720693965154610914}
   - component: {fileID: 3128330191338072906}
-  - component: {fileID: 5376280276512082978}
+  - component: {fileID: 6397736744990495413}
   m_Layer: 0
   m_Name: Plataforma1
   m_TagString: Floor
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 225.53003, y: -16, z: 4.2800007}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4690876754141598608}
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5376280276512082978
-BoxCollider:
+--- !u!136 &6397736744990495413
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,9 +103,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.4909624
+  m_Height: 4.054245
+  m_Direction: 0
+  m_Center: {x: -0.095451355, y: -0.1824069, z: -0.029852748}
 --- !u!1 &4980404768502435821
 GameObject:
   m_ObjectHideFlags: 0
