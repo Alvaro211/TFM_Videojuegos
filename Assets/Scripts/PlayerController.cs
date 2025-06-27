@@ -121,14 +121,16 @@ public class PlayerMovement : MonoBehaviour
 
         GameManager.instance.playerMovement = this;
 
-        if (GameManager.instance.newGame)
+
+        GameManager.instance.Load();
+
+        if (GameManager.instance.newGame || GameManager.instance.sharedData.player.positiónZ == 0)
         {
             GameManager.instance.newGame = false;
             startPosition = transform.position;
         }
         else
         {
-            GameManager.instance.Load();
             ContinueGame();
         }
 
@@ -334,10 +336,6 @@ public class PlayerMovement : MonoBehaviour
        // if(GameManager.instance.canMove)
             controller.Move(currentVelocity * Time.deltaTime);
 
-        if(transform.position.y < -1.5f)
-        {
-            Dead();
-        }
 
         if (CheckEnemyAround()) {
 

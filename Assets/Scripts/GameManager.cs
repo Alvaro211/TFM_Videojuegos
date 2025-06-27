@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public float effectVol;
 
     public PlayerMovement playerMovement;
-    private MyData sharedData;
+    public MyData sharedData;
 
     public bool continueGame = false;
     public bool isOpenDoorGreen = false;
