@@ -6,9 +6,9 @@ public class MyData
     [Serializable]
     public struct PlayerStats
     {
-        public float positiónX;
-        public float positiónY;
-        public float positiónZ;
+        public float positionX;
+        public float positionY;
+        public float positionZ;
 
         public bool noteGreen;
         public bool noteYellow;
