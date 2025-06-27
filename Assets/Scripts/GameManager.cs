@@ -59,9 +59,9 @@ public class GameManager : MonoBehaviour
         sharedData = new MyData();
         if (playerMovement != null) { 
             Vector3 position = playerMovement.GetStartPosition();
-            sharedData.player.positiónX = position.x;
-            sharedData.player.positiónY = position.y;
-            sharedData.player.positiónZ = position.z;
+            sharedData.player.positionX = position.x;
+            sharedData.player.positionY = position.y;
+            sharedData.player.positionZ = position.z;
 
             sharedData.player.noteRed = playerMovement.GetNoteRed();
             sharedData.player.noteBlue = playerMovement.GetNoteBlue();
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
             if (playerMovement != null)
             {
-                playerMovement.SetStartPosition(new Vector3(sharedData.player.positiónX, sharedData.player.positiónY, sharedData.player.positiónZ));
+                playerMovement.SetStartPosition(new Vector3(sharedData.player.positionX, sharedData.player.positionY, sharedData.player.positionZ));
                 playerMovement.SetNoteGreen(sharedData.player.noteGreen);
                 playerMovement.SetNoteRed(sharedData.player.noteRed);
                 playerMovement.SetNoteBlue(sharedData.player.noteBlue);
@@ -142,9 +142,9 @@ public class GameManager : MonoBehaviour
         sharedData = new MyData();
         
         Vector3 position = playerMovement.GetStartPosition();
-        sharedData.player.positiónX = position.x;
-        sharedData.player.positiónY = position.y;
-        sharedData.player.positiónZ = position.z;
+        sharedData.player.positionX = position.x;
+        sharedData.player.positionY = position.y;
+        sharedData.player.positionZ = position.z;
 
         sharedData.player.noteRed = playerMovement.GetNoteRed();
         sharedData.player.noteBlue = playerMovement.GetNoteBlue();
@@ -181,9 +181,9 @@ public class GameManager : MonoBehaviour
         if (sharedData != null && sharedData.continueGame && playerMovement != null)
         {
             Vector3 position = playerMovement.GetStartPosition();
-            sharedData2.player.positiónX = position.x;
-            sharedData2.player.positiónY = position.y;
-            sharedData2.player.positiónZ = position.z;
+            sharedData2.player.positionX = position.x;
+            sharedData2.player.positionY = position.y;
+            sharedData2.player.positionZ = position.z;
 
             sharedData2.player.noteRed = playerMovement.GetNoteRed();
             sharedData2.player.noteBlue = playerMovement.GetNoteBlue();
@@ -197,9 +197,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            sharedData2.player.positiónX = 0f;
-            sharedData2.player.positiónY = 0f;
-            sharedData2.player.positiónZ = 0f;
+            sharedData2.player.positionX = 0f;
+            sharedData2.player.positionY = 0f;
+            sharedData2.player.positionZ = 0f;
 
             sharedData2.player.noteRed = false;
             sharedData2.player.noteBlue = false;
