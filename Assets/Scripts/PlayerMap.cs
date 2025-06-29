@@ -161,6 +161,51 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShortCut1"",
+                    ""type"": ""Button"",
+                    ""id"": ""0425a4b4-eb91-4cb2-a3af-d5d66ee0e490"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShortCut2"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f90af5c-ef03-4578-9b0e-16d9ba855398"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShortCut3"",
+                    ""type"": ""Button"",
+                    ""id"": ""2ecd76ee-0c00-463e-a311-cdcd7bd5591e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShortCut4"",
+                    ""type"": ""Button"",
+                    ""id"": ""7678ea22-fdfb-41d5-996d-d94c2bda676f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShortCut5"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9b17623-19ee-4a38-8828-ca91f5e97033"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -460,6 +505,171 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                     ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""518fc0fd-5c2b-4f78-a9d1-86209998bfef"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut1"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""id"": ""df239d2a-f765-4c4a-a5d4-aa25378097b5"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button"",
+                    ""id"": ""a87578f6-6943-41b5-94c2-d5616a9c273e"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""624f6dc8-a8a4-4583-a972-3a32a312f6c1"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut2"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""id"": ""2d580d6c-1bbc-4e81-8fa7-6481397f9415"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button"",
+                    ""id"": ""247c3a8b-51db-41e9-be23-76c71a8096c7"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""463fe064-7a3d-4530-bb0f-5a71593e5d91"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut3"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""id"": ""c783ca62-05b2-40a3-92fd-392e72917bc2"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button"",
+                    ""id"": ""23bb704b-bcb9-48a1-a780-0f3a18e1665a"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""20f98a4b-52a2-45d5-9ce3-ac76409810f4"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut4"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""id"": ""2c3df7d9-a2e2-4da8-bacd-3824fe9600f0"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button"",
+                    ""id"": ""e9b962eb-faf7-4f40-8b7c-879e19e7a960"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button With One Modifier"",
+                    ""id"": ""f07cfa50-fb1b-4495-aa0b-1bdaf69007ec"",
+                    ""path"": ""ButtonWithOneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut5"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""id"": ""70ab45ed-1de6-4442-a6aa-ec8ab6dc10e9"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Button"",
+                    ""id"": ""5abe818e-7765-43f9-bcf3-3e1a0c2eb1e7"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShortCut5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -483,6 +693,11 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         m_Player_Sound6 = m_Player.FindAction("Sound6", throwIfNotFound: true);
         m_Player_Diary = m_Player.FindAction("Diary", throwIfNotFound: true);
         m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
+        m_Player_ShortCut1 = m_Player.FindAction("ShortCut1", throwIfNotFound: true);
+        m_Player_ShortCut2 = m_Player.FindAction("ShortCut2", throwIfNotFound: true);
+        m_Player_ShortCut3 = m_Player.FindAction("ShortCut3", throwIfNotFound: true);
+        m_Player_ShortCut4 = m_Player.FindAction("ShortCut4", throwIfNotFound: true);
+        m_Player_ShortCut5 = m_Player.FindAction("ShortCut5", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -559,6 +774,11 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sound6;
     private readonly InputAction m_Player_Diary;
     private readonly InputAction m_Player_Reset;
+    private readonly InputAction m_Player_ShortCut1;
+    private readonly InputAction m_Player_ShortCut2;
+    private readonly InputAction m_Player_ShortCut3;
+    private readonly InputAction m_Player_ShortCut4;
+    private readonly InputAction m_Player_ShortCut5;
     public struct PlayerActions
     {
         private @PlayerMap m_Wrapper;
@@ -578,6 +798,11 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         public InputAction @Sound6 => m_Wrapper.m_Player_Sound6;
         public InputAction @Diary => m_Wrapper.m_Player_Diary;
         public InputAction @Reset => m_Wrapper.m_Player_Reset;
+        public InputAction @ShortCut1 => m_Wrapper.m_Player_ShortCut1;
+        public InputAction @ShortCut2 => m_Wrapper.m_Player_ShortCut2;
+        public InputAction @ShortCut3 => m_Wrapper.m_Player_ShortCut3;
+        public InputAction @ShortCut4 => m_Wrapper.m_Player_ShortCut4;
+        public InputAction @ShortCut5 => m_Wrapper.m_Player_ShortCut5;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -632,6 +857,21 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @Reset.started += instance.OnReset;
             @Reset.performed += instance.OnReset;
             @Reset.canceled += instance.OnReset;
+            @ShortCut1.started += instance.OnShortCut1;
+            @ShortCut1.performed += instance.OnShortCut1;
+            @ShortCut1.canceled += instance.OnShortCut1;
+            @ShortCut2.started += instance.OnShortCut2;
+            @ShortCut2.performed += instance.OnShortCut2;
+            @ShortCut2.canceled += instance.OnShortCut2;
+            @ShortCut3.started += instance.OnShortCut3;
+            @ShortCut3.performed += instance.OnShortCut3;
+            @ShortCut3.canceled += instance.OnShortCut3;
+            @ShortCut4.started += instance.OnShortCut4;
+            @ShortCut4.performed += instance.OnShortCut4;
+            @ShortCut4.canceled += instance.OnShortCut4;
+            @ShortCut5.started += instance.OnShortCut5;
+            @ShortCut5.performed += instance.OnShortCut5;
+            @ShortCut5.canceled += instance.OnShortCut5;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -681,6 +921,21 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
             @Reset.started -= instance.OnReset;
             @Reset.performed -= instance.OnReset;
             @Reset.canceled -= instance.OnReset;
+            @ShortCut1.started -= instance.OnShortCut1;
+            @ShortCut1.performed -= instance.OnShortCut1;
+            @ShortCut1.canceled -= instance.OnShortCut1;
+            @ShortCut2.started -= instance.OnShortCut2;
+            @ShortCut2.performed -= instance.OnShortCut2;
+            @ShortCut2.canceled -= instance.OnShortCut2;
+            @ShortCut3.started -= instance.OnShortCut3;
+            @ShortCut3.performed -= instance.OnShortCut3;
+            @ShortCut3.canceled -= instance.OnShortCut3;
+            @ShortCut4.started -= instance.OnShortCut4;
+            @ShortCut4.performed -= instance.OnShortCut4;
+            @ShortCut4.canceled -= instance.OnShortCut4;
+            @ShortCut5.started -= instance.OnShortCut5;
+            @ShortCut5.performed -= instance.OnShortCut5;
+            @ShortCut5.canceled -= instance.OnShortCut5;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -715,5 +970,10 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
         void OnSound6(InputAction.CallbackContext context);
         void OnDiary(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
+        void OnShortCut1(InputAction.CallbackContext context);
+        void OnShortCut2(InputAction.CallbackContext context);
+        void OnShortCut3(InputAction.CallbackContext context);
+        void OnShortCut4(InputAction.CallbackContext context);
+        void OnShortCut5(InputAction.CallbackContext context);
     }
 }

@@ -836,10 +836,22 @@ public class PlayerMovement : MonoBehaviour
         // Ajustar la posición de todas las imágenes
         UpdateImagePositions();
 
-        if(color.a == 150)
-        {
+    }
 
+    public void AddSequence(AudioClip clip)
+    {
+        sequence.Add(clip);
+    }
+
+    public void ResetImage()
+    {
+        sequence.Clear();
+
+        foreach(GameObject image in spawnedImages){
+            Destroy(image);
         }
+
+        spawnedImages.Clear();
     }
 
     private void UpdateImagePositions()
@@ -1252,7 +1264,7 @@ public class PlayerMovement : MonoBehaviour
             GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel2();
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             GameManager.instance.isSeenCinematic2 = true;
         }
         else if (other.gameObject.CompareTag("Animation3") && !GameManager.instance.isSeenCinematic3)
@@ -1261,7 +1273,7 @@ public class PlayerMovement : MonoBehaviour
             GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel3();
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             GameManager.instance.isSeenCinematic3 = true;
         }
         else if (other.gameObject.CompareTag("Animation4") && !GameManager.instance.isSeenCinematic4)
@@ -1270,7 +1282,7 @@ public class PlayerMovement : MonoBehaviour
             GameManager.instance.canMove = false;
             canvasTransform.gameObject.SetActive(false);
             cineMachine.PlayTimelineLevel4();
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             GameManager.instance.isSeenCinematic4 = true;
 
         }
