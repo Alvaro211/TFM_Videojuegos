@@ -73,6 +73,7 @@ public class Shortcut : MonoBehaviour
         anim3.SetBool("IsOpened", false);
 
         playerMovement.ResetImage();
+        playerMovement.SetStartPosition(player.transform.position);
 
     }
 
@@ -101,6 +102,7 @@ public class Shortcut : MonoBehaviour
         anim3.SetBool("IsOpened", false);
 
         playerMovement.ResetImage();
+        playerMovement.SetStartPosition(player.transform.position);
 
         playerMovement.SpawnImage(noteGreen.GetComponent<Renderer>().materials[0].color);
         playerMovement.AddSequence(audioGreen);
@@ -132,6 +134,7 @@ public class Shortcut : MonoBehaviour
         anim3.SetBool("IsOpened", false);
 
         playerMovement.ResetImage();
+        playerMovement.SetStartPosition(player.transform.position);
 
         playerMovement.SpawnImage(noteGreen.GetComponent<Renderer>().materials[0].color);
         playerMovement.AddSequence(audioGreen);
@@ -166,6 +169,7 @@ public class Shortcut : MonoBehaviour
         anim3.SetBool("IsOpened", false);
 
         playerMovement.ResetImage();
+        playerMovement.SetStartPosition(player.transform.position);
 
         playerMovement.SpawnImage(noteGreen.GetComponent<Renderer>().materials[0].color);
         playerMovement.AddSequence(audioGreen);
@@ -199,9 +203,10 @@ public class Shortcut : MonoBehaviour
         anim2.SetBool("IsOpened", true);
 
         Animator anim3 = door3.GetComponent<Animator>();
-        anim3.SetBool("IsOpened", true);
+        anim3.SetBool("IsOpened", false);
 
         playerMovement.ResetImage();
+        playerMovement.SetStartPosition(player.transform.position);
 
         playerMovement.SpawnImage(noteGreen.GetComponent<Renderer>().materials[0].color);
         playerMovement.AddSequence(audioGreen);
