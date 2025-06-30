@@ -108,6 +108,8 @@ public class PlayerMovement : MonoBehaviour
 
     public CinemachineImpulseSource impulseSource;
     public UnityEngine.UI.Image vignetteImage;
+
+    public CinemachineAnimation cinemachine;
     void Start()
     {
         
@@ -1167,15 +1169,15 @@ public class PlayerMovement : MonoBehaviour
         else if(other.tag == "FloorObjectSong")
         {
             isNearObjectSong = true;
-            //other.transform.parent.gameObject.SetActive(false);
             objectSong = other.GetComponent<ObjectSong>();
-            //objectSong.ShowControl();
         }else if(other.tag == "EntryBoss" && !onBoss)
         {
             startPosition = this.transform.position;
             onBoss = true;
             bossLight = other.GetComponent<BossLight>();
             StartCoroutine(bossLight.Blink());
+
+            cinemachine.PlayTimelineLevel5();
 
         }
         else if(other.gameObject.CompareTag("Ball"))

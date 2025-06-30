@@ -12,26 +12,52 @@ public class BossConroller : MonoBehaviour
     public float velocityMunition = 20f;
     public float timeWaitShoot = 5f;
 
+    public bool onAnimation = true;
+
     private Vector3 positionInitial;
     private int direcction = 1;
+    private Animator animator;
+    private bool firstTime = true;
 
     void Start()
     {
         positionInitial = transform.position;
-        Invoke("Shoot", timeWaitShoot);
+
+        animator = this.transform.GetChild(0).GetComponent<Animator>();
+        
+        onAnimation = true;
     }
 
     void Update()
     {
         if (GameManager.instance.defeatBoss) {
-            ReturnToStartPosition();
-            CancelInvoke("Shoot");
+           
+                ReturnToStartPosition();
+                CancelInvoke("Shoot");
+           
         }
         else
         {
-            Movement();
+            if (!onAnimation) {
+                Movement();
+
+                if (firstTime)
+                {
+                    Invoke("Shoot", timeWaitShoot);
+                    firstTime = false;
+                }
+            }
+            else
+            {
+                this.transform.position = positionInitial;
+            }
         }
         
+    }
+
+    public void StartAnimation()
+    {
+        animator.SetBool("Start", true);
     }
 
     void Shoot()

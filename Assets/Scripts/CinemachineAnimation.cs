@@ -6,6 +6,8 @@ using UnityEngine.Playables;
 
 public class CinemachineAnimation : MonoBehaviour
 {
+    public CinemachineVirtualCamera virtualMain;
+
     public PlayableDirector directorLevel1;
     public CinemachineVirtualCamera virtualCamera1;
     public List<Light> lightsLevel1 = new List<Light>();
@@ -22,11 +24,17 @@ public class CinemachineAnimation : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera4;
     public List<Light> lightsLevel4 = new List<Light>();
 
+    public PlayableDirector directorLevel5;
+    public CinemachineVirtualCamera virtualCamera5;
+    public List<Light> lightsLevel5 = new List<Light>();
+
     public Transform canvas;
 
     public GameObject ball;
     public GameObject enemy;
     public GameObject enemyAnimation1;
+
+    public GameObject boss;
 
     private GameObject enemyInstanciate;
     private GameObject ballInstanciate;
@@ -60,6 +68,8 @@ public class CinemachineAnimation : MonoBehaviour
         {
             dolly.m_PathPosition = 0f;
         }
+
+        virtualMain.m_Lens.OrthographicSize = 10;
     }
     private void OnEnable()
     {
@@ -74,6 +84,9 @@ public class CinemachineAnimation : MonoBehaviour
 
         if (directorLevel4 != null)
             directorLevel4.stopped += OnTimelineFinishedLevel4;
+
+        if (directorLevel5 != null)
+            directorLevel5.stopped += OnTimelineFinishedLevel5;
     }
 
     private void OnDisable()
@@ -89,6 +102,9 @@ public class CinemachineAnimation : MonoBehaviour
 
         if (directorLevel4 != null)
             directorLevel4.stopped -= OnTimelineFinishedLevel4;
+
+        if (directorLevel5 != null)
+            directorLevel5.stopped -= OnTimelineFinishedLevel5;
 
 
     }
@@ -124,7 +140,6 @@ public class CinemachineAnimation : MonoBehaviour
         TurnOffLightsLevel1();
         canvas.gameObject.SetActive(true);
         GameManager.instance.canMove = true;
-
 
         enemyInstanciate.SetActive(false);
         enemyAnimation1.SetActive(true);
@@ -281,6 +296,64 @@ public class CinemachineAnimation : MonoBehaviour
     public void TurnOnLightsLevel4()
     {
         foreach (Light light in lightsLevel4)
+        {
+            if (light != null)
+            {
+                light.enabled = true;
+                light.intensity = 90f;
+            }
+        }
+    }
+
+    public void PlayTimelineLevel5()
+    {
+        if (directorLevel5 != null)
+        {
+            canvas.gameObject.SetActive(false);
+            GameManager.instance.canMove = false;
+            TurnOnLightsLevel5();
+            directorLevel5.Play();
+
+            Invoke("IncreaseOrthoSize", 2f);
+
+            BossConroller boosController = boss.GetComponent<BossConroller>();
+            boosController.onAnimation = true;
+            boosController.Invoke("StartAnimation", 12f);
+        }
+    }
+
+    private void IncreaseOrthoSize()
+    {
+        virtualMain.m_Lens.OrthographicSize = 20;
+    }
+
+    private void OnTimelineFinishedLevel5(PlayableDirector pd)
+    {
+        canvas.gameObject.SetActive(true);
+        TurnOffLightsLevel5();
+        GameManager.instance.canMove = true; 
+        
+        BossConroller boosController = boss.GetComponent<BossConroller>();
+        boosController.onAnimation = false;
+    }
+
+    public void TurnOffLightsLevel5()
+    {
+        foreach (Light light in lightsLevel5)
+        {
+            if (light != null)
+            {
+                light.intensity = 0;
+                light.enabled = false;
+            }
+        }
+
+        GameManager.instance.canMove = true;
+    }
+
+    public void TurnOnLightsLevel5()
+    {
+        foreach (Light light in lightsLevel5)
         {
             if (light != null)
             {
