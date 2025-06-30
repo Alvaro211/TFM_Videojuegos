@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
 
+    public Vibration vibration;
+
     public bool helpControls = true;
     public bool canMove = true;
     public bool playerMovePlatform = false;

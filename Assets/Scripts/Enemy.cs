@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 public class Enemy : MonoBehaviour
 {
@@ -29,6 +30,11 @@ public class Enemy : MonoBehaviour
 
     private Coroutine currentRoutine;
     private string currentRoutineName = "";
+
+    private float duracion = 1f;
+    private float inicioIntensidad = 0.5f;
+    private float finalIntensidad = 1.0f;
+    private float tiempo = 0f;
 
     void Start()
     {
@@ -71,9 +77,13 @@ public class Enemy : MonoBehaviour
         else
             isStunned = false;
 
+
         if (player != null && !chasingBall)
         {
+            if(tiempo < 0.5f)
+                tiempo += Time.deltaTime;
 
+            GameManager.instance.vibration.VibrarMando((0.5f + tiempo), 0.5f);
 
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer <= searchRadius)
@@ -108,6 +118,10 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            tiempo = 0f;
+        }
 
         if (!chasingBall && !chasingPlayer)
         {
@@ -137,7 +151,9 @@ public class Enemy : MonoBehaviour
         {
             anim.SetBool("IsIdle", agent.remainingDistance <= agent.stoppingDistance);
         }
+
     }
+
 
     private IEnumerator ChangeDirection()
     {

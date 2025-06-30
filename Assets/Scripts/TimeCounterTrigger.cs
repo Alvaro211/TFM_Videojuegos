@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 
@@ -9,6 +10,11 @@ public class TimeCounterTrigger : MonoBehaviour
     private float timeInTrigger = 0f;
 
     private PlayerMovement player;
+
+
+    private float duracion = 1f;
+    private float inicioIntensidad = 0.5f;
+    private float finalIntensidad = 1.0f;
 
     private void Start()
     {
@@ -31,7 +37,13 @@ public class TimeCounterTrigger : MonoBehaviour
         if (startCounting && other.CompareTag("Player"))
         {
 
-            timeInTrigger += Time.deltaTime;  
+            timeInTrigger += Time.deltaTime;
+
+            if (timeInTrigger > 0.5f)
+                timeInTrigger = 0.5f;
+
+            GameManager.instance.vibration.VibrarMando((0.5f + timeInTrigger), 0.5f);
+
             if (timeInTrigger >= timeAfterDead) 
             {
                 player.Dead();

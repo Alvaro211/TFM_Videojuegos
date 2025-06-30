@@ -2704,6 +2704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1562798669}
   - component: {fileID: 1562798668}
+  - component: {fileID: 1562798670}
   m_Layer: 0
   m_Name: InstanceGameManager
   m_TagString: Untagged
@@ -2723,6 +2724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1cd49cdca5f2b459d988db855be7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vibration: {fileID: 1562798670}
   helpControls: 1
   canMove: 1
   playerMovePlatform: 0
@@ -2732,9 +2734,9 @@ MonoBehaviour:
   playerMovement: {fileID: 0}
   sharedData:
     player:
-      "positi\xF3nX": 0
-      "positi\xF3nY": 0
-      "positi\xF3nZ": 0
+      positionX: 0
+      positionY: 0
+      positionZ: 0
       noteGreen: 0
       noteYellow: 0
       noteBlue: 0
@@ -2778,6 +2780,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1562798670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562798667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5f46759f064f148b54eac6102f6a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensidadVibracion: 0.5
+  duracionVibracion: 0.5
 --- !u!1 &1609075873
 GameObject:
   m_ObjectHideFlags: 0
