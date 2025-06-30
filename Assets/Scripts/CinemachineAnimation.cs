@@ -28,7 +28,11 @@ public class CinemachineAnimation : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera5;
     public List<Light> lightsLevel5 = new List<Light>();
 
+    public CinemachineImpulseSource impulseSource;
+
     public Transform canvas;
+
+    public AudioSource musicAudioSource;
 
     public GameObject ball;
     public GameObject enemy;
@@ -319,22 +323,63 @@ public class CinemachineAnimation : MonoBehaviour
             BossConroller boosController = boss.GetComponent<BossConroller>();
             boosController.onAnimation = true;
             boosController.Invoke("StartAnimation", 12f);
+            Invoke("ImpulseCameraBoss", 12f);
+            StartCoroutine(FadeOutCoroutine(5f));
         }
     }
 
     private void IncreaseOrthoSize()
     {
         virtualMain.m_Lens.OrthographicSize = 20;
+
+        var transposer = virtualMain.GetCinemachineComponent<CinemachineFramingTransposer>();
+        if (transposer != null)
+        {
+            transposer.m_ScreenY = 0.72f;
+        }
+    }
+
+    private void ImpulseCameraBoss()
+    {
+        impulseSource.GenerateImpulse();
+        AudioSource bossAudioSource = boss.GetComponent<AudioSource>();
+        bossAudioSource.Play();
+    }
+
+    private IEnumerator FadeOutCoroutine(float duration)
+    {
+        float startVolume = musicAudioSource.volume;
+
+        float timer = 0f;
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            musicAudioSource.volume = Mathf.Lerp(startVolume, 0f, timer / duration);
+            yield return null;
+        }
+
+        musicAudioSource.volume = 0f;
+        musicAudioSource.Stop();
     }
 
     private void OnTimelineFinishedLevel5(PlayableDirector pd)
     {
+        musicAudioSource.volume = 1f;
+        musicAudioSource.Play();
         canvas.gameObject.SetActive(true);
         TurnOffLightsLevel5();
         GameManager.instance.canMove = true; 
         
         BossConroller boosController = boss.GetComponent<BossConroller>();
         boosController.onAnimation = false;
+
+        foreach (Transform hijo in canvas)
+        {
+            if (hijo.name == "CirculoNota(Clone)")
+            {
+                hijo.position = new Vector3(hijo.position.x, hijo.position.y-20, hijo.position.z);
+            }
+        }
     }
 
     public void TurnOffLightsLevel5()
