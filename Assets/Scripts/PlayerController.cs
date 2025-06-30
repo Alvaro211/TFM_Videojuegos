@@ -549,6 +549,7 @@ public class PlayerMovement : MonoBehaviour
         {
             menuPause.gameObject.SetActive(false);
 
+            vignetteImage.gameObject.SetActive(true);
             GameManager.instance.canMove = true;
             sprite.gameObject.SetActive(true);
 
@@ -570,6 +571,7 @@ public class PlayerMovement : MonoBehaviour
             GameManager.instance.canMove = false;
             Time.timeScale = 0;
             sliderBall.gameObject.SetActive(false);
+            vignetteImage.gameObject.SetActive(false);
 
             menuPause.gameObject.SetActive(true);
             if (hotspot != null)
