@@ -110,6 +110,9 @@ public class PlayerMovement : MonoBehaviour
     public UnityEngine.UI.Image vignetteImage;
 
     public CinemachineAnimation cinemachine;
+
+    private float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
     void Start()
     {
         
@@ -261,6 +264,7 @@ public class PlayerMovement : MonoBehaviour
         // Si está tocando el suelo (Floor), desactivamos la gravedad
         if (!controller.isGrounded)
         {
+            coyoteTimeCounter -= Time.deltaTime;
 
             if (anim.GetBool("IsFalling"))
             {
@@ -306,6 +310,8 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetBool("IsJumping", false);
                 anim.SetBool("IsFalling", false);
             }
+
+            coyoteTimeCounter = coyoteTime;
         }
 
         
@@ -879,6 +885,7 @@ public class PlayerMovement : MonoBehaviour
     // Método para aplicar el salto
     IEnumerator Jump()
     {
+        coyoteTime = 0;
         audioSourceEffectPlayer.clip = audioJump;
         audioSourceEffectPlayer.Play();
         yield return null;
@@ -887,7 +894,7 @@ public class PlayerMovement : MonoBehaviour
         jumpCooldown = true;
         yield return new WaitForSeconds(0.1f);
         isHit = false;
-        if(controller.isGrounded || movingPlatform != null)
+       // if(controller.isGrounded || movingPlatform != null)
             verticalVelocity = Mathf.Sqrt(jumpForce * -2f * gravityScale);
         Invoke(nameof(EnableJumpCooldown), 0.1f);
 

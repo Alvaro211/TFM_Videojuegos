@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8720693965154610914}
   - component: {fileID: 3128330191338072906}
   - component: {fileID: 6397736744990495413}
+  - component: {fileID: 3931643102014455828}
   m_Layer: 0
   m_Name: Plataforma1
   m_TagString: Floor
@@ -102,12 +103,33 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.4909624
   m_Height: 4.054245
   m_Direction: 0
   m_Center: {x: -0.095451355, y: -0.1824069, z: -0.029852748}
+--- !u!65 &3931643102014455828
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3194895124274967396}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.4, y: 1, z: 1}
+  m_Center: {x: -0.7, y: -0.8, z: 0}
 --- !u!1 &4980404768502435821
 GameObject:
   m_ObjectHideFlags: 0
