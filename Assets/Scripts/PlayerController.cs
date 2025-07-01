@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
         GameManager.instance.Load();
 
-        if (GameManager.instance.newGame || GameManager.instance.sharedData.player.positionZ == 0)
+        if (/*GameManager.instance.newGame || GameManager.instance.sharedData.player.positionZ == 0*/ true)
         {
             GameManager.instance.newGame = false;
             startPosition = transform.position;
