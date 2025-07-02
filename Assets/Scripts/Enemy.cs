@@ -7,278 +7,308 @@ using UnityEngine.InputSystem;
 
 public class Enemy : MonoBehaviour
 {
-    public float patrolDistance = 8f; // Distancia que avanzar?en Z
+    private enum di_ren_zhuang_tai
+    {
+        巡逻,
+        迷惑,
+        追逐
+    }
+    private enum zhui_zhu_dui_xiang_lei
+    {
+        玩家,
+        光球,
+        无
+    }
+    [SerializeField]
+    private di_ren_zhuang_tai ZhuangTai = di_ren_zhuang_tai.巡逻;
+    public float patrolDistance = 5f; // Distancia que avanzar?en Z
     public float waitTime = 2f;         // Tiempo de espera en cada punto
-    public float searchRadius = 10;
-    public bool horizontal = false;
+    public float searchRadius = 15;
+    [SerializeField] float XunLuoSuDu;
+    [SerializeField] float ZhuiZhuShuDu;
+    public bool horizontal = true;
     public bool isStunned = false;
 
-    private NavMeshAgent agent;
+    [Header("感叹号")]
+    [SerializeField] private GameObject GanTan;
+    [SerializeField] private GameObject WenHao;
+    public GameObject gantanPref; //可以废弃的变量
+    private Vector3 MuBiao_WeiZhi;
+    private NavMeshAgent agen;
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private bool movingForward = true;
-    private bool chasingBall = false;
-    private bool chasingPlayer = false;
 
-    private SpriteRenderer sprite;
+    private Animator anim;
+    private SpriteRenderer TuPian;
 
-    public Animator anim;
-    [Header("感叹号")]
-    public GameObject gantan;
-    public GameObject gantanPref;
-    private Transform player;
 
-    private Coroutine currentRoutine;
-    private string currentRoutineName = "";
+    private Vector3 WanJa_WeiZhi;
+    private Vector3 GuangQui_WeiZhi;
+    private GameObject GuangQui;
 
-    private float duracion = 1f;
-    private float inicioIntensidad = 0.5f;
-    private float finalIntensidad = 1.0f;
-    private float tiempo = 0f;
+    private float DengDai_JiShi = 0;
+    private float ZhuiShaJianZhi_JiShi = 0;
+    private float MiHuo_JiShi = 0;
+    private float FangQiZhuiZhu_JiShi = 0;
+
+
+    NavMeshPath WanJia_LuJing;
+    NavMeshPath GuangQiu_LuJing;
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        gantan = Resources.Load<GameObject>("GanTan");
+        agen = GetComponent<NavMeshAgent>();
         startPosition = transform.position; // Guarda la posici髇 inicial
+        WanJia_LuJing = new();
+        GuangQiu_LuJing = new();
+
+        GanTan.SetActive(false);
+        WenHao.SetActive(false);
+
         if (!horizontal)
             targetPosition = startPosition + new Vector3(0, 0, patrolDistance);
         else
             targetPosition = startPosition + new Vector3(patrolDistance, 0, 0);
 
         // Moverse al primer destino
-        agent.SetDestination(targetPosition);
+        agen.SetDestination(targetPosition);
 
-        GameObject playerObj = GameObject.Find("Jugador");
-        if (playerObj != null)
-            player = playerObj.transform;
 
-        sprite = this.gameObject.GetComponentInChildren<SpriteRenderer>();
+        TuPian = this.gameObject.GetComponentInChildren<SpriteRenderer>();
+
+
+
 
         anim = this.transform.GetChild(0).transform.GetComponent<Animator>();
     }
-
+    bool NengZuiDao;
+    GameObject playerObj;
     void Update()
     {
-        if (sprite != null)
-        {
-            sprite.transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
 
-        if (!chasingBall && !chasingPlayer)
+        if (playerObj == null)
         {
-            anim.SetBool("IsIdle", agent.remainingDistance <= agent.stoppingDistance);
-        }
-
-        if (chasingBall && (agent.destination.x - transform.position.x) < 0.3f)
-        {
-            isStunned = true;
+            playerObj = GameObject.FindObjectOfType<PlayerMovement>().gameObject;
+            WanJa_WeiZhi = playerObj.transform.position;
         }
         else
+        {
+            WanJa_WeiZhi = playerObj.transform.position;
+        }
+
+        jianzaofangxiang();
+
+        if ((Vector3.Distance(transform.position, WanJa_WeiZhi) <= searchRadius
+        && agen.CalculatePath(WanJa_WeiZhi, WanJia_LuJing)
+        && WanJia_LuJing.status == NavMeshPathStatus.PathComplete)
+        ||
+         (GuangQui != null && GuangQui.activeInHierarchy && Vector3.Distance(transform.position, GuangQui_WeiZhi) < searchRadius
+        && agen.CalculatePath(GuangQui_WeiZhi, GuangQiu_LuJing)
+        && GuangQiu_LuJing.status == NavMeshPathStatus.PathComplete)
+        )
+        {
+            ZhuangTai = di_ren_zhuang_tai.追逐;
+            NengZuiDao = true;
+
+        }
+        else
+        {
+            NengZuiDao = false;
+
+        }
+
+
+
+        switch (ZhuangTai)
+        {
+            case di_ren_zhuang_tai.巡逻:
+                XunLuoXingWei();
+                break;
+            case di_ren_zhuang_tai.迷惑:
+                MiHuo_xingwei();
+
+                break;
+            case di_ren_zhuang_tai.追逐:
+                ZhuiZhu_xingwei();
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+
+    void MiHuo_xingwei()
+    {
+
+        MiHuo_JiShi += Time.deltaTime;
+        if (MiHuo_JiShi < 5f)
+        {
+            anim.SetBool("IsIdle", false);
+            anim.SetBool("IsChasing", false);
+            anim.SetBool("IsConfuse", true);
+            isStunned = true;
+
+
+        }
+        else
+        {
+            MiHuo_JiShi = 0;
+            fanghuixunluo();
             isStunned = false;
 
 
-        if (player != null && !chasingBall)
+
+
+        }
+
+    }
+
+    void ZhuiZhu_xingwei()
+    {
+
+        DengDai_JiShi = 0;
+
+        zhui_zhu_dui_xiang_lei MuBiaoLeiXing = PanDuanMuBiaoLeiXing();
+        anim.SetBool("IsChasing", true);
+        anim.SetBool("IsIdle", false);
+        anim.SetBool("IsConfuse", false);
+        agen.SetDestination(MuBiao_WeiZhi);//设置目标
+        agen.speed =ZhuiZhuShuDu;
+        GanTan.SetActive(true);
+        WenHao.SetActive(false);
+        if (Vector2.Distance(MuBiao_WeiZhi, transform.position) <= agen.stoppingDistance) //这里是当敌人追到目标后的逻辑
         {
-            if(tiempo < 0.5f)
-                tiempo += Time.deltaTime;
 
-            GameManager.instance.vibration.VibrarMando((0.5f + tiempo), 0.5f);
-
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-            if (distanceToPlayer <= searchRadius)
+            switch (MuBiaoLeiXing)
             {
-                NavMeshPath path = new NavMeshPath();
-                if (agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
-                {
-                    if (gantanPref == null)
+                case zhui_zhu_dui_xiang_lei.玩家:
+                    GanTan.SetActive(true);
+                    WenHao.SetActive(false);
+                    anim.SetBool("IsIdle", true);
+                    anim.SetBool("IsChasing", false);
+                    anim.SetBool("IsConfuse", true);
+                    agen.speed = XunLuoSuDu;
+                    agen.ResetPath();
+                    ZhuiShaJianZhi_JiShi += Time.deltaTime;
+                    if (ZhuiShaJianZhi_JiShi > 0.5f)
                     {
-                        var obj = Instantiate(gantan);
-                        obj.name = "GanTan";
-                        obj.GetComponent<CameraForward>().target = transform;
-                        gantanPref = obj;
-
-                        foreach (var o in FindObjectsOfType<CameraForward>())
-                        {
-                            if (o.name != "GanTan")
-                            {
-                                Destroy(o.gameObject);
-                            }
-                        }
+                        ZhuiShaJianZhi_JiShi = 0;
+                        fanghuixunluo();
                     }
-                    chasingPlayer = true;
-                    anim.SetBool("IsChasing", true);
-                    agent.SetDestination(player.position);
-                    agent.speed = 7;
-                    if (currentRoutine != null)
-                        StopCoroutine(currentRoutine);
-                    currentRoutine = StartCoroutine(WaitPlayerAndReturn());
-                    currentRoutineName = "WaitPlayerAndReturn";
-                    return;
-                }
+                    break;
+                case zhui_zhu_dui_xiang_lei.光球: //因为其它脚本的调用,迷惑状态被分成了两截,该状态下,一开始就要调方法写这里,持续调用的,两边都写
+                    anim.SetBool("IsChasing", false);
+                    anim.SetBool("IsIdle", false);
+                    anim.SetBool("IsConfuse", true);
+                    GanTan.SetActive(false);
+                    WenHao.SetActive(true);
+                    isStunned = true;
+                    MiHuo_JiShi += Time.deltaTime;
+                    ZhuangTai = di_ren_zhuang_tai.迷惑;
+                    break;
+                default:
+                    fanghuixunluo();
+                    break;
             }
+
+        }
+        else if (!NengZuiDao) //追逐过程中,目标消失或路径无法到达
+        {
+
+            FangQiZhuiZhu_JiShi += Time.deltaTime;
+            if (FangQiZhuiZhu_JiShi > 2)
+            {
+                fanghuixunluo();
+                FangQiZhuiZhu_JiShi = 0;
+                GanTan.SetActive(false);
+                WenHao.SetActive(false);
+
+            }
+        }
+    }
+    private void XunLuoXingWei()
+    {
+
+
+        if (agen.remainingDistance <= agen.stoppingDistance)
+        {
+            if (DengDai_JiShi < waitTime)
+            {
+                anim.SetBool("IsIdle", true);
+                DengDai_JiShi += Time.deltaTime;
+
+            }
+            else
+            {
+                DengDai_JiShi = 0;
+                anim.SetBool("IsIdle", false);
+                agen.SetDestination(movingForward ? startPosition : targetPosition);
+                movingForward = !movingForward;
+            }
+        }
+
+    }
+
+
+    zhui_zhu_dui_xiang_lei PanDuanMuBiaoLeiXing()
+    {
+        if (GuangQui != null && GuangQui.activeInHierarchy && Vector3.Distance(transform.position, GuangQui_WeiZhi) < searchRadius &&
+            Vector3.Distance(transform.position, GuangQui_WeiZhi) < Vector3.Distance(transform.position, WanJa_WeiZhi))
+        {
+            MuBiao_WeiZhi = GuangQui_WeiZhi;
+
+            return zhui_zhu_dui_xiang_lei.光球;
+        }
+        else if (Vector3.Distance(transform.position, WanJa_WeiZhi) < searchRadius)
+        {
+            MuBiao_WeiZhi = WanJa_WeiZhi;
+            isStunned = WenHao.activeInHierarchy;//因为玩家可能在敌人迷惑状态中穿过敌人
+            return zhui_zhu_dui_xiang_lei.玩家;
+
         }
         else
         {
-            tiempo = 0f;
-        }
-
-        if (!chasingBall && !chasingPlayer)
-        {
-            anim.SetBool("IsIdle", agent.remainingDistance <= agent.stoppingDistance);
-        }
-
-
-        if (!chasingBall && !chasingPlayer) // Solo patrullar si no est?yendo a la bola
-        {
-            if (/*!waiting && !agent.pathPending && */agent.remainingDistance <= agent.stoppingDistance /*&& agent.velocity.magnitude == 0*/)
-            {
-                anim.SetBool("IsIdle", true);
-                if (currentRoutine != null && currentRoutineName != "ChangeDirection")
-                {
-                    StopCoroutine(currentRoutine);
-                }
-
-                if (currentRoutineName != "ChangeDirection")
-                {
-                    currentRoutine = StartCoroutine(ChangeDirection());
-                    currentRoutineName = "ChangeDirection";
-                }
-            }
-        }
-
-        if (!chasingBall && !chasingPlayer)
-        {
-            anim.SetBool("IsIdle", agent.remainingDistance <= agent.stoppingDistance);
-        }
-
-    }
-
-
-    private IEnumerator ChangeDirection()
-    {
-        if (chasingBall || chasingPlayer) yield break;
-
-        yield return new WaitForSeconds(waitTime); // Espera antes de cambiar direcci髇
-
-
-        // Cambiar destino
-        if (!chasingBall && !chasingPlayer)
-        {
-            if (patrolDistance != 0)
-                anim.SetBool("IsIdle", false);
-            agent.SetDestination(movingForward ? startPosition : targetPosition);
-            movingForward = !movingForward;
-
-            ComprobarDireccionSprite();
-        }
-
-        currentRoutineName = "";
-    }
-
-    public void MoveToBall(Vector3 ballPosition)
-    {
-
-        if (Vector3.Distance(transform.position, targetPosition) < searchRadius && !chasingPlayer)
-        {
-            //// Verifica si la posici髇 es alcanzable
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(ballPosition, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                chasingBall = true; // Se dirige a la bola
-                if (gantanPref == null)
-                {
-                    var obj = Instantiate(gantan);
-                    obj.name = "GanTan";
-                    obj.GetComponent<CameraForward>().target = transform;
-                    gantanPref = obj;
-                    foreach (var o in FindObjectsOfType<CameraForward>())
-                    {
-                        if (o.name != "GanTan")
-                        {
-                            Destroy(o.gameObject);
-                        }
-                    }
-                }
-
-                anim.SetBool("IsChasing", true);
-                anim.SetBool("IsIdle", false);
-                agent.SetDestination(hit.position);
-
-
-                ComprobarDireccionSprite();
-
-                if (currentRoutine != null)
-                    StopCoroutine(currentRoutine);
-                currentRoutine = StartCoroutine(WaitBallAndReturn());
-                currentRoutineName = "WaitBallAndReturn";
-            }
+            return zhui_zhu_dui_xiang_lei.无;
         }
     }
 
-    private IEnumerator WaitBallAndReturn()
+    public void MoveToBall(GameObject ballPosition)
     {
-        yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
-        anim.SetBool("IsConfuse", true);
-        yield return new WaitForSeconds(5f); // Espera 3 segundos en la bola
-        chasingBall = false;
-        chasingPlayer = false;
-        if (gantanPref != null)
+        GuangQui = ballPosition;
+        GuangQui_WeiZhi = ballPosition.transform.position;
+    }
+
+
+    private void jianzaofangxiang()
+    {
+        float directionToPlayer = agen.destination.x - transform.position.x; //负数为向左走
+
+        if (directionToPlayer < 0)
         {
-            Destroy(gantanPref);
+            TuPian.transform.rotation = Quaternion.Euler(0.0f, -180f, 0.0f);
         }
+        else if (directionToPlayer > 0)
+        {
+            TuPian.transform.rotation = Quaternion.Euler(0.0f, 0f, 0.0f);
+        }
+
+
+    }
+
+    private void fanghuixunluo()
+    {
+        agen.speed = XunLuoSuDu;
+        agen.SetDestination(movingForward ? startPosition : targetPosition);
+        ZhuangTai = di_ren_zhuang_tai.巡逻;
         anim.SetBool("IsChasing", false);
-        anim.SetBool("IsIdle", true);
+        anim.SetBool("IsIdle", false);
         anim.SetBool("IsConfuse", false);
 
-
-        agent.ResetPath();
-        if (currentRoutine != null)
-            StopCoroutine(currentRoutine);
-        currentRoutine = StartCoroutine(ContinuePatrol(false));
-        currentRoutineName = "ContinuePatrol";
+        GanTan.SetActive(false);
+        WenHao.SetActive(false);
     }
-
-    private IEnumerator WaitPlayerAndReturn()
-    {
-        ComprobarDireccionSprite();
-
-        yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
-        chasingBall = false;
-        chasingPlayer = false;
-        if (gantanPref != null)
-        {
-            Destroy(gantanPref);
-        }
-        anim.SetBool("IsIdle", true);
-        anim.SetBool("IsChasing", false);
-        agent.speed = 3f;
-        agent.ResetPath();
-        if (currentRoutine != null)
-            StopCoroutine(currentRoutine);
-        currentRoutine = StartCoroutine(ContinuePatrol(true));
-        currentRoutineName = "ContinuePatrol";
-    }
-
-    private IEnumerator ContinuePatrol(bool hasSeenPlayer)
-    {
-        // Despu閟 de esperar, vuelve a su ruta original
-        anim.SetBool("IsIdle", false);
-        yield return new WaitForSeconds(hasSeenPlayer ? 0.5f : waitTime); // Espera antes de comenzar el patrullaje
-        agent.SetDestination(movingForward ? startPosition : targetPosition);
-        ComprobarDireccionSprite();
-        movingForward = !movingForward;
-    }
-
-    private void ComprobarDireccionSprite()
-    {
-        float directionToPlayer = agent.destination.x - transform.position.x;
-
-        if ((directionToPlayer > 0 && sprite.flipX) || (directionToPlayer < 0 && !sprite.flipX))
-        {
-            sprite.flipX = !sprite.flipX;
-        }
-    }
-
-
 }
+

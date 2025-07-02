@@ -63,7 +63,7 @@ public class BallBounceHandler : MonoBehaviour
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             foreach (Enemy enemy in enemies)
             {
-                enemy.MoveToBall(transform.position); // Envía la posición de la bola a cada enemigo
+                enemy.MoveToBall(gameObject); // Envía la posición de la bola a cada enemigo
             }
 
             // Obtener la normal del primer punto de contacto

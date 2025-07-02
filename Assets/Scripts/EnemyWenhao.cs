@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyWenhao : MonoBehaviour
 {
-    public GameObject wenhao;
+   /* public GameObject wenhao;
 
     private void Start()
     {
@@ -31,5 +31,5 @@ public class EnemyWenhao : MonoBehaviour
             Destroy(obj, 5f);
             Destroy(GetComponent<Collider>());
         }
-    }
+    }*/
 }
