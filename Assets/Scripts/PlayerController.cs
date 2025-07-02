@@ -840,7 +840,37 @@ public class PlayerMovement : MonoBehaviour
         TextMeshProUGUI text = newImage.GetComponentInChildren<TextMeshProUGUI>();
         color.a = 1;
         image.color = color;
-        text.text = (spawnedImages.Count + 1).ToString();
+
+        if (Gamepad.current != null)
+        {
+            if ((spawnedImages.Count + 1) == 1)
+            {
+                text.text = "<b>↑</b>";
+                text.transform.position = new Vector3((text.transform.position.x - 0.5f), (text.transform.position.y + 1.5f), text.transform.position.z);
+            }
+            else if ((spawnedImages.Count + 1) == 2)
+            {
+                text.text = "<b>→</b>";
+                text.transform.position = new Vector3((text.transform.position.x - 2f), (text.transform.position.y + 2f), text.transform.position.z);
+            }
+            else if ((spawnedImages.Count + 1) == 3)
+            {
+                text.text = "<b>↓</b>";
+                text.transform.position = new Vector3((text.transform.position.x - 0.5f), (text.transform.position.y + 1.5f), text.transform.position.z);
+            }
+            else if ((spawnedImages.Count + 1) == 4)
+            {
+                text.text = "<b>←</b>";
+                text.transform.position = new Vector3((text.transform.position.x - 2f), (text.transform.position.y + 2f), text.transform.position.z);
+            }
+
+            text.fontSize = 40f;
+        }
+        else
+        {
+            text.text = (spawnedImages.Count + 1).ToString();
+            text.fontSize = 30f;
+        }
         spawnedImages.Add(newImage);
 
         // Ajustar la posición de todas las imágenes
