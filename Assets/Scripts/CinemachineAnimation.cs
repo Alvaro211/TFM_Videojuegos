@@ -341,6 +341,8 @@ public class CinemachineAnimation : MonoBehaviour
 
     private void ImpulseCameraBoss()
     {
+        GameManager.instance.vibration.VibrarMando((2f), 1f);
+
         impulseSource.GenerateImpulse();
         AudioSource bossAudioSource = boss.GetComponent<AudioSource>();
         bossAudioSource.Play();

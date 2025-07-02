@@ -13,6 +13,10 @@ public class TimeCounterTrigger : MonoBehaviour
 
     private PlayerMovement player;
 
+    private float duracion = 1f;
+    private float inicioIntensidad = 0.5f;
+    private float finalIntensidad = 1.0f;
+    private float vibration;
 
     public float jiGuang_XianShi_shijian = 0.75f;
 
@@ -41,6 +45,13 @@ public class TimeCounterTrigger : MonoBehaviour
 
         if (startCounting && other.CompareTag("Player"))
         {
+
+            if (timeInTrigger < 0.5f)
+                vibration = timeInTrigger;
+            else
+                vibration = 0.5f;
+
+            GameManager.instance.vibration.VibrarMando((0.5f + vibration), 0.5f);
 
             timeInTrigger += Time.deltaTime;
             if (timeInTrigger >= (timeAfterDead - jiGuang_XianShi_shijian))

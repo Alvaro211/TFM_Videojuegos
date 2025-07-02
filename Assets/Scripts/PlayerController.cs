@@ -381,6 +381,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (timeReset > 2)
             {
+                GameManager.instance.vibration.VibrarMando((2f), 0.5f);
                 this.transform.position = startPosition + new Vector3(0, 1, 0);
             }
         }
@@ -1101,6 +1102,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dead()
     {
+        GameManager.instance.vibration.VibrarMando((2f), 0.5f);
+
         audioSourceEffectPlayer.clip = audioDead;
         audioSourceEffectPlayer.Play();
 
