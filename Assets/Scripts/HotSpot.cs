@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 
 public class HotSpot : MonoBehaviour
 {
@@ -48,6 +49,24 @@ public class HotSpot : MonoBehaviour
         }
         // Asegurarse de que todas las luces estén apagadas al inicio
         SetAllLightsIntensity(0);
+    }
+
+    private void Update()
+    {
+        if (Gamepad.current != null)
+        {
+            if (control.text == "E")
+            {
+                control.text = "X";
+            }
+        }
+        else
+        {
+            if (control.text == "X")
+            {
+                control.text = "E";
+            }
+        }
     }
 
     public void ActivateLights()

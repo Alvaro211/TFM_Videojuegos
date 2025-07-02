@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private bool updateSliderBall = false;
     private float timerSliderBall = 0f;
 
-    private int currentIndexHotSpot = 0;
+    public int currentIndexHotSpot = 0;
     private Vector3 startPosition;
     private float verticalVelocity;
     private bool isMoving;
@@ -323,6 +323,11 @@ public class PlayerMovement : MonoBehaviour
         if (isMoving)
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
+            Debug.Log(currentVelocity.x);
+            if (currentVelocity.x > 5)
+                this.transform.rotation = Quaternion.Euler(0, 0, 0);
+            else if(currentVelocity.x < -5)
+                this.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {

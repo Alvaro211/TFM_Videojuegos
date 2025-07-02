@@ -74,6 +74,7 @@ public class Shortcut : MonoBehaviour
 
         playerMovement.ResetImage();
         playerMovement.SetStartPosition(player.transform.position);
+        playerMovement.currentIndexHotSpot = 2;
 
     }
 
@@ -106,6 +107,8 @@ public class Shortcut : MonoBehaviour
 
         playerMovement.SpawnImage(noteGreen.GetComponent<Renderer>().materials[0].color);
         playerMovement.AddSequence(audioGreen);
+
+        playerMovement.currentIndexHotSpot = 2;
     }
 
 
@@ -141,6 +144,8 @@ public class Shortcut : MonoBehaviour
 
         playerMovement.SpawnImage(noteYellow.GetComponent<Renderer>().materials[0].color);
         playerMovement.AddSequence(audioYellow);
+
+        playerMovement.currentIndexHotSpot = 3;
     }
 
 
@@ -179,6 +184,8 @@ public class Shortcut : MonoBehaviour
 
         playerMovement.SpawnImage(noteBlue.GetComponent<Renderer>().materials[0].color);
         playerMovement.AddSequence(audioBlue);
+
+        playerMovement.currentIndexHotSpot = 5;
     }
 
     public void PressKey5(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -219,6 +226,8 @@ public class Shortcut : MonoBehaviour
 
         playerMovement.SpawnImage(noteRed.GetComponent<Renderer>().materials[0].color);
         playerMovement.AddSequence(audioRed);
+
+        playerMovement.currentIndexHotSpot = 6;
     }
 
 }
