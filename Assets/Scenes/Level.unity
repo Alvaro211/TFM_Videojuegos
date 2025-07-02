@@ -12876,7 +12876,7 @@ Camera:
   far clip plane: 1000
   field of view: 80
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12901,7 +12901,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 751.2, y: 22, z: -22}
+  m_LocalPosition: {x: 751.2, y: 26.400002, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -40329,6 +40329,7 @@ RectTransform:
   m_Children:
   - {fileID: 595968780}
   - {fileID: 2125593220}
+  - {fileID: 1706593277}
   - {fileID: 203346794}
   - {fileID: 1238685471}
   - {fileID: 300011347}
@@ -40340,7 +40341,6 @@ RectTransform:
   - {fileID: 859095614}
   - {fileID: 674922794}
   - {fileID: 1914803959}
-  - {fileID: 1706593277}
   - {fileID: 927906565}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -56722,7 +56722,7 @@ PrefabInstance:
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPages.Array.data[7]
       value: 
-      objectReference: {fileID: 21300000, guid: bc19c72b98b8d5640959b4b426a8e64d,
+      objectReference: {fileID: 21300000, guid: 575b4092644644f408f97b2e5649ca77,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.size
@@ -56736,32 +56736,32 @@ PrefabInstance:
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: 5d37f004031f3324db46e282c2e9976f,
+      objectReference: {fileID: 21300000, guid: 39afd130367c6d84a920b4bffe462172,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: b5a56f731cebbb14e84f74c99eb955fd,
+      objectReference: {fileID: 21300000, guid: 42b95e13fcb3cad40853229acba9f77a,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[3]
       value: 
-      objectReference: {fileID: 21300000, guid: c539a935a238ebd4eb326c00a474b423,
+      objectReference: {fileID: 21300000, guid: bd36a0dc25e37024582346c19be42b5a,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[4]
       value: 
-      objectReference: {fileID: 21300000, guid: bdea5ae85941d674b808fbb96dbb9320,
+      objectReference: {fileID: 21300000, guid: c18e37dd9bfb41940b5ad82ea3abf44d,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[5]
       value: 
-      objectReference: {fileID: 21300000, guid: ec79b838c007e3448857cd05a7b3d1c6,
+      objectReference: {fileID: 21300000, guid: 91784bdbef6077e49b7361e602c90e9f,
         type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: bookPageWritten.Array.data[6]
       value: 
-      objectReference: {fileID: 21300000, guid: 9cd29a4dad57b3d46950ca380f0bfab9,
+      objectReference: {fileID: 21300000, guid: 4738f285d52e66940bc1e27a60e02cbf,
         type: 3}
     - target: {fileID: 22443772, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_Pivot.x
@@ -60632,7 +60632,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1716474887}
   m_Lens:
     FieldOfView: 80
-    OrthographicSize: 10
+    OrthographicSize: 20
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -60658,7 +60658,7 @@ Transform:
   m_GameObject: {fileID: 1547773805}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 104.20001, y: 14.401688, z: 0}
+  m_LocalPosition: {x: 104.20001, y: 18.80169, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -67240,6 +67240,7 @@ MonoBehaviour:
   spacing: 80
   sprite: {fileID: 1716474895}
   layout: {fileID: 1213133948}
+  currentIndexHotSpot: 0
   anim: {fileID: 1716474894}
   cineMachine: {fileID: 1213133950}
   book: {fileID: 1414163933}
@@ -81362,7 +81363,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 80
-    OrthographicSize: 19.77385
+    OrthographicSize: 20
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -82295,6 +82296,7 @@ GameObject:
   - component: {fileID: 2110216092}
   - component: {fileID: 2110216094}
   - component: {fileID: 2110216093}
+  - component: {fileID: 2110216095}
   m_Layer: 0
   m_Name: AyudaBola (1)
   m_TagString: Untagged
@@ -82456,6 +82458,19 @@ MeshRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 99
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2110216095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110216091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4baa4a669aaad61468996053614231f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 2110216093}
 --- !u!1 &2110364592
 GameObject:
   m_ObjectHideFlags: 0
