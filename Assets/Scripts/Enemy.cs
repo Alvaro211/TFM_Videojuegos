@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class Enemy : MonoBehaviour
 {
-    private enum di_ren_zhuang_tai
+/*    private enum di_ren_zhuang_tai
     {
         巡逻,
         迷惑,
@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
         无
     }
     [SerializeField]
-    private di_ren_zhuang_tai ZhuangTai = di_ren_zhuang_tai.巡逻;
+    private di_ren_zhuang_tai ZhuangTai = di_ren_zhuang_tai.巡逻;*/
     public float patrolDistance = 5f; // Distancia que avanzar?en Z
     public float waitTime = 2f;         // Tiempo de espera en cada punto
     public float searchRadius = 15;
@@ -108,7 +108,7 @@ public class Enemy : MonoBehaviour
         && GuangQiu_LuJing.status == NavMeshPathStatus.PathComplete)
         )
         {
-            ZhuangTai = di_ren_zhuang_tai.追逐;
+           // ZhuangTai = di_ren_zhuang_tai.追逐;
             NengZuiDao = true;
 
         }
@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
 
 
 
-        switch (ZhuangTai)
+       /* switch (ZhuangTai)
         {
             case di_ren_zhuang_tai.巡逻:
                 XunLuoXingWei();
@@ -134,7 +134,7 @@ public class Enemy : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        }*/
 
 
     }
@@ -171,7 +171,7 @@ public class Enemy : MonoBehaviour
 
         DengDai_JiShi = 0;
 
-        zhui_zhu_dui_xiang_lei MuBiaoLeiXing = PanDuanMuBiaoLeiXing();
+        //zhui_zhu_dui_xiang_lei MuBiaoLeiXing = PanDuanMuBiaoLeiXing();
         anim.SetBool("IsChasing", true);
         anim.SetBool("IsIdle", false);
         anim.SetBool("IsConfuse", false);
@@ -182,7 +182,7 @@ public class Enemy : MonoBehaviour
         if (Vector2.Distance(MuBiao_WeiZhi, transform.position) <= agen.stoppingDistance) //这里是当敌人追到目标后的逻辑
         {
 
-            switch (MuBiaoLeiXing)
+           /* switch (MuBiaoLeiXing)
             {
                 case zhui_zhu_dui_xiang_lei.玩家:
                     GanTan.SetActive(true);
@@ -212,7 +212,7 @@ public class Enemy : MonoBehaviour
                 default:
                     fanghuixunluo();
                     break;
-            }
+            }*/
 
         }
         else if (!NengZuiDao) //追逐过程中,目标消失或路径无法到达
@@ -253,7 +253,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    zhui_zhu_dui_xiang_lei PanDuanMuBiaoLeiXing()
+    /*zhui_zhu_dui_xiang_lei PanDuanMuBiaoLeiXing()
     {
         if (GuangQui != null && GuangQui.activeInHierarchy && Vector3.Distance(transform.position, GuangQui_WeiZhi) < searchRadius &&
             Vector3.Distance(transform.position, GuangQui_WeiZhi) < Vector3.Distance(transform.position, WanJa_WeiZhi))
@@ -273,7 +273,7 @@ public class Enemy : MonoBehaviour
         {
             return zhui_zhu_dui_xiang_lei.无;
         }
-    }
+    }*/
 
     public void MoveToBall(GameObject ballPosition)
     {
@@ -302,7 +302,7 @@ public class Enemy : MonoBehaviour
     {
         agen.speed = XunLuoSuDu;
         agen.SetDestination(movingForward ? startPosition : targetPosition);
-        ZhuangTai = di_ren_zhuang_tai.巡逻;
+      //  ZhuangTai = di_ren_zhuang_tai.巡逻;
         anim.SetBool("IsChasing", false);
         anim.SetBool("IsIdle", false);
         anim.SetBool("IsConfuse", false);
