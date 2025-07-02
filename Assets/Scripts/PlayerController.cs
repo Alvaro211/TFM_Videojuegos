@@ -846,22 +846,22 @@ public class PlayerMovement : MonoBehaviour
             if ((spawnedImages.Count + 1) == 1)
             {
                 text.text = "<b>↑</b>";
-                text.transform.position = new Vector3((text.transform.position.x - 0.5f), (text.transform.position.y + 1.5f), text.transform.position.z);
+                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 0.5f), (text.transform.localPosition.y + 1.5f), text.transform.localPosition.z);
             }
             else if ((spawnedImages.Count + 1) == 2)
             {
                 text.text = "<b>→</b>";
-                text.transform.position = new Vector3((text.transform.position.x - 2f), (text.transform.position.y + 2f), text.transform.position.z);
+                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 2.5f), (text.transform.localPosition.y + 2.2f), text.transform.localPosition.z);
             }
             else if ((spawnedImages.Count + 1) == 3)
             {
                 text.text = "<b>↓</b>";
-                text.transform.position = new Vector3((text.transform.position.x - 0.5f), (text.transform.position.y + 1.5f), text.transform.position.z);
+                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 0.5f), (text.transform.localPosition.y + 1.5f), text.transform.localPosition.z);
             }
             else if ((spawnedImages.Count + 1) == 4)
             {
                 text.text = "<b>←</b>";
-                text.transform.position = new Vector3((text.transform.position.x - 2f), (text.transform.position.y + 2f), text.transform.position.z);
+                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 2.5f), (text.transform.localPosition.y + 2.2f), text.transform.localPosition.z);
             }
 
             text.fontSize = 40f;
