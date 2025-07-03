@@ -9,18 +9,18 @@ public class Enemy : MonoBehaviour
 {
     private enum di_ren_zhuang_tai
     {
-        xun_luo,
-        mi_huo,
-        zhui_zhu
+        patrol,
+        puzzle,
+        chasing
     }
     private enum zhui_zhu_dui_xiang_lei
     {
-        wanjia,
-        guangqiu,
-        wu
+        player,
+        light_globe,
+        none
     }
     [SerializeField]
-    private di_ren_zhuang_tai ZhuangTai = di_ren_zhuang_tai.xun_luo;
+    private di_ren_zhuang_tai ZhuangTai = di_ren_zhuang_tai.patrol;
     public float patrolDistance = 5f; // Distancia que avanzar?en Z
     public float waitTime = 2f;         // Tiempo de espera en cada punto
     public float searchRadius = 15;
@@ -108,7 +108,7 @@ public class Enemy : MonoBehaviour
         && GuangQiu_LuJing.status == NavMeshPathStatus.PathComplete)
         )
         {
-           ZhuangTai = di_ren_zhuang_tai.zhui_zhu;
+           ZhuangTai = di_ren_zhuang_tai.chasing;
             NengZuiDao = true;
 
         }
@@ -122,14 +122,14 @@ public class Enemy : MonoBehaviour
 
        switch (ZhuangTai)
         {
-            case di_ren_zhuang_tai.xun_luo:
+            case di_ren_zhuang_tai.patrol:
                 XunLuoXingWei();
                 break;
-            case di_ren_zhuang_tai.mi_huo:
+            case di_ren_zhuang_tai.puzzle:
                 MiHuo_xingwei();
 
                 break;
-            case di_ren_zhuang_tai.zhui_zhu:
+            case di_ren_zhuang_tai.chasing:
                 ZhuiZhu_xingwei();
                 break;
             default:
@@ -184,7 +184,7 @@ public class Enemy : MonoBehaviour
 
            switch (MuBiaoLeiXing)
             {
-                case zhui_zhu_dui_xiang_lei.wanjia:
+                case zhui_zhu_dui_xiang_lei.player:
                     GanTan.SetActive(true);
                     WenHao.SetActive(false);
                     anim.SetBool("IsIdle", true);
@@ -199,7 +199,7 @@ public class Enemy : MonoBehaviour
                         fanghuixunluo();
                     }
                     break;
-                case zhui_zhu_dui_xiang_lei.guangqiu: //因为其它脚本的调用,迷惑状态被分成了两截,该状态下,一开始就要调方法写这里,持续调用的,两边都写
+                case zhui_zhu_dui_xiang_lei.light_globe: //因为其它脚本的调用,迷惑状态被分成了两截,该状态下,一开始就要调方法写这里,持续调用的,两边都写
                     anim.SetBool("IsChasing", false);
                     anim.SetBool("IsIdle", false);
                     anim.SetBool("IsConfuse", true);
@@ -207,7 +207,7 @@ public class Enemy : MonoBehaviour
                     WenHao.SetActive(true);
                     isStunned = true;
                     MiHuo_JiShi += Time.deltaTime;
-                    ZhuangTai = di_ren_zhuang_tai.mi_huo;
+                    ZhuangTai = di_ren_zhuang_tai.puzzle;
                     break;
                 default:
                     fanghuixunluo();
@@ -260,18 +260,18 @@ public class Enemy : MonoBehaviour
         {
             MuBiao_WeiZhi = GuangQui_WeiZhi;
 
-            return zhui_zhu_dui_xiang_lei.guangqiu;
+            return zhui_zhu_dui_xiang_lei.light_globe;
         }
         else if (Vector3.Distance(transform.position, WanJa_WeiZhi) < searchRadius)
         {
             MuBiao_WeiZhi = WanJa_WeiZhi;
             isStunned = WenHao.activeInHierarchy;//因为玩家可能在敌人迷惑状态中穿过敌人
-            return zhui_zhu_dui_xiang_lei.wanjia;
+            return zhui_zhu_dui_xiang_lei.player;
 
         }
         else
         {
-            return zhui_zhu_dui_xiang_lei.wu;
+            return zhui_zhu_dui_xiang_lei.none;
         }
     }
 
@@ -302,7 +302,7 @@ public class Enemy : MonoBehaviour
     {
         agen.speed = XunLuoSuDu;
         agen.SetDestination(movingForward ? startPosition : targetPosition);
-       ZhuangTai = di_ren_zhuang_tai.xun_luo;
+       ZhuangTai = di_ren_zhuang_tai.patrol;
         anim.SetBool("IsChasing", false);
         anim.SetBool("IsIdle", false);
         anim.SetBool("IsConfuse", false);
