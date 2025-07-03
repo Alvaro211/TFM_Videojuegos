@@ -13,9 +13,6 @@ public class TimeCounterTrigger : MonoBehaviour
 
     private PlayerMovement player;
 
-    private float duracion = 1f;
-    private float inicioIntensidad = 0.5f;
-    private float finalIntensidad = 1.0f;
     private float vibration;
 
     public float jiGuang_XianShi_shijian = 0.75f;

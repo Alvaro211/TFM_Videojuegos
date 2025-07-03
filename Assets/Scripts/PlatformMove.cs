@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
@@ -18,6 +19,8 @@ public class PlatformMove : MonoBehaviour
     public Material inActivatedMaterial;
     public List<Light> lights;
 
+    public TextMeshPro textoAyuda;
+
     private Vector3 initialPosition;
     private Vector3 positionToReturn;
     private Vector3 targetPosition;
@@ -27,6 +30,8 @@ public class PlatformMove : MonoBehaviour
     private Renderer objRenderer;
     private Coroutine corutine;
     private AudioSource audio;
+
+    private float timeInTrigger;
 
     private void Start()
     {
@@ -165,5 +170,26 @@ public class PlatformMove : MonoBehaviour
         }
 
         StartCoroutine(MoveToPosition(positionToReturn, false));
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            timeInTrigger += Time.deltaTime;
+            if (timeInTrigger >= 5f)
+            {
+                textoAyuda.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            textoAyuda.gameObject.SetActive(false);
+            timeInTrigger = 0f;
+        }
     }
 }

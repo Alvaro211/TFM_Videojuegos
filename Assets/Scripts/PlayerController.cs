@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
     public int currentIndexHotSpot = 0;
     private Vector3 startPosition;
+    private bool startToLeft = false;
     private float verticalVelocity;
     private bool isMoving;
     private bool isHit = false;
@@ -130,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
         GameManager.instance.Load();
 
-        if (GameManager.instance.newGame || GameManager.instance.sharedData.player.positionZ == 0)
+        if (/*GameManager.instance.newGame || GameManager.instance.sharedData.player.positionZ == 0*/ true)
         {
             GameManager.instance.newGame = false;
             startPosition = transform.position;
@@ -323,7 +324,6 @@ public class PlayerMovement : MonoBehaviour
         if (isMoving)
         {
             currentVelocity = Vector3.Lerp(currentVelocity, moveInput * moveSpeed, Time.deltaTime * 10f);
-            Debug.Log(currentVelocity.x);
             if (currentVelocity.x > 5)
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
             else if(currentVelocity.x < -5)
@@ -388,6 +388,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 GameManager.instance.vibration.VibrarMando((2f), 0.5f);
                 this.transform.position = startPosition + new Vector3(0, 1, 0);
+
+                if (startToLeft)
+                    this.transform.rotation = Quaternion.Euler(0, 180, 0);
+                else
+                    this.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
         else
@@ -631,7 +636,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void InterectCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-           anim.SetBool("IsHitting", false);
+        Invoke("ccc", 0.6f);
+    }
+
+    public void ccc()
+    {
+        anim.SetBool("IsHitting", false);
     }
 
     public void DiaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -641,7 +651,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (diary.activeSelf)
         {
+            GameManager.instance.canMove = true;
             diary.SetActive(false);
+            Time.timeScale = 1;
 
             foreach (Transform hijo in canvasTransform)
             {
@@ -653,6 +665,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            GameManager.instance.canMove = false;
+            Time.timeScale = 0;
             foreach (Transform hijo in canvasTransform)
             {
                 if (hijo.name == "CirculoNota(Clone)")
@@ -1135,6 +1149,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dead()
     {
+        GameManager.instance.canMove = false;
+        Invoke("RestartMoveAfterDead", 0.5f);
+
         GameManager.instance.vibration.VibrarMando((2f), 0.5f);
 
         audioSourceEffectPlayer.clip = audioDead;
@@ -1143,9 +1160,22 @@ public class PlayerMovement : MonoBehaviour
         controller.enabled = false;
         transform.position = startPosition + new Vector3(0, 1, 0);
         controller.enabled = true;
+
+        if (startToLeft)
+            this.transform.rotation = Quaternion.Euler(0, 180, 0);
+        else
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        rotationCanMove = transform.rotation;
+
         currentVelocity = Vector3.zero;
         imageDamage.gameObject.SetActive(true);
         StartCoroutine(TrasparentDamage(3f));
+    }
+
+    private void RestartMoveAfterDead()
+    {
+        GameManager.instance.canMove = true;
     }
 
     private IEnumerator TrasparentDamage(float duration)
@@ -1236,8 +1266,11 @@ public class PlayerMovement : MonoBehaviour
             hotspot = other.GetComponent<HotSpot>();
             hotspot.ShowControl();
 
-            if(currentIndexHotSpot <= hotspot.numHotSpot)
+            if (currentIndexHotSpot <= hotspot.numHotSpot)
+            {
                 startPosition = transform.position;
+                startToLeft = hotspot.continueLeft;
+            }
             
             GameManager.instance.Save();
         }
