@@ -344,7 +344,7 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6dcfe860-d4ad-4e52-b8be-3fda8441ba0d"",
-                    ""path"": ""<XInputController>/buttonEast"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -542,7 +542,7 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""85c9621b-8824-4c28-b9d1-5551274d67a6"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

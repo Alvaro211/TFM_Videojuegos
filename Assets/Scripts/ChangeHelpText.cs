@@ -20,12 +20,12 @@ public class ChangeHelpText : MonoBehaviour
         {
             if (text.text == " F ")
             {
-                text.text = " B ";
+                text.text = " LB ";
             }
         }
         else
         {
-            if (text.text == " B ")
+            if (text.text == " LB ")
             {
                 text.text = " F ";
             }

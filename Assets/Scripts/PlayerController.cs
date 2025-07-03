@@ -130,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
 
         GameManager.instance.Load();
 
-        if (/*GameManager.instance.newGame || GameManager.instance.sharedData.player.positionZ == 0*/ true)
+        if (GameManager.instance.newGame || GameManager.instance.sharedData.player.positionZ == 0)
         {
             GameManager.instance.newGame = false;
             startPosition = transform.position;
@@ -397,64 +397,92 @@ public class PlayerMovement : MonoBehaviour
 
         if (helpBall.activeInHierarchy)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 direction = Vector3.zero;
+            float rawAngle = 0f;
+            Vector3 hitPoint = Vector3.zero;
 
-            Plane plane = new Plane(Vector3.forward, -7f);
-
-            if (plane.Raycast(ray, out float enter))
+            if (Gamepad.current != null)
             {
-                Vector3 hitPoint = ray.GetPoint(enter);
-                Debug.DrawLine(ray.origin, hitPoint, Color.red);
-                Vector3 direction = hitPoint - transform.position;
+                Vector2 stickInput = Gamepad.current.rightStick.ReadValue();
 
-                float rawAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-                float playerYRotation = transform.rotation.eulerAngles.y;
-                float finalAngle = rawAngle;
-
-                // Mirando a la izquierda
-                if (Mathf.Abs(playerYRotation - 180f) < 1f)
+                if (stickInput.magnitude > 0.1f) // Umbral para evitar ruido del stick
                 {
-                    helpBall.GetComponent<SpriteRenderer>().flipY = true;
-                    if (rawAngle > -140f && rawAngle < 140f)
-                    {
-                        if (rawAngle >= 0)
-                            finalAngle = 140f;
-                        else
-                            finalAngle = -140f;
-                    }
+                    direction = new Vector3(stickInput.x, stickInput.y, 0f);
+                    rawAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    hitPoint = transform.position + direction.normalized * 5f; // Punto de referencia, ajusta el multiplicador a gusto
                 }
-                // Mirando a la derecha
                 else
                 {
-                    finalAngle = Mathf.Clamp(rawAngle, -40f, 40f);
+                    return; // No hay input del joystick
                 }
+            }
+            else
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Plane plane = new Plane(Vector3.forward, -7f);
 
-                helpBall.transform.rotation = Quaternion.Euler(0, 0, finalAngle);
+                if (plane.Raycast(ray, out float enter))
+                {
+                    hitPoint = ray.GetPoint(enter);
+                    Debug.DrawLine(ray.origin, hitPoint, Color.red);
+                    direction = hitPoint - transform.position;
+                    rawAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                }
+                else
+                {
+                    return; // No impacto del rayo
+                }
+            }
 
+            float playerYRotation = transform.rotation.eulerAngles.y;
+            float finalAngle = rawAngle;
+
+            // Mirando a la izquierda
+            if (Mathf.Abs(playerYRotation - 180f) < 1f)
+            {
+                helpBall.GetComponent<SpriteRenderer>().flipY = true;
+                if (rawAngle > -140f && rawAngle < 140f)
+                {
+                    finalAngle = rawAngle >= 0 ? 140f : -140f;
+                }
+            }
+            else // Mirando a la derecha
+            {
+                finalAngle = Mathf.Clamp(rawAngle, -40f, 40f);
+            }
+
+            helpBall.transform.rotation = Quaternion.Euler(0, 0, finalAngle);
+
+            float t = 0f;
+            if (Gamepad.current != null)
+            {
+                t = Mathf.Clamp01(direction.magnitude); // Ya normalizado, entre 0 y 1
+            }
+            else
+            {
                 Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
                 float distanceFromCenter = Vector2.Distance(Input.mousePosition, screenCenter);
-
                 float maxScreenDistance = screenCenter.magnitude;
-                float t = distanceFromCenter / maxScreenDistance;
-
-                float minScale = 0.15f;
-                float maxScale = 0.45f;
-                float finalScale = Mathf.Lerp(minScale, maxScale, t);
-
-                if ((playerYRotation < 0.1f && playerYRotation > -0.1f && hitPoint.x < transform.position.x + 4) || //+4 por la distancia del srpite
-                    (playerYRotation < 180.1f && playerYRotation > 179.9f && hitPoint.x > transform.position.x - 3))
-                {
-                    finalScale = minScale/2;
-                    helpBall.transform.rotation = Quaternion.Euler(0, 0, 0);
-                }
-
-                helpBall.transform.localScale = new Vector3(finalScale, 1, 1);
+                t = distanceFromCenter / maxScreenDistance;
             }
+
+            float minScale = 0.15f;
+            float maxScale = 0.45f;
+            float finalScale = Mathf.Lerp(minScale, maxScale, t);
+
+            if ((playerYRotation < 0.1f && playerYRotation > -0.1f && hitPoint.x < transform.position.x + 4) ||
+                (playerYRotation < 180.1f && playerYRotation > 179.9f && hitPoint.x > transform.position.x - 3))
+            {
+                finalScale = minScale / 2;
+                helpBall.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+
+            helpBall.transform.localScale = new Vector3(finalScale, 1, 1);
         }
+
     }
 
-    
+
 
     private void ContinueGame()
     {
@@ -686,7 +714,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            hotspot.AudioPlay();
+            hotspot.Invoke("AudioPlay", 0.6f);
             hotspot.Invoke("ActivateLights", (duration/3)*2);
             Invoke("DesactiveCanMove", duration);
             impulseSource.Invoke("GenerateImpulse", duration/2);
@@ -967,69 +995,78 @@ public class PlayerMovement : MonoBehaviour
     {
         if (poolBall != null)
         {
-            // Obtener la posición del ratón en el mundo
-            Vector3 mousePosition = GetMouseWorldPosition();
-            float directionToMouseX = mousePosition.x - transform.position.x;
+            Vector3 rawDirection = Vector3.zero;
+            float rawAngle = 0f;
+            Vector3 mousePosition = Vector3.zero;
 
-            // Obtener rotación en Y del jugador
+            bool useGamepad = Gamepad.current != null && Gamepad.current.rightStick.ReadValue().magnitude > 0.1f;
+
+            if (useGamepad)
+            {
+                Vector2 stickInput = Gamepad.current.rightStick.ReadValue();
+                rawDirection = new Vector3(stickInput.x, stickInput.y, 0f).normalized;
+                rawAngle = Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg;
+            }
+            else
+            {
+                mousePosition = GetMouseWorldPosition();
+                rawDirection = (mousePosition - transform.position).normalized;
+                rawDirection.z = 0;
+                rawAngle = Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg;
+            }
+
             float playerYRotation = transform.rotation.eulerAngles.y;
 
-            // Si está rotado hacia la derecha (0°) pero el ratón está a la izquierda, cancelar
-            if (playerYRotation == 0 && directionToMouseX < 0)
-                return;
+            // Cancelar si la dirección no coincide con la rotación del personaje
+            if (!useGamepad)
+            {
+                float directionToMouseX = mousePosition.x - transform.position.x;
 
-            // Si está rotado hacia la izquierda (180°) pero el ratón está a la derecha, cancelar
-            if (playerYRotation == 180 && directionToMouseX > 0)
-                return;
+                if (playerYRotation == 0 && directionToMouseX < 0)
+                    return;
+
+                if (playerYRotation == 180 && directionToMouseX > 0)
+                    return;
+            }
+            else
+            {
+                if (playerYRotation == 0 && rawDirection.x < 0)
+                    return;
+
+                if (playerYRotation == 180 && rawDirection.x > 0)
+                    return;
+            }
 
             ballLauch = true;
 
-            // Crear la bola desde el pool
             GameObject newBall = poolBall.GetInactivePrefab();
-            if (newBall == null) return; // Si no hay bolas inactivas, salir
+            if (newBall == null) return;
 
             newBall.gameObject.SetActive(true);
 
-            // Asegurar que la bola tenga un Rigidbody
             Rigidbody rb = newBall.GetComponent<Rigidbody>();
             BallBounceHandler ballBuounce = newBall.GetComponent<BallBounceHandler>();
             if (rb != null && ballBuounce != null)
             {
                 rb.isKinematic = false;
 
-                Vector3 rawDirection = (mousePosition - transform.position).normalized;
-                rawDirection.z = 0;
-
-                // Calcula el ángulo del disparo
-                float rawAngle = Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg;
-
-                // Si está mirando a la izquierda (rotación Y cercana a 180)
+                // Limitar ángulos según orientación
                 if (Mathf.Abs(playerYRotation - 180f) < 1f)
                 {
-                    // Si está fuera del rango permitido hacia la izquierda, lo forzamos
                     if (rawAngle > -140f && rawAngle < 140f)
-                    {
-                        // Si está por encima, lo forzamos a 140
-                        if (rawAngle >= 0)
-                            rawAngle = 140f;
-                        else // Si está por debajo, lo forzamos a -140
-                            rawAngle = -140f;
-                    }
+                        rawAngle = (rawAngle >= 0) ? 140f : -140f;
                 }
                 else
                 {
-                    // Está mirando a la derecha: limitar entre -40 y 40
                     rawAngle = Mathf.Clamp(rawAngle, -40f, 40f);
                 }
 
-                // Reconstruye la dirección
+                // Reconstruye la dirección desde el ángulo corregido
                 float angleRad = rawAngle * Mathf.Deg2Rad;
                 Vector3 direction = new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0).normalized;
 
-
-
-                // Importante: si el ángulo original era < -40 o > 40, reemplaza; si no, usa raw
-                if (Mathf.Abs(angleRad - Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg) < 0.1f)
+                // Usa la dirección cruda si apenas se corrigió
+                if (Mathf.Abs(angleRad - Mathf.Atan2(rawDirection.y, rawDirection.x)) < 0.1f)
                     direction = rawDirection;
 
                 ballBuounce.velocityY = direction.y;
@@ -1037,29 +1074,20 @@ public class PlayerMovement : MonoBehaviour
                 ballBuounce.bounceCount = 0;
                 ballBuounce.isAscending = false;
 
-                // Ajustar velocidad en base a la dirección
                 rb.velocity = direction * 15;
 
-                if(direction.x > 0) 
+                if (direction.x > 0)
                     newBall.transform.position = transform.position + new Vector3(2, 1, 0);
                 else
-
                     newBall.transform.position = transform.position + new Vector3(-2, 1, 0);
 
                 audioSourceEffectPlayer.clip = audioJump;
                 audioSourceEffectPlayer.Play();
             }
 
-
             Enemy[] enemies = FindObjectsOfType<Enemy>();
-           /* foreach(var e in enemies)
-            {
-                GameObject obj = Instantiate(wenhao);
-                obj.GetComponent<CameraForward>().target = e.transform;
+            // ... Aquí iría lo que tienes comentado
 
-                Destroy(obj, cooldownBall);
-               
-            }*/
             StartCoroutine(HideBall(newBall));
             updateSliderBall = true;
         }

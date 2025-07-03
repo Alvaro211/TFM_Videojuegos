@@ -12,14 +12,14 @@ public class Vibration : MonoBehaviour
     void Update()
     {
         // Verificar si hay un Gamepad conectado
-        if (Gamepad.current != null)
+       /* if (Gamepad.current != null)
         {
             Debug.Log("Mando detectado: " + Gamepad.current.name);
         }
         else
         {
             Debug.Log("No se detectó un mando.");
-        }
+        }*/
         if (Gamepad.current != null)
         {
             // Verifica si se presiona el botón A (Xbox) o el botón X (PlayStation)
