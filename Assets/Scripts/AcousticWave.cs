@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AcousticWave: MonoBehaviour
+public class AcousticWave : MonoBehaviour
 {
     [SerializeField] private float xiaoShi_shiJian = 1.5f;
-    private void OnEnable()
+    [SerializeField] private GameObject wave;
+
+
+    public void xianShi()
     {
-        Invoke("xiaoShi", xiaoShi_shiJian);
+        wave.SetActive(true);
+        Invoke(nameof(xiaoShi), xiaoShi_shiJian);
     }
 
     void xiaoShi()
     {
-        gameObject.SetActive(false);
+        wave.SetActive(false);
     }
 }

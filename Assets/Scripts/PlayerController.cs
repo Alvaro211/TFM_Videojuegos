@@ -792,6 +792,18 @@ public class PlayerMovement : MonoBehaviour
             if (movingPlatform != null)
             {
                 movingPlatform.MovePlatform(1);
+                foreach (Transform hijo in canvasTransform)
+                {
+                    if (hijo.name == "CirculoNota(Clone)")
+                    {
+                        var i = hijo.transform.Find("Text (TMP)");
+                        if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                        {
+                            hijo.GetComponent<AcousticWave>().xianShi();
+                        }
+
+                    }
+                }
             }
         }
     }
@@ -810,6 +822,18 @@ public class PlayerMovement : MonoBehaviour
             if (movingPlatform != null)
             {
                 movingPlatform.MovePlatform(2);
+                foreach (Transform hijo in canvasTransform)
+                {
+                    if (hijo.name == "CirculoNota(Clone)")
+                    {
+                        var i = hijo.transform.Find("Text (TMP)");
+                        if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                        {
+                            hijo.GetComponent<AcousticWave>().xianShi();
+                        }
+
+                    }
+                }
             }
         }
     }
@@ -824,6 +848,18 @@ public class PlayerMovement : MonoBehaviour
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    var i = hijo.transform.Find("Text (TMP)");
+                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    {
+                        hijo.GetComponent<AcousticWave>().xianShi();
+                    }
+
+                }
+            }
         }
     }
     public void Sound4Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -837,8 +873,20 @@ public class PlayerMovement : MonoBehaviour
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    var i = hijo.transform.Find("Text (TMP)");
+                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    {
+                        hijo.GetComponent<AcousticWave>().xianShi();
+                    }
 
-            
+                }
+            }
+
+
         }
     }
     public void Sound5Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -852,6 +900,18 @@ public class PlayerMovement : MonoBehaviour
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    var i = hijo.transform.Find("Text (TMP)");
+                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    {
+                        hijo.GetComponent<AcousticWave>().xianShi();
+                    }
+
+                }
+            }
         }
     }
     public void Sound6Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -865,6 +925,18 @@ public class PlayerMovement : MonoBehaviour
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    var i = hijo.transform.Find("Text (TMP)");
+                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    {
+                        hijo.GetComponent<AcousticWave>().xianShi();
+                    }
+
+                }
+            }
         }
     }
 
