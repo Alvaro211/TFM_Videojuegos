@@ -336,6 +336,9 @@ MonoBehaviour:
   imagenEstado: {fileID: 7463623148069225079}
   interrogacion: {fileID: 21300000, guid: d06550e9e43aa524e8c29b8bbc0d54d9, type: 3}
   exclamacion: {fileID: 21300000, guid: d3caec957f35df046ab7a5b821fb4724, type: 3}
+  audio: {fileID: 5861233822443597329}
+  audioIdle: {fileID: 8300000, guid: db532ae4c87b4cb48a410d8d2e44a9f3, type: 3}
+  audioChasing: {fileID: 8300000, guid: 7fa129371e9af224e8ccb8a1b73dbaf3, type: 3}
 --- !u!82 &5861233822443597329
 AudioSource:
   m_ObjectHideFlags: 0
@@ -347,7 +350,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -923159350489427428, guid: f8757647a04f3b340a4b200fc424afe7,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 7fa129371e9af224e8ccb8a1b73dbaf3, type: 3}
+  m_audioClip: {fileID: 8300000, guid: db532ae4c87b4cb48a410d8d2e44a9f3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

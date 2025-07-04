@@ -611,7 +611,7 @@ public class PlayerMovement : MonoBehaviour
             Time.timeScale = 1;
             StartCoroutine(ResetCooldownOptions());
         }
-        else
+        else if(!book.gameObject.activeSelf)
         {
             GameManager.instance.canMove = false;
             Time.timeScale = 0;
@@ -663,7 +663,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        else
+        else if(!menuPause.activeSelf)
         {
             GameManager.instance.canMove = false;
             Time.timeScale = 0;

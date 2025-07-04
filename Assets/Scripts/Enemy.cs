@@ -28,14 +28,15 @@ public class Enemy : MonoBehaviour
     public Sprite interrogacion;
     public Sprite exclamacion;
 
+    public AudioSource audio;
+    public AudioClip audioIdle;
+    public AudioClip audioChasing;
+
     private Transform player;
 
     private Coroutine currentRoutine;
     private string currentRoutineName = "";
 
-    private float duracion = 1f;
-    private float inicioIntensidad = 0.5f;
-    private float finalIntensidad = 1.0f;
     private float tiempo = 0f;
 
     void Start()
@@ -61,6 +62,23 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+
+        bool isChasing = chasingPlayer || chasingBall;
+
+        // Si está persiguiendo y no suena el audio correcto
+        if (isChasing && (audio.clip != audioChasing || !audio.isPlaying))
+        {
+            audio.clip = audioChasing;
+            audio.Play();
+        }
+        // Si NO está persiguiendo y no suena audioIdle
+        else if (!isChasing && !audio.isPlaying)
+        {
+            audio.clip = audioIdle;
+            audio.loop = true; 
+            audio.Play();
+        }
+
         if (chasingBall)
         {
             if(agent.remainingDistance <= agent.stoppingDistance)
@@ -159,6 +177,8 @@ public class Enemy : MonoBehaviour
             anim.SetBool("IsIdle", agent.remainingDistance <= agent.stoppingDistance);
         }
 
+
+        
     }
 
 
