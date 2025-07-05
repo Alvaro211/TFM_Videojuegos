@@ -14,6 +14,8 @@ public class BossConroller : MonoBehaviour
 
     public bool onAnimation = true;
 
+    public AudioSource audio;
+
     private Vector3 positionInitial;
     private int direcction = 1;
     private Animator animator;

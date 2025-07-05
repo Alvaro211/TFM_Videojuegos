@@ -1327,7 +1327,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isOnFinishLevel = false;
             finishLevel.HideControl();
-            finishLevel.ClearSequence();
         }else if (other.gameObject.CompareTag("PlatformMove") && movingPlatform != null)
         {
             movingPlatform.ResetEffect();

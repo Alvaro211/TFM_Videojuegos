@@ -36,8 +36,11 @@ public class RedpointControl : MonoBehaviour
         int i = 0;
         foreach (var a in all)
         {
-
             a.redPoint.transform.position = player.position + (a.ball.transform.position - player.position) .normalized* 3f;
+
+            Vector3 dir2D = a.ball.transform.position - a.redPoint.transform.position;
+            float angle = Mathf.Atan2(dir2D.y, dir2D.x) * Mathf.Rad2Deg;
+            a.redPoint.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
 
 

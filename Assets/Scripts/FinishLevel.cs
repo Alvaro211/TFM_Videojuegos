@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FinishLevel : MonoBehaviour
@@ -21,7 +22,7 @@ public class FinishLevel : MonoBehaviour
 
     private bool souning = false;
     private List<AudioClip> playerSequence = new List<AudioClip>();
-    public Animator dooranimgreen;
+    public Animator[] dooranimgreen;
     public GameObject doorcollision;
 
     // Start is called before the first frame update
@@ -45,7 +46,9 @@ public class FinishLevel : MonoBehaviour
 
         if (mustOpen)
         {
-            dooranimgreen.SetBool("IsOpened", true);
+            for(int i = 0; i < dooranimgreen.Length; i++)
+                dooranimgreen[i].SetBool("IsOpened", true);
+
             doorcollision.SetActive(false);
         }
 
@@ -84,7 +87,7 @@ public class FinishLevel : MonoBehaviour
         {
             audioSource.clip = open;
             audioSource.Play();
-            dooranimgreen.SetBool("IsOpened", true);
+            dooranimgreen[dooranimgreen.Length-1].SetBool("IsOpened", true);
             doorcollision.SetActive(false);
             // StartCoroutine(RotateOverTime());
 
@@ -147,36 +150,48 @@ public class FinishLevel : MonoBehaviour
 
     void CheckSequence()
     {
-        if (playerSequence.Count == audioClips.Count)
+        if (!doorOpen)
         {
-            if (!doorOpen && IsSequenceCorrect())
+            if (IsSequenceCorrect())
             {
-                SoundDoor(true);
-                doorOpen = true;
+                if (playerSequence.Count == audioClips.Count)
+                {
+                    SoundDoor(true);
+                    doorOpen = true;
 
-                if(this.name == "FinishLevelDoor1")
-                {
-                    GameManager.instance.isOpenDoorGreen = true;
-                }else if (this.name == "FinishLevelDoor2")
-                {
-                    GameManager.instance.isOpenDoorGreenYellow = true;
+                    if (this.name == "FinishLevelDoor1")
+                    {
+                        GameManager.instance.isOpenDoorGreen = true;
+                    }
+                    else if (this.name == "FinishLevelDoor2")
+                    {
+                        GameManager.instance.isOpenDoorGreenYellow = true;
+                    }
+                    else if (this.name == "FinishLevelDoor2")
+                    {
+                        GameManager.instance.isOpenDoorBoss = true;
+                    }
                 }
-                else if (this.name == "FinishLevelDoor2")
-                {
-                    GameManager.instance.isOpenDoorBoss = true;
-                }
+
+                dooranimgreen[playerSequence.Count-1].SetBool("IsOpened", true);
             }
             else
             {
+
+                for (int i = 0; i < playerSequence.Count; i++)
+                    dooranimgreen[i].SetBool("IsOpened", false);
+
                 playerSequence.Clear();
                 SoundDoor(false);
+
             }
         }
     }
 
     bool IsSequenceCorrect()
     {
-        for (int i = 0; i < audioClips.Count; i++)
+
+        for (int i = 0; i < playerSequence.Count; i++)
         {
             if (playerSequence[i] != audioClips[i])
                 return false;
@@ -184,8 +199,4 @@ public class FinishLevel : MonoBehaviour
         return true;
     }
 
-    public void ClearSequence()
-    {
-        playerSequence.Clear();
-    }
 }
