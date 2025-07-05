@@ -16,6 +16,8 @@ public class BossConroller : MonoBehaviour
 
     public AudioSource audio;
 
+    public Credits credits;
+
     private Vector3 positionInitial;
     private int direcction = 1;
     private Animator animator;
@@ -100,5 +102,13 @@ public class BossConroller : MonoBehaviour
     {
         float returnSpeed = velocityBoss * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, positionInitial + new Vector3(-11, 0, 0), returnSpeed);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ball"))
+        { 
+            credits.ShowFloatingMessage();
+        }
     }
 }
