@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject imagePrefab;  // Arrastra aquí el prefab en el Inspector
     public Transform canvasTransform; 
-    public float yOffset = 50f;  // Distancia desde la parte baja del Canvas
+    public float yOffset = 20f;  // Distancia desde la parte baja del Canvas
     public float spacing = 100f; // Espacio entre imágenes
 
     public SpriteRenderer sprite;
@@ -610,6 +610,14 @@ public class PlayerMovement : MonoBehaviour
             cooldownHideOptions = true;
             Time.timeScale = 1;
             StartCoroutine(ResetCooldownOptions());
+
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    hijo.gameObject.SetActive(true);
+                }
+            }
         }
         else if(!book.gameObject.activeSelf)
         {
@@ -623,6 +631,14 @@ public class PlayerMovement : MonoBehaviour
                 hotspot.HideControl();
             if (finishLevel != null)
                 finishLevel.HideControl();
+
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    hijo.gameObject.SetActive(false);
+                }
+            }
 
         }
         
@@ -653,7 +669,7 @@ public class PlayerMovement : MonoBehaviour
         {
             GameManager.instance.canMove = true;
             diary.SetActive(false);
-            Time.timeScale = 1;
+           // Time.timeScale = 1;
 
             foreach (Transform hijo in canvasTransform)
             {
@@ -666,7 +682,7 @@ public class PlayerMovement : MonoBehaviour
         else if(!menuPause.activeSelf)
         {
             GameManager.instance.canMove = false;
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             foreach (Transform hijo in canvasTransform)
             {
                 if (hijo.name == "CirculoNota(Clone)")
@@ -1028,6 +1044,7 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 localPos = rectTransform.localPosition;
             localPos.z = -25;
+            localPos.y = -180;
             rectTransform.localPosition = localPos;
         }
     }
