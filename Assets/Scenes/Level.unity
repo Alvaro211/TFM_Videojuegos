@@ -2408,6 +2408,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
+        type: 3}
+      propertyPath: riseSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
+        type: 3}
+      propertyPath: fallDistance
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
+        type: 3}
+      propertyPath: fastCubeSpeed
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1716640571379251624, guid: a135e9828f20eef4fa99fad94216c67d,
         type: 3}
       propertyPath: m_SortingLayer
@@ -6115,7 +6130,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 605.85223, y: -6.9565}
+  m_AnchoredPosition: {x: 612.69, y: 6.59}
   m_SizeDelta: {x: 25.6832, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &162595570
@@ -9161,7 +9176,7 @@ PrefabInstance:
     - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
         type: 3}
       propertyPath: fallDistance
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
         type: 3}
@@ -13246,7 +13261,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 602.6, y: 34.920002, z: -22}
+  m_LocalPosition: {x: 746.9, y: 53.02, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30744,6 +30759,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
+        type: 3}
+      propertyPath: riseSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
+        type: 3}
+      propertyPath: fallDistance
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
+        type: 3}
+      propertyPath: fastCubeSpeed
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1716640571379251624, guid: a135e9828f20eef4fa99fad94216c67d,
         type: 3}
@@ -61307,7 +61337,7 @@ Transform:
   m_GameObject: {fileID: 1547773805}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -44.400024, y: 27.32169, z: 0}
+  m_LocalPosition: {x: 99.900024, y: 45.421688, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -67838,7 +67868,7 @@ Transform:
   m_GameObject: {fileID: 1716474883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 602.6, y: 29.2, z: -7}
+  m_LocalPosition: {x: 746.9, y: 47.3, z: -7}
   m_LocalScale: {x: 0.36, y: 0.36, z: 0.36}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -80924,6 +80954,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
+        type: 3}
+      propertyPath: riseSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
+        type: 3}
+      propertyPath: fallDistance
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 967626302879978364, guid: a135e9828f20eef4fa99fad94216c67d,
+        type: 3}
+      propertyPath: fastCubeSpeed
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1716640571379251624, guid: a135e9828f20eef4fa99fad94216c67d,
         type: 3}
       propertyPath: m_SortingLayer
@@ -83367,7 +83412,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 599.17, y: -6.14}
+  m_AnchoredPosition: {x: 606.00775, y: 7.406501}
   m_SizeDelta: {x: 25.6832, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2110216093
