@@ -799,6 +799,18 @@ public class PlayerMovement : MonoBehaviour
 
         if(sequence.Count > sound && !souning)
         {
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    var i = hijo.transform.Find("Text (TMP)");
+                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    {
+                        hijo.GetComponent<AcousticWave>().xianShi();
+                    }
+
+                }
+            }
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
@@ -808,18 +820,7 @@ public class PlayerMovement : MonoBehaviour
             if (movingPlatform != null)
             {
                 movingPlatform.MovePlatform(1);
-                foreach (Transform hijo in canvasTransform)
-                {
-                    if (hijo.name == "CirculoNota(Clone)")
-                    {
-                        var i = hijo.transform.Find("Text (TMP)");
-                        if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
-                        {
-                            hijo.GetComponent<AcousticWave>().xianShi();
-                        }
-
-                    }
-                }
+               
             }
         }
     }
@@ -829,6 +830,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (sequence.Count > sound && !souning)
         {
+            foreach (Transform hijo in canvasTransform)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    var i = hijo.transform.Find("Text (TMP)");
+                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    {
+                        hijo.GetComponent<AcousticWave>().xianShi();
+                    }
+
+                }
+            }
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
@@ -838,18 +851,7 @@ public class PlayerMovement : MonoBehaviour
             if (movingPlatform != null)
             {
                 movingPlatform.MovePlatform(2);
-                foreach (Transform hijo in canvasTransform)
-                {
-                    if (hijo.name == "CirculoNota(Clone)")
-                    {
-                        var i = hijo.transform.Find("Text (TMP)");
-                        if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
-                        {
-                            hijo.GetComponent<AcousticWave>().xianShi();
-                        }
-
-                    }
-                }
+               
             }
         }
     }
@@ -859,11 +861,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (sequence.Count > sound && !souning)
         {
-            souning = true;
-            audioSourceSequence.clip = sequence[sound];
-            audioSourceSequence.Play();
-            SoundToDoor(sequence[sound]);
-            StartCoroutine(WaitForSoundToEnd());
             foreach (Transform hijo in canvasTransform)
             {
                 if (hijo.name == "CirculoNota(Clone)")
@@ -876,6 +873,12 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+            
         }
     }
     public void Sound4Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -884,11 +887,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (sequence.Count > sound && !souning)
         {
-            souning = true;
-            audioSourceSequence.clip = sequence[sound];
-            audioSourceSequence.Play();
-            SoundToDoor(sequence[sound]);
-            StartCoroutine(WaitForSoundToEnd());
             foreach (Transform hijo in canvasTransform)
             {
                 if (hijo.name == "CirculoNota(Clone)")
@@ -901,6 +899,12 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+           
 
 
         }
@@ -911,11 +915,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (sequence.Count > sound && !souning)
         {
-            souning = true;
-            audioSourceSequence.clip = sequence[sound];
-            audioSourceSequence.Play();
-            SoundToDoor(sequence[sound]);
-            StartCoroutine(WaitForSoundToEnd());
             foreach (Transform hijo in canvasTransform)
             {
                 if (hijo.name == "CirculoNota(Clone)")
@@ -928,6 +927,12 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+           
         }
     }
     public void Sound6Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -936,11 +941,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (sequence.Count > sound && !souning)
         {
-            souning = true;
-            audioSourceSequence.clip = sequence[sound];
-            audioSourceSequence.Play();
-            SoundToDoor(sequence[sound]);
-            StartCoroutine(WaitForSoundToEnd());
             foreach (Transform hijo in canvasTransform)
             {
                 if (hijo.name == "CirculoNota(Clone)")
@@ -953,6 +953,12 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
+            souning = true;
+            audioSourceSequence.clip = sequence[sound];
+            audioSourceSequence.Play();
+            SoundToDoor(sequence[sound]);
+            StartCoroutine(WaitForSoundToEnd());
+            
         }
     }
 
