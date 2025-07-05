@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Experimental.GlobalIllumination;
+using System.Collections.Generic;
 
 public class CubeFalling : MonoBehaviour
 {
@@ -8,12 +10,18 @@ public class CubeFalling : MonoBehaviour
     public float riseSpeed = 2f;
     public float waitTime = 1f; // Tiempo de espera arriba
 
+    public List<Light> spotlights;
+
     private Rigidbody fastCubeRb;
     private Vector3 fastCubeStartPos;
     private bool fastCubeFalling = true;
     private bool isWaiting = false;
     private bool sound = false;
     private AudioSource audio;
+
+    private float maxIntensity;      // Guardamos la intensidad original
+    private float minIntensity = 0f;
+    private float lightTransitionSpeed = 50f;
 
     void Start()
     {
@@ -24,6 +32,11 @@ public class CubeFalling : MonoBehaviour
             fastCubeRb.freezeRotation = true;
             fastCubeStartPos = gameObject.transform.position;
             audio = GetComponent<AudioSource>();
+        }
+
+        if (spotlights != null)
+        {
+            maxIntensity = spotlights[0].intensity;
         }
     }
 
@@ -53,6 +66,37 @@ public class CubeFalling : MonoBehaviour
                 {
                     fastCubeRb.transform.position = fastCubeStartPos;
                     StartCoroutine(WaitBeforeFalling()); // Espera antes de volver a caer
+                }
+            }
+        }
+
+        Invoke("LigthTrasparecen", 0.3f);
+    }
+
+    private void LigthTrasparecen()
+    {
+        if (spotlights != null && spotlights.Count > 0)
+        {
+            float targetIntensity = 0f;
+
+            if (fastCubeFalling)
+            {
+                targetIntensity = maxIntensity;
+            }
+            else
+            {
+                targetIntensity = minIntensity;
+            }
+
+            foreach (Light light in spotlights)
+            {
+                if (light != null)
+                {
+                    light.intensity = Mathf.MoveTowards(
+                        light.intensity,
+                        targetIntensity,
+                        lightTransitionSpeed * Time.deltaTime
+                    );
                 }
             }
         }

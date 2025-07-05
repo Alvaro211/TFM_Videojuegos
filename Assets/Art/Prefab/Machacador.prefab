@@ -128,6 +128,10 @@ MonoBehaviour:
   fallDistance: 4
   riseSpeed: 5
   waitTime: 1
+  spotlights:
+  - {fileID: 2688724579297804583}
+  - {fileID: 4432747222010263388}
+  - {fileID: 8077695469757588675}
 --- !u!82 &4121600089561172594
 AudioSource:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class HotSpot : MonoBehaviour
 {
     public TextMeshPro control;
+    public SpriteRenderer iconX;
     public AudioSource audioSource;
     public List<Light[]> lights = new List<Light[]>(); // Array de luces a controlar
     public List<int> numLightPlatform;
@@ -56,16 +57,18 @@ public class HotSpot : MonoBehaviour
     {
         if (Gamepad.current != null)
         {
-            if (control.text == "E")
+            if (control.gameObject.activeSelf)
             {
-                control.text = "X";
+                control.gameObject.SetActive(false);
+                iconX.gameObject.SetActive(true);
             }
         }
         else
         {
-            if (control.text == "X")
+            if (iconX.gameObject.activeSelf)
             {
-                control.text = "E";
+                control.gameObject.SetActive(true);
+                iconX.gameObject.SetActive(false);
             }
         }
     }
@@ -128,13 +131,20 @@ public class HotSpot : MonoBehaviour
 
     public void ShowControl()
     {
-        if(GameManager.instance.helpControls)
-            control.gameObject.SetActive(true);
+        if (GameManager.instance.helpControls)
+        {
+            if (Gamepad.current != null)
+                iconX.gameObject.SetActive(true);
+            else
+                control.gameObject.SetActive(true);
+        }
+
     }
 
     public void HideControl()
     {
         control.gameObject.SetActive(false);
+        iconX.gameObject.SetActive(false);
     }
 
     

@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class ChangeHelpText : MonoBehaviour
 {
     public TextMeshPro text;
+    public SpriteRenderer iconLB;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,17 +19,13 @@ public class ChangeHelpText : MonoBehaviour
     {
         if (Gamepad.current != null)
         {
-            if (text.text == " F ")
-            {
-                text.text = " LB ";
-            }
+            text.gameObject.SetActive(false);
+            iconLB.gameObject.SetActive(true);
         }
         else
         {
-            if (text.text == " LB ")
-            {
-                text.text = " F ";
-            }
+            text.gameObject.SetActive(true);
+            iconLB.gameObject.SetActive(false);
         }
     }
 }
