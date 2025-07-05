@@ -20,6 +20,7 @@ public class PlatformMove : MonoBehaviour
     public List<Light> lights;
 
     public TextMeshPro textoAyuda;
+    public float timeToAdvise = 5;
 
     private Vector3 initialPosition;
     private Vector3 positionToReturn;
@@ -32,6 +33,7 @@ public class PlatformMove : MonoBehaviour
     private AudioSource audio;
 
     private float timeInTrigger;
+    private bool isMovedOneTime = false;
 
     private void Start()
     {
@@ -55,6 +57,8 @@ public class PlatformMove : MonoBehaviour
         if (isMoving || (index == 1 && !activatedPlatform1) || (index == 2 && activatedPlatform1)) return; // Evita activar el movimiento si ya se está moviendo
 
         audio.Play();
+
+        isMovedOneTime = true;
 
         isMoved = !isMoved;
         targetPosition = isMoved
@@ -177,7 +181,7 @@ public class PlatformMove : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             timeInTrigger += Time.deltaTime;
-            if (timeInTrigger >= 5f)
+            if (timeInTrigger >= timeToAdvise && !isMovedOneTime)
             {
                 textoAyuda.gameObject.SetActive(true);
             }

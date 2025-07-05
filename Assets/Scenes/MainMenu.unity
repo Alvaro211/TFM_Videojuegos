@@ -190,7 +190,7 @@ MonoBehaviour:
   masterMixer: {fileID: 24100000, guid: f8757647a04f3b340a4b200fc424afe7, type: 2}
   musicVolumMenu: {fileID: 0}
   effectVolumMenu: {fileID: 0}
-  helpMenu: {fileID: 0}
+  helpMenu: {fileID: 611871141}
   musicVolumPlay: {fileID: 0}
   effectVolumPlay: {fileID: 0}
   helpPlay: {fileID: 0}

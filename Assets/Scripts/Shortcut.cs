@@ -51,7 +51,7 @@ public class Shortcut : MonoBehaviour
     public void PressKey1(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         controller.enabled = false;
-        player.transform.position = new Vector3(580, 21, -7);
+        player.transform.position = new Vector3(581.9f, 25.39f, -7);
         controller.enabled = true;
 
         noteGreen.gameObject.SetActive(true);

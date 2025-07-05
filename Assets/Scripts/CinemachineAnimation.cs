@@ -73,7 +73,7 @@ public class CinemachineAnimation : MonoBehaviour
             dolly.m_PathPosition = 0f;
         }
 
-        virtualMain.m_Lens.OrthographicSize = 10;
+        virtualMain.m_Lens.OrthographicSize = 13;
     }
     private void OnEnable()
     {
