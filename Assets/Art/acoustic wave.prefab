@@ -11,14 +11,13 @@ GameObject:
   - component: {fileID: 504114291555157025}
   - component: {fileID: 8737835874386941475}
   - component: {fileID: 5413061459250133264}
-  - component: {fileID: 8296266931275514225}
   m_Layer: 5
   m_Name: acoustic wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &504114291555157025
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 7148232675080760352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 21.859, y: 21.859, z: 21.859}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,16 +75,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8296266931275514225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7148232675080760352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb14015602aca7745b62edde1b8d3e53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xiaoShi_shiJian: 1

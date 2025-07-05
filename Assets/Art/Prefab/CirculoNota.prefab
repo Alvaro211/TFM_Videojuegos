@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1429388791146154515}
   - component: {fileID: 7121909376730448920}
+  - component: {fileID: 7495495423545788045}
   - component: {fileID: 1752688279926156351}
   m_Layer: 5
   m_Name: CirculoNota
@@ -47,6 +48,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5736860071195227724}
   m_CullTransparentMesh: 1
+--- !u!114 &7495495423545788045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5736860071195227724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb14015602aca7745b62edde1b8d3e53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xiaoShi_shiJian: 1
+  wave: {fileID: 2581790198066008298}
 --- !u!114 &1752688279926156351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,21 +287,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 504114291555157025, guid: dc5b5f5f39990c8418da50a77857348e,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 21.859
-      objectReference: {fileID: 0}
-    - target: {fileID: 504114291555157025, guid: dc5b5f5f39990c8418da50a77857348e,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 21.859
-      objectReference: {fileID: 0}
-    - target: {fileID: 504114291555157025, guid: dc5b5f5f39990c8418da50a77857348e,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 21.859
-      objectReference: {fileID: 0}
-    - target: {fileID: 504114291555157025, guid: dc5b5f5f39990c8418da50a77857348e,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -355,6 +355,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc5b5f5f39990c8418da50a77857348e, type: 3}
+--- !u!1 &2581790198066008298 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7148232675080760352, guid: dc5b5f5f39990c8418da50a77857348e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4676921413973064906}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5051132752064149739 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 504114291555157025, guid: dc5b5f5f39990c8418da50a77857348e,
