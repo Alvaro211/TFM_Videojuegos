@@ -13,6 +13,8 @@ using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public AcousticWave footSoundWaves;
+    public SpriteRenderer footSoundWavesSprite;
     public float moveSpeed; // Velocidad del movimiento
     public float gravityScale = -9.8f; // Gravedad normal del jugador
     public float jumpForce = 5f; // Fuerza de salto
@@ -792,7 +794,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
-
+   
     public void Sound1Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         sound = 0;
@@ -807,11 +809,16 @@ public class PlayerMovement : MonoBehaviour
                     if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
                     {
                         hijo.GetComponent<AcousticWave>().xianShi();
+                        // Color newcolor = hijo.GetComponent<RawImage>.color;
+                        footSoundWavesSprite.color = Color.white ;
+                        footSoundWaves.xianShi();
                     }
 
                 }
             }
-            souning = true;
+            
+
+           souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
