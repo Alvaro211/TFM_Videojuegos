@@ -55,9 +55,8 @@ public class Colleccionable : MonoBehaviour
         transform.position = startPos + new Vector3(0f, yOffset, 0f);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void PlayAudio()
     {
-        if (other.CompareTag("Player"))
-            audio.Play();
+        audio.Play();
     }
 }

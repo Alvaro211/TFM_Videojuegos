@@ -32,6 +32,9 @@ public class TimeCounterTrigger : MonoBehaviour
         {
             timeInTrigger = 0f;
             dframb = other.transform;
+
+            PlayerMovement player = other.GetComponent<PlayerMovement>();
+            player.flickerSpeed = 15;
         }
     }
 
@@ -74,6 +77,8 @@ public class TimeCounterTrigger : MonoBehaviour
         {
             timeInTrigger = 0f;
 
+            PlayerMovement player = other.GetComponent<PlayerMovement>();
+            player.flickerSpeed = 5;
         }
     }
 }

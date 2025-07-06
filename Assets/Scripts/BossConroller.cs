@@ -108,7 +108,7 @@ public class BossConroller : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         { 
-            credits.ShowFloatingMessage();
+            credits.Invoke("ShowFloatingMessage", 3f);
         }
     }
 }

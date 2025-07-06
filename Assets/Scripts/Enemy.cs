@@ -37,7 +37,8 @@ public class Enemy : MonoBehaviour
     private Coroutine currentRoutine;
     private string currentRoutineName = "";
 
-    private float tiempo = 0f;
+    private float tiempo = 0f; 
+    private bool wasPausedByTimeScale = false;
 
     void Start()
     {
@@ -65,17 +66,33 @@ public class Enemy : MonoBehaviour
 
         bool isChasing = chasingPlayer || chasingBall;
 
-        // Si está persiguiendo y no suena el audio correcto
+        if (Time.timeScale == 0f)
+        {
+            if (audio.isPlaying)
+            {
+                audio.Pause();
+                wasPausedByTimeScale = true;
+            }
+            return; // No ejecutar más lógica si el juego está pausado
+        }
+
+        if (Time.timeScale == 1f && wasPausedByTimeScale)
+        {
+            audio.UnPause();
+            wasPausedByTimeScale = false;
+        }
+
+        // Tu lógica de reproducción de audio
         if (isChasing && (audio.clip != audioChasing || !audio.isPlaying))
         {
             audio.clip = audioChasing;
+            audio.loop = false; // O true, según tu caso
             audio.Play();
         }
-        // Si NO está persiguiendo y no suena audioIdle
         else if (!isChasing && !audio.isPlaying)
         {
             audio.clip = audioIdle;
-            audio.loop = true; 
+            audio.loop = true;
             audio.Play();
         }
 

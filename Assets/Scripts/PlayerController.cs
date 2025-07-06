@@ -114,8 +114,25 @@ public class PlayerMovement : MonoBehaviour
 
     public CinemachineAnimation cinemachine;
 
+    public Collider playerCollider;
+    private Collider ballCollider;
+
     private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
+
+    private Coroutine corutineHideball;
+
+    public Light spotlight;
+    public Light spotlight2;
+    public float flickerSpeed = 5f;
+    public float angleVariation = 1f;
+    public float innerAngleVariation = 0.5f;
+
+    private float initialOuterAngle;
+    private float initialInnerAngle;
+    private float initialIntensity;
+
+    private Colleccionable collecionable;
     void Start()
     {
         
@@ -147,6 +164,11 @@ public class PlayerMovement : MonoBehaviour
         audioSourceEffectPlayer = GetComponent<AudioSource>();
         
         ballLauch = false;
+
+        playerCollider = this.GetComponent<Collider>();
+
+        initialOuterAngle = spotlight.spotAngle;
+        initialInnerAngle = spotlight.innerSpotAngle;
 
         foreach (RawImage image in notes)
         {
@@ -238,6 +260,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
+        float wave = Mathf.Sin(Time.time * flickerSpeed);
+
+        spotlight.spotAngle = initialOuterAngle + wave * angleVariation;
+        spotlight.innerSpotAngle = initialInnerAngle + wave * innerAngleVariation;
+
+        spotlight2.spotAngle = initialOuterAngle + wave * angleVariation;
+        spotlight2.innerSpotAngle = initialInnerAngle + wave * innerAngleVariation;
+
         if (GameManager.instance.canMove) {
             rotationCanMove = transform.rotation;
         }
@@ -353,15 +384,21 @@ public class PlayerMovement : MonoBehaviour
             controller.Move(currentVelocity * Time.deltaTime);
 
 
-        if (CheckEnemyAround()) {
+
+	    float enemyDistance = CheckEnemyAround();
+        if (enemyDistance != -1)
+        {
 
             //audioSourceMusic.pitch = Mathf.Lerp(1.0f, 0.7f, Time.deltaTime * 2);
             audioSourceMusic.pitch = 0.5f;
+            flickerSpeed = ConvertValue(enemyDistance);
         }
-        else if(audioSourceMusic.pitch != 1)
+        else if (audioSourceMusic.pitch != 1)
         {
             audioSourceMusic.pitch = 1;
+            flickerSpeed = 5;
         }
+
 
         if (updateSliderBall && !menuPause.activeSelf)
         {
@@ -654,10 +691,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void InterectCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        Invoke("ccc", 0.6f);
+        Invoke("SetIsHittingFalse", 0.6f);
     }
 
-    public void ccc()
+    public void SetIsHittingFalse()
     {
         anim.SetBool("IsHitting", false);
     }
@@ -752,6 +789,33 @@ public class PlayerMovement : MonoBehaviour
             impulseSource.Invoke("GenerateImpulse", duration/2);
 
         }
+        else if (collecionable != null)
+        {
+            int index = collecionable.indexCollecionable * 2 + 1;
+
+            book.bookPages[index] = book.bookPageWritten[index];
+            book.bookPages[index + 1] = book.bookPageWritten[index + 1];
+
+            collecionable.gameObject.SetActive(false);
+
+            if (collecionable.indexCollecionable == 0)
+            {
+                GameManager.instance.isTakeColeccionable1 = true;
+            }
+            else if (collecionable.indexCollecionable == 1)
+            {
+                GameManager.instance.isTakeColeccionable2 = true;
+            }
+            else if (collecionable.indexCollecionable == 2)
+            {
+                GameManager.instance.isTakeColeccionable3 = true;
+            }
+
+            anim.SetBool("IsHitting", true);
+            audioSourceEffectPlayer.clip = audioTakeNote;
+            audioSourceEffectPlayer.Play();
+        }
+
     }
 
     private void DesactiveCanMove()
@@ -1160,10 +1224,18 @@ public class PlayerMovement : MonoBehaviour
 
             newBall.gameObject.SetActive(true);
 
+            ballCollider = newBall.GetComponent<Collider>();
+
             Rigidbody rb = newBall.GetComponent<Rigidbody>();
             BallBounceHandler ballBuounce = newBall.GetComponent<BallBounceHandler>();
-            if (rb != null && ballBuounce != null)
+            if (rb != null && ballBuounce != null && ballCollider != null)
             {
+                Physics.IgnoreCollision(ballCollider, playerCollider, true);
+
+                // Espera 2 segundos y vuelve a activar la colisión
+                StartCoroutine(EnableCollisionAfterDelay(2f));
+
+
                 rb.isKinematic = false;
 
                 // Limitar ángulos según orientación
@@ -1204,11 +1276,19 @@ public class PlayerMovement : MonoBehaviour
             Enemy[] enemies = FindObjectsOfType<Enemy>();
             // ... Aquí iría lo que tienes comentado
 
-            StartCoroutine(HideBall(newBall));
+            corutineHideball = StartCoroutine(HideBall(newBall));
             updateSliderBall = true;
         }
     }
-    
+
+    IEnumerator EnableCollisionAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // Ahora sí permitir colisión
+        Physics.IgnoreCollision(ballCollider, playerCollider, false);
+    }
+
 
     Vector3 GetMouseWorldPosition()
     {
@@ -1301,18 +1381,33 @@ public class PlayerMovement : MonoBehaviour
         imageDamage.color = finalColor;
     }
 
-    private bool CheckEnemyAround()
+    private float CheckEnemyAround()
     {
+        float closestDistance = float.MaxValue;
+
         foreach (Enemy enemy in listEnemy)
         {
             float distancia = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distancia < 10)
+            if (distancia < 15f && distancia < closestDistance)
             {
-                return true;
+                closestDistance = distancia;
             }
         }
+        return closestDistance == float.MaxValue ? -1f : closestDistance;
+    }
 
-        return false;
+    public float ConvertValue(float input)
+    {
+        // Rango de salida: de 20 a 7
+        float outputMin = 25f;
+        float outputMax = 10f;
+
+        // Clamp el valor para evitar salirse del rango
+        input = Mathf.Clamp(input, 5, 15);
+
+        // Interpolación inversa
+        float t = (input - 5) / (15 - 5);
+        return Mathf.Lerp(outputMin, outputMax, t);
     }
 
     // Detectar cuando sale del suelo
@@ -1345,6 +1440,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 hearingSound[heard.heardSound] = false;
             }
+        }
+        else if (other.gameObject.CompareTag("Collectionable"))
+        {
+            collecionable = null;
         }
     }
 
@@ -1406,11 +1505,12 @@ public class PlayerMovement : MonoBehaviour
             
             if (colliderBall != null) colliderBall.isTrigger = false;
 
-            
+            sliderBall.gameObject.SetActive(false);
             updateSliderBall = false;
             timerSliderBall = 0f;
             sliderBall.value = 1f;
 
+            StopCoroutine(corutineHideball);
         }else if (other.gameObject.CompareTag("FinishLevel"))
         {
             isOnFinishLevel = true;
@@ -1499,26 +1599,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Collectionable"))
         {
-            Colleccionable collecionable = other.GetComponent<Colleccionable>();
-
-            int index = collecionable.indexCollecionable * 2 + 1;
-
-            book.bookPages[index] = book.bookPageWritten[index];
-            book.bookPages[index+1] = book.bookPageWritten[index+1];
-
-            other.gameObject.SetActive(false);
-
-            if(collecionable.indexCollecionable == 0)
-            {
-                GameManager.instance.isTakeColeccionable1 = true;
-            }else if(collecionable.indexCollecionable == 1)
-            {
-                GameManager.instance.isTakeColeccionable2 = true;
-            }
-            else if (collecionable.indexCollecionable == 2)
-            {
-                GameManager.instance.isTakeColeccionable3 = true;
-            }
+             collecionable = other.GetComponent<Colleccionable>();
         }
     }
 

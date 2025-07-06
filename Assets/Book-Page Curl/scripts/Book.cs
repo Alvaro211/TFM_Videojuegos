@@ -24,6 +24,7 @@ public class Book : MonoBehaviour {
     public bool enableShadowEffect=true;
     //represent the index of the sprite shown in the right page
     public int currentPage = 0;
+    public AudioSource audio;
     public int TotalPageCount
     {
         get { return bookPages.Length; }
@@ -309,7 +310,10 @@ public class Book : MonoBehaviour {
     {
         if (interactable)
         DragRightPageToPoint(transformPoint(Input.mousePosition));
-        
+
+
+        audio.Play();
+
     }
     public void DragLeftPageToPoint(Vector3 point)
     {
@@ -343,7 +347,10 @@ public class Book : MonoBehaviour {
     {
         if (interactable)
         DragLeftPageToPoint(transformPoint(Input.mousePosition));
-        
+
+
+        audio.Play();
+
     }
     public void OnMouseRelease()
     {
@@ -370,6 +377,7 @@ public class Book : MonoBehaviour {
     {
         LeftNext.sprite= (currentPage > 0 && currentPage <= bookPages.Length) ? bookPages[currentPage-1] : background;
         RightNext.sprite=(currentPage>=0 &&currentPage<bookPages.Length) ? bookPages[currentPage] : background;
+
     }
     public void TweenForward()
     {
