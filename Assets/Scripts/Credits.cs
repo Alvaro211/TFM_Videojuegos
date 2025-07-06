@@ -39,6 +39,14 @@ public class Credits : MonoBehaviour
         // Opcional: desactivar después de un momento
         yield return new WaitForSeconds(0.5f);
 
-        SceneManager.LoadScene(0);
+        if(SceneManager.GetActiveScene().buildIndex == 1)
+            SceneManager.LoadScene(0);
+        else
+        {
+            backgroundImage.gameObject.SetActive(false);
+            credtis.gameObject.SetActive(false);
+
+            rt.anchoredPosition = startPos;
+        }
     }
 }

@@ -13696,7 +13696,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 672.6, y: 121.4, z: -22}
+  m_LocalPosition: {x: 680.1, y: 159.6, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24284,7 +24284,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 37.300003, y: -258.2}
+  m_AnchoredPosition: {x: 37.300003, y: -248.5}
   m_SizeDelta: {x: 200, y: 50.000015}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &540862528
@@ -42023,8 +42023,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 1638072148}
   credtis: {fileID: 538873304}
-  floatDuration: 22
-  floatDistance: 1000
+  floatDuration: 17
+  floatDistance: 1300
 --- !u!1 &999315227
 GameObject:
   m_ObjectHideFlags: 0
@@ -62745,7 +62745,7 @@ Transform:
   m_GameObject: {fileID: 1547773805}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.599976, y: 113.80169, z: 0}
+  m_LocalPosition: {x: 33.099976, y: 152.0017, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -67947,7 +67947,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -90.4, y: -150}
+  m_AnchoredPosition: {x: -90.4, y: -95}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1690636710
@@ -67971,7 +67971,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Realizado por:\n\n\tJulia Mart\xEDnez Campos\n\t\xC1lvaro P\xE9rez Mart\xEDnez\n\tYihang
-    Sun\n\tJuan David Acevedo\n\n\nMuchas gracias por jugarlo"
+    Sun\n\tJuan David Acevedo\n\nEn agradecimientos a nuestros tutores:\n\t\n\tSergio
+    Gonzalez Jimenez\n\tSergio Rodriguez Gonzalez\n\tSergio Garc\xEDa Cabezas\n\nMuchas
+    gracias por jugarlo"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -68034,7 +68036,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -158.71832, y: 0, z: -173.64769, w: -203.3254}
+  m_margin: {x: -158.71832, y: 0, z: -249.64922, w: -203.3254}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -69497,7 +69499,7 @@ Transform:
   m_GameObject: {fileID: 1716474883}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 672.6, y: 112.6, z: -7}
+  m_LocalPosition: {x: 680.1, y: 150.8, z: -7}
   m_LocalScale: {x: 0.36, y: 0.36, z: 0.36}
   m_ConstrainProportionsScale: 1
   m_Children:
