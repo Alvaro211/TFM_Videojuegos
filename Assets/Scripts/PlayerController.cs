@@ -783,6 +783,8 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
+            GameManager.instance.vibration.VibrarMando(0.5f, 0.5f);
+
             hotspot.Invoke("AudioPlay", 0.6f);
             hotspot.Invoke("ActivateLights", (duration/3)*2);
             Invoke("DesactiveCanMove", duration);

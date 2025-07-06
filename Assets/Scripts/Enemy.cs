@@ -138,15 +138,14 @@ public class Enemy : MonoBehaviour
             if (tiempo < 0.5f)
                 tiempo += Time.deltaTime;
 
-            GameManager.instance.vibration.VibrarMando((0.5f + tiempo), 0.5f);
-
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer <= searchRadius)
             {
                 NavMeshPath path = new NavMeshPath();
                 if (agent.CalculatePath(player.position, path) && path.status == NavMeshPathStatus.PathComplete)
                 {
-                   
+                    GameManager.instance.vibration.VibrarMando((0.5f + tiempo), 0.5f);
+
                     chasingPlayer = true;
                     anim.SetBool("IsChasing", true);
                     anim.SetBool("IsIdle", false);
