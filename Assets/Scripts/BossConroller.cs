@@ -15,6 +15,8 @@ public class BossConroller : MonoBehaviour
     public bool onAnimation = true;
 
     public AudioSource audio;
+    public AudioClip audioBossIdle;
+    public AudioClip audioBossShout;
 
     public Credits credits;
 
@@ -35,10 +37,9 @@ public class BossConroller : MonoBehaviour
     void Update()
     {
         if (GameManager.instance.defeatBoss) {
-           
-                ReturnToStartPosition();
-                CancelInvoke("Shoot");
-           
+            ReturnToStartPosition();
+            CancelInvoke("Shoot");
+            animator.SetBool("Start", false);
         }
         else
         {
@@ -50,13 +51,21 @@ public class BossConroller : MonoBehaviour
                     Invoke("Shoot", timeWaitShoot);
                     firstTime = false;
                 }
+
+                if (!audio.isPlaying)
+                {
+                    audio.clip = audioBossIdle;
+                    audio.loop = true;
+                    audio.Play();
+                }
             }
             else
             {
                 this.transform.position = positionInitial;
             }
         }
-        
+
+
     }
 
     public void StartAnimation()
@@ -110,5 +119,15 @@ public class BossConroller : MonoBehaviour
         { 
             credits.Invoke("ShowFloatingMessage", 3f);
         }
+    }
+
+    public void PlayBossShout()
+    {
+        if (audio == null || audioBossShout == null) return;
+
+        audio.Stop(); // Detener el audio actual
+        audio.clip = audioBossShout;
+        audio.loop = false;
+        audio.Play();
     }
 }

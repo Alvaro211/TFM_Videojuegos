@@ -19,6 +19,7 @@ public class TimeCounterTrigger : MonoBehaviour
 
     public GameObject JiGuang;
 
+
     private void Start()
     {
         GameObject playerGO = GameObject.FindWithTag("Player");
@@ -54,12 +55,12 @@ public class TimeCounterTrigger : MonoBehaviour
             GameManager.instance.vibration.VibrarMando((0.5f + vibration), 0.5f);
 
             timeInTrigger += Time.deltaTime;
-            if (timeInTrigger >= (timeAfterDead - jiGuang_XianShi_shijian))
-            {
+            //if (timeInTrigger >= (timeAfterDead - jiGuang_XianShi_shijian))
+           // {
                 JiGuang.SetActive(true);
                 JiGuang.transform.LookAt(other.transform.position);
 
-            }
+            //}
             if (timeInTrigger >= timeAfterDead)
             {
                 JiGuang.SetActive(false);
@@ -79,6 +80,8 @@ public class TimeCounterTrigger : MonoBehaviour
 
             PlayerMovement player = other.GetComponent<PlayerMovement>();
             player.flickerSpeed = 5;
+
+            JiGuang.SetActive(false);
         }
     }
 }
