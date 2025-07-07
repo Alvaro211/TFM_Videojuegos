@@ -15,6 +15,8 @@ public class ControlMenu : MonoBehaviour
 
     public Image imageContinue;
 
+    public Transform canvas;
+
     public void Start()
     {
         int index = SceneManager.GetActiveScene().buildIndex;
@@ -93,6 +95,16 @@ public class ControlMenu : MonoBehaviour
 
     public void HideOptionsPlay()
     {
+        foreach (Transform hijo in canvas)
+        {
+            if (hijo.name == "CirculoNota(Clone)")
+            {
+                hijo.gameObject.SetActive(true);
+            }
+        }
+
+        Time.timeScale = 1;
+        GameManager.instance.canMove = true;
         options.gameObject.SetActive(false);
     }
 
@@ -103,6 +115,7 @@ public class ControlMenu : MonoBehaviour
 
     public void GoToMenu()
     {
+        GameManager.instance.DisableCargar();
         SceneManager.LoadScene(0);
     }
 

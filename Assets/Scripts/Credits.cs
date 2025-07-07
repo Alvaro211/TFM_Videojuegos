@@ -8,6 +8,10 @@ public class Credits : MonoBehaviour
     public Image backgroundImage;
     public GameObject credtis;
 
+    public Transform canvas;
+
+    public GameObject[] enemy;
+
     public float floatDuration = 20f; // tiempo de subida
     public float floatDistance = 1000f;  // distancia que sube
 
@@ -20,6 +24,21 @@ public class Credits : MonoBehaviour
     {
         backgroundImage.gameObject.SetActive(true);
         credtis.gameObject.SetActive(true);
+
+        foreach(GameObject enemy in enemy)
+        {
+            enemy.SetActive(false);
+        }
+
+        foreach (Transform hijo in canvas)
+        {
+            if (hijo.name == "CirculoNota(Clone)")
+            {
+                hijo.gameObject.SetActive(false);
+            }
+        }
+
+        GameManager.instance.canMove = false;
 
         RectTransform rt = credtis.GetComponent<RectTransform>();
         Vector3 startPos = rt.anchoredPosition;

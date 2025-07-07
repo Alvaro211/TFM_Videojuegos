@@ -199,6 +199,8 @@ public class PlayerMovement : MonoBehaviour
         inputMap.Player.Diary.performed += DiaryPerformed;
         inputMap.Player.Reset.performed += ResetPerformed;
         inputMap.Player.Reset.canceled += ResetCanceled;
+
+        GameManager.instance.DisableCargar();
     }
 
     private void OnDestroy()
@@ -615,8 +617,17 @@ public class PlayerMovement : MonoBehaviour
     {
         isPressJumping = true;
 
-        if ((controller.isGrounded || GameManager.instance.playerMovePlatform) && !jumpCooldown && GameManager.instance.canMove)
-            StartCoroutine(Jump());
+        if (controller.isGrounded && !jumpCooldown && GameManager.instance.canMove)
+                 StartCoroutine(Jump());
+
+        if (GameManager.instance.playerMovePlatform && !jumpCooldown && GameManager.instance.canMove)
+        {
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.5f))
+                StartCoroutine(Jump());
+
+        }
 
 
     }
@@ -836,12 +847,13 @@ public class PlayerMovement : MonoBehaviour
     
     public void SpherePerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        helpBall.SetActive(true);
+        if(GameManager.instance.canMove)
+            helpBall.SetActive(true);
     }
 
     public void SphereCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (!ballLauch)
+        if (!ballLauch && GameManager.instance.canMove)
         {
             LaunchBall();
         }
@@ -872,7 +884,7 @@ public class PlayerMovement : MonoBehaviour
                 if (hijo.name == "CirculoNota(Clone)")
                 {
                     var i = hijo.transform.Find("Text (TMP)");
-                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    if (i != null && (i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0") || i.GetComponent<TextMeshProUGUI>().text == "<b>↑</b>"))
                     {
                         hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
                         Color newcolor = hijo.GetComponent<RawImage>().color;
@@ -908,7 +920,7 @@ public class PlayerMovement : MonoBehaviour
                 if (hijo.name == "CirculoNota(Clone)")
                 {
                     var i = hijo.transform.Find("Text (TMP)");
-                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    if (i != null && (i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0") || i.GetComponent<TextMeshProUGUI>().text == "<b>→</b>"))
                     {
                         hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
                         Color newcolor = hijo.GetComponent<RawImage>().color;
@@ -942,7 +954,7 @@ public class PlayerMovement : MonoBehaviour
                 if (hijo.name == "CirculoNota(Clone)")
                 {
                     var i = hijo.transform.Find("Text (TMP)");
-                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    if (i != null && (i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0") || i.GetComponent<TextMeshProUGUI>().text == "<b>↓</b>"))
                     {
                         hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
                         Color newcolor = hijo.GetComponent<RawImage>().color;
@@ -971,7 +983,7 @@ public class PlayerMovement : MonoBehaviour
                 if (hijo.name == "CirculoNota(Clone)")
                 {
                     var i = hijo.transform.Find("Text (TMP)");
-                    if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
+                    if (i != null && (i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0") || i.GetComponent<TextMeshProUGUI>().text == "<b>←</b>"))
                     {
                         hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
                         Color newcolor = hijo.GetComponent<RawImage>().color;
@@ -1146,13 +1158,13 @@ public class PlayerMovement : MonoBehaviour
     // Método para aplicar el salto
     IEnumerator Jump()
     {
+        jumpCooldown = true;
         coyoteTime = 0;
         audioSourceEffectPlayer.clip = audioJump;
         audioSourceEffectPlayer.Play();
         yield return null;
         anim.SetBool("IsJumping", true);
         anim.SetBool("IsFalling", true);
-        jumpCooldown = true;
         yield return new WaitForSeconds(0.1f);
         isHit = false;
        // if(controller.isGrounded || movingPlatform != null)

@@ -19,11 +19,13 @@ public class ChangeHelpText : MonoBehaviour
     {
         if (Gamepad.current != null)
         {
+            Cursor.visible = false;
             text.gameObject.SetActive(false);
             iconLB.gameObject.SetActive(true);
         }
         else
         {
+            Cursor.visible = true;
             text.gameObject.SetActive(true);
             iconLB.gameObject.SetActive(false);
         }

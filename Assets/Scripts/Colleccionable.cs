@@ -19,7 +19,7 @@ public class Colleccionable : MonoBehaviour
 
         GameManager.instance.Load();
 
-        if(this.name == "Coleccionables1" && GameManager.instance.isTakeColeccionable1)
+        if(this.name == "Coleccionables1" && GameManager.instance.isTakeColeccionable1 && !GameManager.instance.newGame)
         {
             this.gameObject.SetActive(false);
 
@@ -28,7 +28,7 @@ public class Colleccionable : MonoBehaviour
             book.bookPages[index] = book.bookPageWritten[index];
             book.bookPages[index + 1] = book.bookPageWritten[index + 1];
         }
-        else if(this.name == "Coleccionables2" && GameManager.instance.isTakeColeccionable2)
+        else if(this.name == "Coleccionables2" && GameManager.instance.isTakeColeccionable2 && !GameManager.instance.newGame)
         {
             this.gameObject.SetActive(false);
 
@@ -37,7 +37,7 @@ public class Colleccionable : MonoBehaviour
             book.bookPages[index] = book.bookPageWritten[index];
             book.bookPages[index + 1] = book.bookPageWritten[index + 1];
         }
-        else if(this.name == "Coleccionables3" && GameManager.instance.isTakeColeccionable3)
+        else if(this.name == "Coleccionables3" && GameManager.instance.isTakeColeccionable3 && !GameManager.instance.newGame)
         {
             this.gameObject.SetActive(false);
 

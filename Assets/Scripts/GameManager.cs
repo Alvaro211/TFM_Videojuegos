@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
 
     public bool newGame = true;
 
+    public GameObject cargar;
+
     private void Awake()
     {
         if (instance == null)
@@ -108,16 +110,18 @@ public class GameManager : MonoBehaviour
                 playerMovement.SetNoteRed(sharedData.player.noteRed);
                 playerMovement.SetNoteBlue(sharedData.player.noteBlue);
                 playerMovement.SetNoteYellow(sharedData.player.noteYellow);
-                isOpenDoorGreen = sharedData.isOpenDoorGreen;
-                isOpenDoorGreenYellow = sharedData.isOpenDoorGreenYellow;
-                isOpenDoorBoss = sharedData.isOpenDoorBoss;
-                continueGame = sharedData.continueGame;
             }
 
             if(sharedData != null && sharedData.continueGame != null)
             {
                 continueGame = sharedData.continueGame;
             }
+
+
+            isOpenDoorGreen = sharedData.isOpenDoorGreen;
+            isOpenDoorGreenYellow = sharedData.isOpenDoorGreenYellow;
+            isOpenDoorBoss = sharedData.isOpenDoorBoss;
+            continueGame = sharedData.continueGame;
 
             helpControls = sharedData.helpControls;
             musicVol = sharedData.musicVolume;
@@ -218,6 +222,12 @@ public class GameManager : MonoBehaviour
         sharedData2.effectVolume = effectVol;
         bf.Serialize(file, sharedData2);
         file.Close();
+    }
+
+    public void DisableCargar()
+    {
+        if(cargar != null)
+            cargar.SetActive(false);
     }
 }
 

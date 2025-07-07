@@ -34,6 +34,7 @@ public class PlatformMove : MonoBehaviour
 
     private float timeInTrigger;
     private bool isMovedOneTime = false;
+    private bool movePlayer = false;
 
     private void Start()
     {
@@ -65,10 +66,10 @@ public class PlatformMove : MonoBehaviour
             ? initialPosition + GetDirectionVector(moveDirection) * moveDistance
             : initialPosition;
 
-        StartCoroutine(MoveToPosition(targetPosition, true));
+        StartCoroutine(MoveToPosition(targetPosition));
     }
 
-    private System.Collections.IEnumerator MoveToPosition(Vector3 destination, bool movePlayer)
+    private System.Collections.IEnumerator MoveToPosition(Vector3 destination)
     {
         GameObject player = GameObject.FindWithTag("Player");
         GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
@@ -141,7 +142,7 @@ public class PlatformMove : MonoBehaviour
 
     public void ResetEffect()
     {
-        isMoved = !isMoved;
+        isMoved = false;
         corutine = StartCoroutine(ResetPlatform());
         if (inActivatedMaterial != null && objRenderer != null)
         {
@@ -173,13 +174,15 @@ public class PlatformMove : MonoBehaviour
             light.gameObject.SetActive(false);
         }
 
-        StartCoroutine(MoveToPosition(positionToReturn, false));
+        StartCoroutine(MoveToPosition(positionToReturn));
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            movePlayer = true;
+
             timeInTrigger += Time.deltaTime;
             if (timeInTrigger >= timeToAdvise && !isMovedOneTime)
             {
@@ -192,6 +195,7 @@ public class PlatformMove : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            movePlayer = false;
             textoAyuda.gameObject.SetActive(false);
             timeInTrigger = 0f;
         }

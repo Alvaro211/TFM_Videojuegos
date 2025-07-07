@@ -2693,9 +2693,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Realizado por:\n\n\tJulia Mart\xEDnez Campos\n\t\xC1lvaro P\xE9rez Mart\xEDnez\n\tYihang
+  m_text: "Realizado por:\n\n\tJulia Martinez Campos\n\tAlvaro Perez Martinez\n\tYihang
     Sun\n\tJuan David Acevedo\n\nEn agradecimientos a nuestros tutores:\n\t\n\tSergio
-    Gonzalez Jimenez\n\tSergio Rodriguez Gonzalez\n\tSergio Garc\xEDa Cabezas\n\nMuchas
+    Gonzalez Jimenez\n\tSergio Rodriguez Gonzalez\n\tSergio Garcia Cabezas\n\nMuchas
     gracias por jugarlo"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fcd43928ef5ff034a9923cf098c55c4d, type: 2}
@@ -3814,6 +3814,7 @@ MonoBehaviour:
   isTakeColeccionable2: 0
   isTakeColeccionable3: 0
   newGame: 0
+  cargar: {fileID: 1037110858}
 --- !u!4 &1562798669
 Transform:
   m_ObjectHideFlags: 0
@@ -4539,6 +4540,7 @@ MonoBehaviour:
   cargar: {fileID: 1037110858}
   audio: {fileID: 50963775}
   imageContinue: {fileID: 1907083541}
+  canvas: {fileID: 0}
 --- !u!114 &1814082539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4737,6 +4739,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 2097090523}
   credtis: {fileID: 2003016092}
+  canvas: {fileID: 0}
+  enemy: []
   floatDuration: 17
   floatDistance: 11500
 --- !u!1 &1907083538

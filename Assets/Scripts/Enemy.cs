@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
 
         bool isChasing = chasingPlayer || chasingBall;
 
-        if (Time.timeScale == 0f)
+        if (Time.timeScale == 0f && GameManager.instance.canMove)
         {
             if (audio.isPlaying)
             {
@@ -83,13 +83,13 @@ public class Enemy : MonoBehaviour
         }
 
         // Tu lógica de reproducción de audio
-        if (isChasing && (audio.clip != audioChasing || !audio.isPlaying))
+        if (isChasing && (audio.clip != audioChasing || !audio.isPlaying) && GameManager.instance.canMove)
         {
             audio.clip = audioChasing;
             audio.loop = false; // O true, según tu caso
             audio.Play();
         }
-        else if (!isChasing && !audio.isPlaying)
+        else if (!isChasing && !audio.isPlaying && GameManager.instance.canMove)
         {
             audio.clip = audioIdle;
             audio.loop = true;

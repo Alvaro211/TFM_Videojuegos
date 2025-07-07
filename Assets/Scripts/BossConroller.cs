@@ -116,7 +116,9 @@ public class BossConroller : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ball"))
-        { 
+        {
+            collision.gameObject.SetActive(false);
+            GameManager.instance.canMove = false;
             credits.Invoke("ShowFloatingMessage", 3f);
         }
     }

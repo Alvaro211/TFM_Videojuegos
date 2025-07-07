@@ -30,16 +30,18 @@ public class FinishLevel : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
+        GameManager.instance.Load();
+
         bool mustOpen = false;
-        if (GameManager.instance.isOpenDoorGreen && this.name == "FinishLevelDoor1")
+        if (GameManager.instance.isOpenDoorGreen && this.name == "FinishLevelDoor1" && !GameManager.instance.newGame)
         {
             mustOpen = true;
         }
-        else if (GameManager.instance.isOpenDoorGreenYellow && this.name == "FinishLevelDoor2")
+        else if (GameManager.instance.isOpenDoorGreenYellow && this.name == "FinishLevelDoor2" && !GameManager.instance.newGame)
         {
             mustOpen = true;
         }
-        else if (GameManager.instance.isOpenDoorBoss && this.name == "FinishLevelDoorBoss")
+        else if (GameManager.instance.isOpenDoorBoss && this.name == "FinishLevelDoorBoss" && !GameManager.instance.newGame)
         {
             mustOpen = true;
         }
