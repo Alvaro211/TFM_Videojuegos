@@ -8,10 +8,10 @@ public class AcousticWave : MonoBehaviour
     [SerializeField] private GameObject wave;
 
 
-    public void xianShi()
+    public void xianShi(float duration)
     {
         wave.SetActive(true);
-        Invoke(nameof(xiaoShi), xiaoShi_shiJian);
+        Invoke(nameof(xiaoShi), duration);
     }
 
     void xiaoShi()

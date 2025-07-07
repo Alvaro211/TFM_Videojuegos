@@ -19,6 +19,7 @@ public class Shortcut : MonoBehaviour
     public GameObject door2;
     public GameObject door3;
 
+
     public AudioClip audioGreen;
     public AudioClip audioYellow;
     public AudioClip audioBlue;
@@ -42,6 +43,7 @@ public class Shortcut : MonoBehaviour
         inputMap.Player.ShortCut3.performed += PressKey3;
         inputMap.Player.ShortCut4.performed += PressKey4;
         inputMap.Player.ShortCut5.performed += PressKey5;
+        inputMap.Player.ShortCut6.performed += PressKey6;
 
 
         controller = player.GetComponent<CharacterController>();
@@ -63,14 +65,18 @@ public class Shortcut : MonoBehaviour
         animationBlue.gameObject.SetActive(true);
         animationRed.gameObject.SetActive(true);
 
-        Animator anim1 = door1.GetComponent<Animator>();
+        ShorcutPuerta(false, door1);
+        ShorcutPuerta(false, door2);
+        ShorcutPuerta(false, door3);
+
+        /*Animator anim1 = door1.GetComponent<Animator>();
         anim1.SetBool("IsOpened", false);
 
         Animator anim2 = door2.GetComponent<Animator>();
         anim2.SetBool("IsOpened", false);
 
         Animator anim3 = door3.GetComponent<Animator>();
-        anim3.SetBool("IsOpened", false);
+        anim3.SetBool("IsOpened", false);*/
 
         playerMovement.ResetImage();
         playerMovement.SetStartPosition(player.transform.position);
@@ -93,14 +99,18 @@ public class Shortcut : MonoBehaviour
         animationBlue.gameObject.SetActive(true);
         animationRed.gameObject.SetActive(true);
 
-        Animator anim1 = door1.GetComponent<Animator>();
+        ShorcutPuerta(true, door1);
+        ShorcutPuerta(false, door2);
+        ShorcutPuerta(false, door3);
+
+        /*Animator anim1 = door1.GetComponent<Animator>();
         anim1.SetBool("IsOpened", true);
 
         Animator anim2 = door2.GetComponent<Animator>();
         anim2.SetBool("IsOpened", false);
 
         Animator anim3 = door3.GetComponent<Animator>();
-        anim3.SetBool("IsOpened", false);
+        anim3.SetBool("IsOpened", false);*/
 
         playerMovement.ResetImage();
         playerMovement.SetStartPosition(player.transform.position);
@@ -127,14 +137,19 @@ public class Shortcut : MonoBehaviour
         animationBlue.gameObject.SetActive(true);
         animationRed.gameObject.SetActive(true);
 
-        Animator anim1 = door1.GetComponent<Animator>();
+        ShorcutPuerta(true, door1);
+        ShorcutPuerta(true, door2);
+        ShorcutPuerta(false, door3);
+
+
+        /*Animator anim1 = door1.GetComponent<Animator>();
         anim1.SetBool("IsOpened", true);
 
         Animator anim2 = door2.GetComponent<Animator>();
         anim2.SetBool("IsOpened", true);
 
         Animator anim3 = door3.GetComponent<Animator>();
-        anim3.SetBool("IsOpened", false);
+        anim3.SetBool("IsOpened", false);*/
 
         playerMovement.ResetImage();
         playerMovement.SetStartPosition(player.transform.position);
@@ -164,14 +179,18 @@ public class Shortcut : MonoBehaviour
         animationBlue.gameObject.SetActive(false);
         animationRed.gameObject.SetActive(true);
 
-        Animator anim1 = door1.GetComponent<Animator>();
+        ShorcutPuerta(true, door1);
+        ShorcutPuerta(true, door2);
+        ShorcutPuerta(false, door3);
+
+        /*Animator anim1 = door1.GetComponent<Animator>();
         anim1.SetBool("IsOpened", true);
 
         Animator anim2 = door2.GetComponent<Animator>();
         anim2.SetBool("IsOpened", true);
 
         Animator anim3 = door3.GetComponent<Animator>();
-        anim3.SetBool("IsOpened", false);
+        anim3.SetBool("IsOpened", false);*/
 
         playerMovement.ResetImage();
         playerMovement.SetStartPosition(player.transform.position);
@@ -203,14 +222,18 @@ public class Shortcut : MonoBehaviour
         animationBlue.gameObject.SetActive(false);
         animationRed.gameObject.SetActive(false);
 
-        Animator anim1 = door1.GetComponent<Animator>();
+        ShorcutPuerta(true, door1);
+        ShorcutPuerta(true, door2);
+        ShorcutPuerta(false, door3);
+
+        /*Animator anim1 = door1.GetComponent<Animator>();
         anim1.SetBool("IsOpened", true);
 
         Animator anim2 = door2.GetComponent<Animator>();
         anim2.SetBool("IsOpened", true);
 
         Animator anim3 = door3.GetComponent<Animator>();
-        anim3.SetBool("IsOpened", false);
+        anim3.SetBool("IsOpened", false);*/
 
         playerMovement.ResetImage();
         playerMovement.SetStartPosition(player.transform.position);
@@ -230,4 +253,75 @@ public class Shortcut : MonoBehaviour
         playerMovement.currentIndexHotSpot = 6;
     }
 
+    public void PressKey6(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        controller.enabled = false;
+        player.transform.position = new Vector3(674, 112, -7);
+        controller.enabled = true;
+
+        noteGreen.gameObject.SetActive(false);
+        noteYellow.gameObject.SetActive(false);
+        noteBlue.gameObject.SetActive(false);
+        noteRed.gameObject.SetActive(false);
+
+        animationYellow.gameObject.SetActive(false);
+        animationBlue.gameObject.SetActive(false);
+        animationRed.gameObject.SetActive(false);
+
+        ShorcutPuerta(true, door1);
+        ShorcutPuerta(true, door2);
+        ShorcutPuerta(true, door3);
+
+        /*Animator anim1 = door1.GetComponent<Animator>();
+        anim1.SetBool("IsOpened", true);
+
+        Animator anim2 = door2.GetComponent<Animator>();
+        anim2.SetBool("IsOpened", true);
+
+        Animator anim3 = door3.GetComponent<Animator>();
+        anim3.SetBool("IsOpened", false);*/
+
+        playerMovement.ResetImage();
+        playerMovement.SetStartPosition(player.transform.position);
+
+        playerMovement.SpawnImage(noteGreen.GetComponent<Renderer>().materials[0].color);
+        playerMovement.AddSequence(audioGreen);
+
+        playerMovement.SpawnImage(noteYellow.GetComponent<Renderer>().materials[0].color);
+        playerMovement.AddSequence(audioYellow);
+
+        playerMovement.SpawnImage(noteBlue.GetComponent<Renderer>().materials[0].color);
+        playerMovement.AddSequence(audioBlue);
+
+        playerMovement.SpawnImage(noteRed.GetComponent<Renderer>().materials[0].color);
+        playerMovement.AddSequence(audioRed);
+
+        playerMovement.currentIndexHotSpot = 6;
+    }
+
+
+    private void ShorcutPuerta(bool open, GameObject door)
+    {
+        FinishLevel finishScript = door.GetComponentInChildren<FinishLevel>(true);
+        finishScript.doorOpen = false;
+
+        if (finishScript != null)
+        {
+            GameObject finishObject = finishScript.gameObject;
+
+            Animator[] animators = finishObject.GetComponentsInChildren<Animator>(true);
+
+            foreach (Animator anim in animators)
+            {
+                anim.SetBool("IsOpened", open);
+            }
+        }
+
+        Transform puerta = door.transform.Find("PuertaObject");
+
+        if (puerta != null)
+        {
+            puerta.gameObject.SetActive(!open);
+        }
+    }
 }

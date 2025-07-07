@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ public class ControlMenu : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject options;
+    public GameObject cargar;
 
     public SoundManager audio;
 
@@ -26,20 +28,53 @@ public class ControlMenu : MonoBehaviour
         }
         else if (index == 1)
             audio.AudioPlay();
+
+        if(cargar != null)
+            DontDestroyOnLoad(cargar);
     }
     public void Play()
     {
         if (GameManager.instance.continueGame)
         {
+            cargar.SetActive(true);
             GameManager.instance.newGame = false;
-            SceneManager.LoadScene(1);
+            //SceneManager.LoadScene(1);
+            StartCoroutine(LoadSceneAsync("Level"));
         }
     }
 
     public void PlayNewGame()
     {
+        cargar.SetActive(true);
         GameManager.instance.newGame = true;
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        StartCoroutine(LoadSceneAsync("Level"));
+    }
+
+    IEnumerator LoadSceneAsync(string scene)
+    {
+
+        yield return new WaitForSeconds(1f);
+        // Empieza la carga en segundo plano
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
+
+        // Opcional: evitar que la escena se active automáticamente
+        asyncLoad.allowSceneActivation = false;
+
+        // Esperar hasta que la escena esté casi completamente cargada
+        while (asyncLoad.progress < 0.9f)
+        {
+            Debug.Log("Progreso: " + asyncLoad.progress);
+            yield return null;
+        }
+
+        Debug.Log("Escena cargada al 90%, lista para activarse");
+
+        // Espera un poco, puedes mostrar una animación aquí si quieres
+        yield return new WaitForSeconds(1f);
+
+        // Activar la escena cargada
+        asyncLoad.allowSceneActivation = true;
     }
 
     public void ShowOptions()

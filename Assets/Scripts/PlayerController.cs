@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
 
         GameManager.instance.Load();
 
-        if (/*GameManager.instance.newGame || GameManager.instance.sharedData.player.positionZ == 0*/ true)
+        if (GameManager.instance.newGame || GameManager.instance.sharedData.player.positionZ == 0)
         {
             GameManager.instance.newGame = false;
             startPosition = transform.position;
@@ -874,17 +874,17 @@ public class PlayerMovement : MonoBehaviour
                     var i = hijo.transform.Find("Text (TMP)");
                     if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
                     {
-                        hijo.GetComponent<AcousticWave>().xianShi();
-                        // Color newcolor = hijo.GetComponent<RawImage>.color;
-                        footSoundWavesSprite.color = Color.white ;
-                        footSoundWaves.xianShi();
+                        hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
+                        Color newcolor = hijo.GetComponent<RawImage>().color;
+                        footSoundWavesSprite.color = newcolor;
+                        footSoundWaves.xianShi(sequence[sound].length);
                     }
 
                 }
             }
             
 
-           souning = true;
+            souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
@@ -910,7 +910,10 @@ public class PlayerMovement : MonoBehaviour
                     var i = hijo.transform.Find("Text (TMP)");
                     if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
                     {
-                        hijo.GetComponent<AcousticWave>().xianShi();
+                        hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
+                        Color newcolor = hijo.GetComponent<RawImage>().color;
+                        footSoundWavesSprite.color = newcolor;
+                        footSoundWaves.xianShi(sequence[sound].length);
                     }
 
                 }
@@ -941,7 +944,10 @@ public class PlayerMovement : MonoBehaviour
                     var i = hijo.transform.Find("Text (TMP)");
                     if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
                     {
-                        hijo.GetComponent<AcousticWave>().xianShi();
+                        hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
+                        Color newcolor = hijo.GetComponent<RawImage>().color;
+                        footSoundWavesSprite.color = newcolor;
+                        footSoundWaves.xianShi(sequence[sound].length);
                     }
 
                 }
@@ -967,7 +973,10 @@ public class PlayerMovement : MonoBehaviour
                     var i = hijo.transform.Find("Text (TMP)");
                     if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
                     {
-                        hijo.GetComponent<AcousticWave>().xianShi();
+                        hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
+                        Color newcolor = hijo.GetComponent<RawImage>().color;
+                        footSoundWavesSprite.color = newcolor;
+                        footSoundWaves.xianShi(sequence[sound].length);
                     }
 
                 }
@@ -995,7 +1004,10 @@ public class PlayerMovement : MonoBehaviour
                     var i = hijo.transform.Find("Text (TMP)");
                     if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
                     {
-                        hijo.GetComponent<AcousticWave>().xianShi();
+                        hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
+                        Color newcolor = hijo.GetComponent<RawImage>().color;
+                        footSoundWavesSprite.color = newcolor;
+                        footSoundWaves.xianShi(sequence[sound].length);
                     }
 
                 }
@@ -1021,7 +1033,10 @@ public class PlayerMovement : MonoBehaviour
                     var i = hijo.transform.Find("Text (TMP)");
                     if (i != null && i.GetComponent<TextMeshProUGUI>().text == (sound + 1).ToString("0"))
                     {
-                        hijo.GetComponent<AcousticWave>().xianShi();
+                        hijo.GetComponent<AcousticWave>().xianShi(sequence[sound].length);
+                        Color newcolor = hijo.GetComponent<RawImage>().color;
+                        footSoundWavesSprite.color = newcolor;
+                        footSoundWaves.xianShi(sequence[sound].length);
                     }
 
                 }
