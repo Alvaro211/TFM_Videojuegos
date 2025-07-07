@@ -13671,7 +13671,7 @@ Camera:
   far clip plane: 1000
   field of view: 80
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 13
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -13696,7 +13696,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 580.8, y: 28.900002, z: -22}
+  m_LocalPosition: {x: 580.8, y: 25.820002, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -45898,7 +45898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 299034722}
-  m_PathPosition: 0
+  m_PathPosition: 0.7956231
   m_PositionUnits: 0
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
@@ -62719,7 +62719,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1716474887}
   m_Lens:
     FieldOfView: 80
-    OrthographicSize: 20
+    OrthographicSize: 13
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -62745,7 +62745,7 @@ Transform:
   m_GameObject: {fileID: 1547773805}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -66.20001, y: 21.30169, z: 0}
+  m_LocalPosition: {x: -66.20001, y: 18.22169, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -69528,8 +69528,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3041e88e068b46a0984604c38721e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footSoundWaves: {fileID: 0}
-  footSoundWavesSprite: {fileID: 0}
+  footSoundWaves: {fileID: 1303359142}
+  footSoundWavesSprite: {fileID: 450849818}
   moveSpeed: 10
   gravityScale: -9.8
   jumpForce: 3.2
