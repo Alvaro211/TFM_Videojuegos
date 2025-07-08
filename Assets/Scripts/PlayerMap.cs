@@ -286,17 +286,6 @@ public partial class @PlayerMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""dde439e7-5f1c-483a-9f59-543b85730bb2"",
-                    ""path"": ""<XInputController>/dpad"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""750132a7-6c7e-44b4-ab6d-f9db7f04b9cb"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",

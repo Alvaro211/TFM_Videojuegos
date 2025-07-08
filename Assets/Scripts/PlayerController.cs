@@ -106,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject helpBall;
     private Vector3 originPositionHelpBall;
     private bool cooldownHideOptions = false;
+    private SpriteRenderer spriteHelpBall;
 
     private Quaternion rotationCanMove;
 
@@ -176,6 +177,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         originPositionHelpBall = helpBall.transform.position;
+
+        spriteHelpBall = helpBall.GetComponent<SpriteRenderer>();
 
         inputMap = new PlayerMap();
         inputMap.Enable();
@@ -443,6 +446,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (helpBall.activeInHierarchy)
         {
+            
             Vector3 direction = Vector3.zero;
             float rawAngle = 0f;
             Vector3 hitPoint = Vector3.zero;
@@ -487,14 +491,15 @@ public class PlayerMovement : MonoBehaviour
             if (Mathf.Abs(playerYRotation - 180f) < 1f)
             {
                 helpBall.GetComponent<SpriteRenderer>().flipY = true;
-                if (rawAngle > -140f && rawAngle < 140f)
+                if (rawAngle > -125f && rawAngle < 125f)
                 {
-                    finalAngle = rawAngle >= 0 ? 140f : -140f;
+                    finalAngle = rawAngle >= 0 ? 125f : -125f;
                 }
             }
             else // Mirando a la derecha
             {
-                finalAngle = Mathf.Clamp(rawAngle, -40f, 40f);
+                helpBall.GetComponent<SpriteRenderer>().flipY = false;
+                finalAngle = Mathf.Clamp(rawAngle, -55f, 55f);
             }
 
             helpBall.transform.rotation = Quaternion.Euler(0, 0, finalAngle);
@@ -516,11 +521,16 @@ public class PlayerMovement : MonoBehaviour
             float maxScale = 0.45f;
             float finalScale = Mathf.Lerp(minScale, maxScale, t);
 
-            if ((playerYRotation < 0.1f && playerYRotation > -0.1f && hitPoint.x < transform.position.x + 4) ||
-                (playerYRotation < 180.1f && playerYRotation > 179.9f && hitPoint.x > transform.position.x - 3))
+            if ((playerYRotation < 0.1f && playerYRotation > -0.1f && hitPoint.x < transform.position.x + 1.5f) ||
+                (playerYRotation < 180.1f && playerYRotation > 179.9f && hitPoint.x > transform.position.x - 1.5f))
             {
                 finalScale = minScale / 2;
                 helpBall.transform.rotation = Quaternion.Euler(0, 0, 0);
+                spriteHelpBall.enabled = false;
+            }
+            else
+            {
+                spriteHelpBall.enabled = true;
             }
 
             helpBall.transform.localScale = new Vector3(finalScale, 1, 1);
@@ -853,7 +863,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SphereCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (!ballLauch && GameManager.instance.canMove)
+        if (!ballLauch && spriteHelpBall.enabled && GameManager.instance.canMove)
         {
             LaunchBall();
         }
@@ -1650,6 +1660,13 @@ public class PlayerMovement : MonoBehaviour
             Enemy enemy = hit.gameObject.GetComponent<Enemy>();
             if(enemy != null && !enemy.isStunned)
                 Dead();
+            else if (hit.gameObject.layer == LayerMask.NameToLayer("Machacadores"))
+            {
+                if (Vector3.Dot(hit.normal, Vector3.down) > 0.5f)
+                {
+                    Dead();
+                }
+            }
         }
     }
 

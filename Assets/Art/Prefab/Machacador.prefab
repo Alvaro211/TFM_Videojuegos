@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6710712094753584776}
   - component: {fileID: 967626302879978364}
   - component: {fileID: 4121600089561172594}
+  - component: {fileID: 1437440595411102386}
   m_Layer: 0
   m_Name: Machacador
   m_TagString: Enemy
@@ -229,6 +230,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &1437440595411102386
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638552859679352888}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 114
+  m_CollisionDetection: 0
 --- !u!1 &1160447157335218870
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +269,7 @@ GameObject:
   - component: {fileID: 3576715722109890839}
   - component: {fileID: 2155144420809013278}
   - component: {fileID: 47677220489300390}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plane
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -328,7 +356,7 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 5

@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Experimental.GlobalIllumination;
 using System.Collections.Generic;
 
 public class CubeFalling : MonoBehaviour
@@ -8,33 +7,28 @@ public class CubeFalling : MonoBehaviour
     public float fastCubeSpeed = 5f;
     public float fallDistance = 2f;
     public float riseSpeed = 2f;
-    public float waitTime = 1f; // Tiempo de espera arriba
+    public float waitTime = 1f;
 
     public List<Light> spotlights;
 
-    private Rigidbody fastCubeRb;
     private Vector3 fastCubeStartPos;
     private bool fastCubeFalling = true;
     private bool isWaiting = false;
     private bool sound = false;
     private AudioSource audio;
 
-    private float maxIntensity;      // Guardamos la intensidad original
+    private float maxIntensity;
     private float minIntensity = 0f;
     private float lightTransitionSpeed = 50f;
+    private float startPositonX;
 
     void Start()
     {
-        if (gameObject != null)
-        {
-            fastCubeRb = gameObject.AddComponent<Rigidbody>();
-            fastCubeRb.useGravity = false;
-            fastCubeRb.freezeRotation = true;
-            fastCubeStartPos = gameObject.transform.position;
-            audio = GetComponent<AudioSource>();
-        }
+        fastCubeStartPos = transform.position;
+        startPositonX = transform.position.x;
+        audio = GetComponent<AudioSource>();
 
-        if (spotlights != null)
+        if (spotlights != null && spotlights.Count > 0)
         {
             maxIntensity = spotlights[0].intensity;
         }
@@ -42,7 +36,7 @@ public class CubeFalling : MonoBehaviour
 
     void Update()
     {
-        if (fastCubeRb != null && !isWaiting)
+        if (!isWaiting)
         {
             if (fastCubeFalling)
             {
@@ -52,41 +46,37 @@ public class CubeFalling : MonoBehaviour
                     audio.Play();
                 }
 
+                transform.position += new Vector3(0, -fastCubeSpeed * Time.deltaTime, 0);
 
-                fastCubeRb.velocity = new Vector3(0, -fastCubeSpeed, 0);
-                if (fastCubeStartPos.y - fastCubeRb.transform.position.y >= fallDistance)
+                if (fastCubeStartPos.y - transform.position.y >= fallDistance)
                 {
                     fastCubeFalling = false;
                 }
             }
             else
             {
-                fastCubeRb.velocity = new Vector3(0, riseSpeed, 0);
-                if (fastCubeRb.transform.position.y >= fastCubeStartPos.y)
+                transform.position += new Vector3(0, riseSpeed * Time.deltaTime, 0);
+
+                if (transform.position.y >= fastCubeStartPos.y)
                 {
-                    fastCubeRb.transform.position = fastCubeStartPos;
-                    StartCoroutine(WaitBeforeFalling()); // Espera antes de volver a caer
+                    transform.position = fastCubeStartPos;
+                    StartCoroutine(WaitBeforeFalling());
                 }
             }
         }
 
-        Invoke("LigthTrasparecen", 0.3f);
+        Vector3 pos = transform.position;
+        pos.x = startPositonX; // Fijamos X para que no se desplace lateralmente
+        transform.position = pos;
+
+        LigthTrasparecen(); // Llamado directo en vez de usar Invoke
     }
 
     private void LigthTrasparecen()
     {
         if (spotlights != null && spotlights.Count > 0)
         {
-            float targetIntensity = 0f;
-
-            if (fastCubeFalling)
-            {
-                targetIntensity = maxIntensity;
-            }
-            else
-            {
-                targetIntensity = minIntensity;
-            }
+            float targetIntensity = fastCubeFalling ? maxIntensity : minIntensity;
 
             foreach (Light light in spotlights)
             {
@@ -105,8 +95,7 @@ public class CubeFalling : MonoBehaviour
     private IEnumerator WaitBeforeFalling()
     {
         isWaiting = true;
-        fastCubeRb.velocity = Vector3.zero; // Detener el cubo
-        yield return new WaitForSeconds(waitTime); // Espera 1 segundo
+        yield return new WaitForSeconds(waitTime);
         fastCubeFalling = true;
         isWaiting = false;
         sound = true;

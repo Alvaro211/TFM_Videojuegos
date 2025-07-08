@@ -211,7 +211,15 @@ public class Enemy : MonoBehaviour
         {
             if (patrolDistance != 0)
                 anim.SetBool("IsIdle", false);
-            agent.SetDestination(movingForward ? startPosition : targetPosition);
+
+            Vector3 destination = movingForward ? startPosition : targetPosition;
+
+            NavMeshPath path = new NavMeshPath();
+            if (agent.CalculatePath(destination, path) && path.status == NavMeshPathStatus.PathComplete)
+            {
+                agent.SetDestination(destination);
+            }
+
             movingForward = !movingForward;
 
             ComprobarDireccionSprite();
@@ -289,7 +297,14 @@ public class Enemy : MonoBehaviour
         // Después de esperar, vuelve a su ruta original
         anim.SetBool("IsIdle", false);
         yield return new WaitForSeconds(hasSeenPlayer ? 0.5f : waitTime); // Espera antes de comenzar el patrullaje
-        agent.SetDestination(movingForward ? startPosition : targetPosition);
+        
+        Vector3 destination = movingForward ? startPosition : targetPosition;
+
+        NavMeshPath path = new NavMeshPath();
+        if (agent.CalculatePath(destination, path) && path.status == NavMeshPathStatus.PathComplete)
+        {
+            agent.SetDestination(destination);
+        }
         ComprobarDireccionSprite();
         movingForward = !movingForward;
     }
