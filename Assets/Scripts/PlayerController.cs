@@ -617,7 +617,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isPressJumping = true;
 
-        if (controller.isGrounded && !jumpCooldown && GameManager.instance.canMove)
+         if (controller.isGrounded && !jumpCooldown && GameManager.instance.canMove)
                  StartCoroutine(Jump());
 
         if (GameManager.instance.playerMovePlatform && !jumpCooldown && GameManager.instance.canMove)

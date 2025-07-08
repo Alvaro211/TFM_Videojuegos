@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -221,29 +222,28 @@ public class Enemy : MonoBehaviour
 
     public void MoveToBall(Vector3 ballPosition)
     {
-
         if (Vector3.Distance(transform.position, targetPosition) < searchRadius && !chasingPlayer)
         {
-            //// Verifica si la posición es alcanzable
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(ballPosition, out hit, 10f, NavMesh.AllAreas))
-            {
-                chasingBall = true; // Se dirige a la bola
+            NavMeshPath path = new NavMeshPath();
 
+            if (agent.CalculatePath(ballPosition, path) && path.status == NavMeshPathStatus.PathComplete)
+            {
+                chasingBall = true;
                 anim.SetBool("IsChasing", true);
                 anim.SetBool("IsIdle", false);
-                agent.SetDestination(hit.position);
 
-
+                agent.SetDestination(ballPosition);
                 ComprobarDireccionSprite();
 
                 if (currentRoutine != null)
                     StopCoroutine(currentRoutine);
+
                 currentRoutine = StartCoroutine(WaitBallAndReturn());
                 currentRoutineName = "WaitBallAndReturn";
             }
         }
     }
+
 
     private IEnumerator WaitBallAndReturn()
     {

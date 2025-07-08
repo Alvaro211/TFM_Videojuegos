@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 public class Colleccionable : MonoBehaviour
 {
     [Header("Float Settings")]
@@ -9,8 +11,13 @@ public class Colleccionable : MonoBehaviour
     public int indexCollecionable;
     public Book book;
 
+    public SpriteRenderer iconX;
+    public GameObject tecla;
+
     private Vector3 startPos;
     private AudioSource audio;
+
+    private bool visible = false;
 
     void Start()
     {
@@ -53,10 +60,36 @@ public class Colleccionable : MonoBehaviour
         // Movimiento vertical tipo onda senoidal
         float yOffset = Mathf.Sin(Time.time * frequency) * amplitude;
         transform.position = startPos + new Vector3(0f, yOffset, 0f);
+
+        if (visible)
+        {
+            if (Gamepad.current != null)
+            {
+                iconX.gameObject.SetActive(true);
+                tecla.SetActive(false);
+            }
+            else
+            {
+                tecla.SetActive(true);
+                iconX.gameObject.SetActive(false);
+            }
+        }
     }
 
     public void PlayAudio()
     {
         audio.Play();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        visible = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        visible = false;
+        tecla.SetActive(false);
+        iconX.gameObject.SetActive(false);
     }
 }

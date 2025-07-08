@@ -73,7 +73,7 @@ public class ControlMenu : MonoBehaviour
         Debug.Log("Escena cargada al 90%, lista para activarse");
 
         // Espera un poco, puedes mostrar una animación aquí si quieres
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         // Activar la escena cargada
         asyncLoad.allowSceneActivation = true;
