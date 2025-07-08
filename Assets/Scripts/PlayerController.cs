@@ -457,12 +457,14 @@ public class PlayerMovement : MonoBehaviour
 
                 if (stickInput.magnitude > 0.1f) // Umbral para evitar ruido del stick
                 {
+                    spriteHelpBall.enabled = true;
                     direction = new Vector3(stickInput.x, stickInput.y, 0f);
                     rawAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                     hitPoint = transform.position + direction.normalized * 5f; // Punto de referencia, ajusta el multiplicador a gusto
                 }
                 else
                 {
+                    spriteHelpBall.enabled = false;
                     return; // No hay input del joystick
                 }
             }
@@ -475,7 +477,8 @@ public class PlayerMovement : MonoBehaviour
                 {
                     hitPoint = ray.GetPoint(enter);
                     Debug.DrawLine(ray.origin, hitPoint, Color.red);
-                    direction = hitPoint - transform.position;
+                    Vector3 flatHitPoint = new Vector3(hitPoint.x, hitPoint.y, helpBall.transform.position.z);
+                    direction = hitPoint - helpBall.transform.position;
                     rawAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 }
                 else
