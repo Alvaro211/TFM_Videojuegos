@@ -10,7 +10,7 @@ public class CubeFalling : MonoBehaviour
     public float waitTime = 1f;
 
     public List<Light> spotlights;
-
+    public GameObject effect;
     private Vector3 fastCubeStartPos;
     private bool fastCubeFalling = true;
     private bool isWaiting = false;
@@ -51,6 +51,7 @@ public class CubeFalling : MonoBehaviour
                 if (fastCubeStartPos.y - transform.position.y >= fallDistance)
                 {
                     fastCubeFalling = false;
+                    Instantiate(effect).transform.position = transform.position;
                 }
             }
             else

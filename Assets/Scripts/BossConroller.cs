@@ -20,6 +20,8 @@ public class BossConroller : MonoBehaviour
 
     public Credits credits;
 
+    [SerializeField] GameObject Deathprefabricated;
+
     private Vector3 positionInitial;
     private int direcction = 1;
     private Animator animator;
@@ -117,9 +119,14 @@ public class BossConroller : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            collision.gameObject.SetActive(false);
-            GameManager.instance.canMove = false;
-            credits.Invoke("ShowFloatingMessage", 3f);
+           collision.gameObject.SetActive(false);
+           GameManager.instance.canMove = false;
+           credits.Invoke("ShowFloatingMessage", 3f);
+
+            var myObj = GameObject.Instantiate(Deathprefabricated);
+            myObj.transform.position = transform.position;
+            gameObject.SetActive(false);
+
         }
     }
 
