@@ -25913,7 +25913,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d3899bbb2496795478c736bef5cdf18e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -28552,6 +28552,8 @@ MonoBehaviour:
   audioBossIdle: {fileID: 8300000, guid: 63c5e187708413e4ab05bc8cd58a0725, type: 3}
   audioBossShout: {fileID: 8300000, guid: 84d0b6470411101499efebdfdf62194f, type: 3}
   credits: {fileID: 998425728}
+  Deathprefabricated: {fileID: 6271241949191652176, guid: a976554176ca64a4abfadfc055f0f351,
+    type: 3}
 --- !u!135 &683547632
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -40829,7 +40831,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d3899bbb2496795478c736bef5cdf18e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -47558,7 +47560,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d3899bbb2496795478c736bef5cdf18e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78504,7 +78506,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d3899bbb2496795478c736bef5cdf18e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
