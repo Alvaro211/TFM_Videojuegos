@@ -20518,7 +20518,7 @@ Transform:
   m_GameObject: {fileID: 449230032}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6, y: 2.01, z: 0}
+  m_LocalPosition: {x: 3.6, y: 1.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.75, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28637,6 +28637,8 @@ MonoBehaviour:
   audioBossIdle: {fileID: 8300000, guid: 63c5e187708413e4ab05bc8cd58a0725, type: 3}
   audioBossShout: {fileID: 8300000, guid: 84d0b6470411101499efebdfdf62194f, type: 3}
   credits: {fileID: 998425728}
+  Deathprefabricated: {fileID: 6271241949191652176, guid: a976554176ca64a4abfadfc055f0f351,
+    type: 3}
 --- !u!135 &683547632
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -59979,12 +59981,12 @@ PrefabInstance:
     - target: {fileID: 1245031366277011436, guid: 5fdbac7f7f3051e4f9283f5de1b0500b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 238.4
+      value: 239.37
       objectReference: {fileID: 0}
     - target: {fileID: 1245031366277011436, guid: 5fdbac7f7f3051e4f9283f5de1b0500b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.3
+      value: -10.81
       objectReference: {fileID: 0}
     - target: {fileID: 1245031366277011436, guid: 5fdbac7f7f3051e4f9283f5de1b0500b,
         type: 3}
@@ -86104,6 +86106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 2110216093}
   iconLB: {fileID: 931341047}
+  iconStickR: {fileID: 254905982}
 --- !u!1 &2110364592
 GameObject:
   m_ObjectHideFlags: 0
@@ -88167,6 +88170,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plataforma1
       objectReference: {fileID: 0}
+    - target: {fileID: 3931643102014455828, guid: 5fdbac7f7f3051e4f9283f5de1b0500b,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4690876754141598608, guid: 5fdbac7f7f3051e4f9283f5de1b0500b,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -88190,7 +88198,7 @@ PrefabInstance:
     - target: {fileID: 4690876754141598608, guid: 5fdbac7f7f3051e4f9283f5de1b0500b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.78
+      value: -0.37
       objectReference: {fileID: 0}
     - target: {fileID: 4690876754141598608, guid: 5fdbac7f7f3051e4f9283f5de1b0500b,
         type: 3}
