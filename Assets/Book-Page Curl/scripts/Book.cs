@@ -18,6 +18,8 @@ public class Book : MonoBehaviour {
     [SerializeField]
     RectTransform BookPanel;
     public Sprite background;
+    public Sprite pagina0;
+    public Sprite pagina7;
     public Sprite[] bookPages;
     public Sprite[] bookPageWritten;
     public bool interactable=true;
@@ -52,6 +54,7 @@ public class Book : MonoBehaviour {
     public Image LeftNext;
     public Image Right;
     public Image RightNext;
+    public Image portada;
     public UnityEvent OnFlip;
     float radius1, radius2;
     //Spine Bottom
@@ -188,6 +191,7 @@ public class Book : MonoBehaviour {
         LeftNext.transform.SetParent(NextPageClip.transform, true);
         Right.transform.SetParent(ClippingPlane.transform, true);
         Right.transform.SetAsFirstSibling();
+        portada.transform.SetAsFirstSibling();
 
         ShadowLTR.rectTransform.SetParent(Left.rectTransform, true);
     }
@@ -224,6 +228,7 @@ public class Book : MonoBehaviour {
         RightNext.transform.SetParent(NextPageClip.transform, true);
         Left.transform.SetParent(ClippingPlane.transform, true);
         Left.transform.SetAsFirstSibling();
+        portada.transform.SetAsFirstSibling();
 
         Shadow.rectTransform.SetParent(Right.rectTransform, true);
     }
@@ -294,6 +299,7 @@ public class Book : MonoBehaviour {
         Left.transform.eulerAngles = new Vector3(0, 0, 0);
         Left.sprite = (currentPage < bookPages.Length) ? bookPages[currentPage] : background;
         Left.transform.SetAsFirstSibling();
+        portada.transform.SetAsFirstSibling();
         
         Right.gameObject.SetActive(true);
         Right.transform.position = RightNext.transform.position;
@@ -303,6 +309,7 @@ public class Book : MonoBehaviour {
         RightNext.sprite = (currentPage < bookPages.Length - 2) ? bookPages[currentPage + 2] : background;
 
         LeftNext.transform.SetAsFirstSibling();
+        portada.transform.SetAsFirstSibling();
         if (enableShadowEffect) Shadow.gameObject.SetActive(true);
         UpdateBookRTLToPoint(f);
     }
@@ -311,8 +318,8 @@ public class Book : MonoBehaviour {
         if (interactable)
         DragRightPageToPoint(transformPoint(Input.mousePosition));
 
-
-        audio.Play();
+        if (RightNext.GetComponent<Image>().sprite != background && LeftNext.GetComponent<Image>().sprite == pagina7)
+            audio.Play();
 
     }
     public void DragLeftPageToPoint(Vector3 point)
@@ -330,6 +337,7 @@ public class Book : MonoBehaviour {
         Right.sprite = bookPages[currentPage - 1];
         Right.transform.eulerAngles = new Vector3(0, 0, 0);
         Right.transform.SetAsFirstSibling();
+        portada.transform.SetAsFirstSibling();
 
         Left.gameObject.SetActive(true);
         Left.rectTransform.pivot = new Vector2(1, 0);
@@ -340,6 +348,7 @@ public class Book : MonoBehaviour {
         LeftNext.sprite = (currentPage >= 3) ? bookPages[currentPage - 3] : background;
 
         RightNext.transform.SetAsFirstSibling();
+        portada.transform.SetAsFirstSibling();
         if (enableShadowEffect) ShadowLTR.gameObject.SetActive(true);
         UpdateBookLTRToPoint(f);
     }
@@ -348,8 +357,11 @@ public class Book : MonoBehaviour {
         if (interactable)
         DragLeftPageToPoint(transformPoint(Input.mousePosition));
 
+        if(LeftNext.GetComponent<Image>().sprite == background && RightNext.GetComponent<Image>().sprite == pagina0)
+        {
 
-        audio.Play();
+        }else
+            audio.Play();
 
     }
     public void OnMouseRelease()

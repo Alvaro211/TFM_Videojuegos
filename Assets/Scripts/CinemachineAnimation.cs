@@ -117,6 +117,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         if (directorLevel1 != null)
         {
+            GameManager.instance.onAnimation = true;
             canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel1();
@@ -162,6 +163,7 @@ public class CinemachineAnimation : MonoBehaviour
         }
 
         GameManager.instance.canMove = true;
+        GameManager.instance.onAnimation = false;
     }
 
     public void TurnOnLightsLevel1()
@@ -181,6 +183,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         if (directorLevel2 != null)
         {
+            GameManager.instance.onAnimation = true;
             canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel2();
@@ -207,6 +210,7 @@ public class CinemachineAnimation : MonoBehaviour
         }
 
         GameManager.instance.canMove = true;
+        GameManager.instance.onAnimation = false;
     }
 
     public void TurnOnLightsLevel2()
@@ -225,6 +229,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         if (directorLevel3 != null)
         {
+            GameManager.instance.onAnimation = true;
             canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel3();
@@ -251,6 +256,7 @@ public class CinemachineAnimation : MonoBehaviour
         }
 
         GameManager.instance.canMove = true;
+        GameManager.instance.onAnimation = false;
     }
 
     public void TurnOnLightsLevel3()
@@ -269,6 +275,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         if (directorLevel4 != null)
         {
+            GameManager.instance.onAnimation = true;
             canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel4();
@@ -295,6 +302,7 @@ public class CinemachineAnimation : MonoBehaviour
         }
 
         GameManager.instance.canMove = true;
+        GameManager.instance.onAnimation = false;
     }
 
     public void TurnOnLightsLevel4()
@@ -313,6 +321,7 @@ public class CinemachineAnimation : MonoBehaviour
     {
         if (directorLevel5 != null)
         {
+            GameManager.instance.onAnimation = true;
             canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel5();
@@ -396,6 +405,7 @@ public class CinemachineAnimation : MonoBehaviour
         }
 
         GameManager.instance.canMove = true;
+        GameManager.instance.onAnimation = false;
     }
 
     public void TurnOnLightsLevel5()

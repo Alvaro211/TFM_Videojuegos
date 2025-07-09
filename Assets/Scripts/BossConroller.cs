@@ -121,7 +121,7 @@ public class BossConroller : MonoBehaviour
         {
            collision.gameObject.SetActive(false);
            GameManager.instance.canMove = false;
-           credits.Invoke("ShowFloatingMessage", 3f);
+           credits.Invoke("ShowFloatingMessage", 1f);
 
             var myObj = GameObject.Instantiate(Deathprefabricated);
             myObj.transform.position = transform.position;

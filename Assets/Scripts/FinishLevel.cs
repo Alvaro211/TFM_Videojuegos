@@ -52,6 +52,7 @@ public class FinishLevel : MonoBehaviour
                 dooranimgreen[i].SetBool("IsOpened", true);
 
             doorcollision.SetActive(false);
+            doorOpen = true;
         }
 
     }

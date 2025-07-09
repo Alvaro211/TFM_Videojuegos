@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     public bool isTakeColeccionable3 = false;
 
     public bool newGame = true;
+    public bool onAnimation = false;
 
     public GameObject cargar;
 
@@ -228,6 +230,32 @@ public class GameManager : MonoBehaviour
     {
         if(cargar != null)
             cargar.SetActive(false);
+    }
+
+    public IEnumerator LoadSceneAsync(string scene)
+    {
+        Time.timeScale = 1;
+        yield return new WaitForSeconds(1f);
+        // Empieza la carga en segundo plano
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
+
+        // Opcional: evitar que la escena se active automáticamente
+        asyncLoad.allowSceneActivation = false;
+
+        // Esperar hasta que la escena esté casi completamente cargada
+        while (asyncLoad.progress < 0.9f)
+        {
+            Debug.Log("Progreso: " + asyncLoad.progress);
+            yield return null;
+        }
+
+        Debug.Log("Escena cargada al 90%, lista para activarse");
+
+        // Espera un poco, puedes mostrar una animación aquí si quieres
+        yield return new WaitForSeconds(2f);
+
+        // Activar la escena cargada
+        asyncLoad.allowSceneActivation = true;
     }
 }
 

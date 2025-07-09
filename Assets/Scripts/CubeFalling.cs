@@ -40,11 +40,7 @@ public class CubeFalling : MonoBehaviour
         {
             if (fastCubeFalling)
             {
-                if (sound)
-                {
-                    sound = false;
-                    audio.Play();
-                }
+                
 
                 transform.position += new Vector3(0, -fastCubeSpeed * Time.deltaTime, 0);
 
@@ -56,6 +52,12 @@ public class CubeFalling : MonoBehaviour
             }
             else
             {
+                if (sound)
+                {
+                    sound = false;
+                    audio.Play();
+                }
+
                 transform.position += new Vector3(0, riseSpeed * Time.deltaTime, 0);
 
                 if (transform.position.y >= fastCubeStartPos.y)

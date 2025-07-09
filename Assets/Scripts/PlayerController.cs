@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using Unity.VisualScripting.ReorderableList;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -653,58 +654,72 @@ public class PlayerMovement : MonoBehaviour
 
     public void OptionsPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (menuPause.activeSelf)
+        if (!GameManager.instance.onAnimation)
         {
-            menuPause.gameObject.SetActive(false);
-
-            vignetteImage.gameObject.SetActive(true);
-            GameManager.instance.canMove = true;
-            sprite.gameObject.SetActive(true);
-
-            if(sliderBall.value != 1)
-                sliderBall.gameObject.SetActive(true);
-
-            if (hotspot != null)
-                hotspot.ShowControl();
-            if (finishLevel != null)
-                finishLevel.ShowControl();
-
-            GameManager.instance.SaveMusic();
-            cooldownHideOptions = true;
-            Time.timeScale = 1;
-            StartCoroutine(ResetCooldownOptions());
-
-            foreach (Transform hijo in canvasTransform)
+            if (menuPause.activeSelf)
             {
-                if (hijo.name == "CirculoNota(Clone)")
+                menuPause.gameObject.SetActive(false);
+
+                vignetteImage.gameObject.SetActive(true);
+                GameManager.instance.canMove = true;
+                sprite.gameObject.SetActive(true);
+
+                if (sliderBall.value != 1)
+                    sliderBall.gameObject.SetActive(true);
+
+                if (hotspot != null)
+                    hotspot.ShowControl();
+                if (finishLevel != null)
+                    finishLevel.ShowControl();
+
+                GameManager.instance.SaveMusic();
+                cooldownHideOptions = true;
+                Time.timeScale = 1;
+                StartCoroutine(ResetCooldownOptions());
+
+                foreach (Transform hijo in canvasTransform)
                 {
-                    hijo.gameObject.SetActive(true);
+                    if (hijo.name == "CirculoNota(Clone)")
+                    {
+                        hijo.gameObject.SetActive(true);
+                    }
+                }
+            }
+            else if (!book.gameObject.activeSelf)
+            {
+                GameManager.instance.canMove = false;
+                Time.timeScale = 0;
+                sliderBall.gameObject.SetActive(false);
+                vignetteImage.gameObject.SetActive(false);
+
+                menuPause.gameObject.SetActive(true);
+                if (hotspot != null)
+                    hotspot.HideControl();
+                if (finishLevel != null)
+                    finishLevel.HideControl();
+
+                foreach (Transform hijo in canvasTransform)
+                {
+                    if (hijo.name == "CirculoNota(Clone)")
+                    {
+                        hijo.gameObject.SetActive(false);
+                    }
+                }
+            }else if (book.gameObject.activeSelf)
+            {
+                GameManager.instance.canMove = true;
+                diary.SetActive(false);
+                // Time.timeScale = 1;
+
+                foreach (Transform hijo in canvasTransform)
+                {
+                    if (hijo.name == "CirculoNota(Clone)")
+                    {
+                        hijo.gameObject.SetActive(true);
+                    }
                 }
             }
         }
-        else if(!book.gameObject.activeSelf)
-        {
-            GameManager.instance.canMove = false;
-            Time.timeScale = 0;
-            sliderBall.gameObject.SetActive(false);
-            vignetteImage.gameObject.SetActive(false);
-
-            menuPause.gameObject.SetActive(true);
-            if (hotspot != null)
-                hotspot.HideControl();
-            if (finishLevel != null)
-                finishLevel.HideControl();
-
-            foreach (Transform hijo in canvasTransform)
-            {
-                if (hijo.name == "CirculoNota(Clone)")
-                {
-                    hijo.gameObject.SetActive(false);
-                }
-            }
-
-        }
-        
     }
 
     public IEnumerator ResetCooldownOptions()
@@ -725,11 +740,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void DiaryPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        audioSourceEffectPlayer.clip = audioOpenDiary;
-        audioSourceEffectPlayer.Play();
 
         if (diary.activeSelf)
         {
+            audioSourceEffectPlayer.clip = audioOpenDiary;
+            audioSourceEffectPlayer.Play();
+
             GameManager.instance.canMove = true;
             diary.SetActive(false);
            // Time.timeScale = 1;
@@ -744,6 +760,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(!menuPause.activeSelf)
         {
+            audioSourceEffectPlayer.clip = audioOpenDiary;
+            audioSourceEffectPlayer.Play();
+
             GameManager.instance.canMove = false;
             //Time.timeScale = 0;
             foreach (Transform hijo in canvasTransform)
@@ -776,7 +795,7 @@ public class PlayerMovement : MonoBehaviour
        
         if (isOnFinishLevel && finishLevel != null && !finishLevel.doorOpen)
         {
-            GameManager.instance.canMove = false;
+          /*  GameManager.instance.canMove = false;
             anim.SetBool("IsHitting", true);
 
             RuntimeAnimatorController controller = anim.runtimeAnimatorController;
@@ -789,7 +808,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            Invoke("DesactiveCanMove", duration);
+            Invoke("DesactiveCanMove", duration);*/
 
         }
         else if ( isOnHotSpot && hotspot != null && GameManager.instance.canMove)
@@ -1568,6 +1587,22 @@ public class PlayerMovement : MonoBehaviour
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
             if (enemy == null || !enemy.isStunned)
                 Dead();
+
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                enemy = other.gameObject.GetComponent<Enemy>();
+                if (enemy != null && !enemy.isStunned)
+                    Dead();
+                else if (other.gameObject.layer == LayerMask.NameToLayer("Machacadores"))
+                {
+                    Vector3 direction = (other.transform.position - transform.position).normalized;
+
+                    if (Vector3.Dot(direction, Vector3.down) > 0.5f)
+                    {
+                        Dead();
+                    }
+                }
+            }
         }
         else if (other.gameObject.CompareTag("PlatformMove"))
         {
@@ -1672,6 +1707,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+
 
     public Vector3 GetStartPosition()
     {
