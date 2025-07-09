@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -22,6 +23,9 @@ public class ControlMenu : MonoBehaviour
         int index = SceneManager.GetActiveScene().buildIndex;
         if (index == 0)
         {
+            if (Gamepad.current != null)
+                UnityEngine.Cursor.visible = true;
+
             audio.AudioMenu();
             if (!GameManager.instance.continueGame)
                 imageContinue.color = new Color(0.33f, 0.33f, 0.33f);
@@ -87,6 +91,7 @@ public class ControlMenu : MonoBehaviour
 
     public void Exit()
     {
+        Debug.Log("Salir");
         Application.Quit();
     }
 

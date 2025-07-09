@@ -658,6 +658,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (menuPause.activeSelf)
             {
+                if(Gamepad.current != null)
+                    UnityEngine.Cursor.visible = false;
+
                 menuPause.gameObject.SetActive(false);
 
                 vignetteImage.gameObject.SetActive(true);
@@ -687,6 +690,10 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (!book.gameObject.activeSelf)
             {
+
+                if (Gamepad.current != null)
+                    UnityEngine.Cursor.visible = true;
+
                 GameManager.instance.canMove = false;
                 Time.timeScale = 0;
                 sliderBall.gameObject.SetActive(false);
@@ -707,6 +714,9 @@ public class PlayerMovement : MonoBehaviour
                 }
             }else if (book.gameObject.activeSelf)
             {
+                if (Gamepad.current != null)
+                    UnityEngine.Cursor.visible = false;
+
                 GameManager.instance.canMove = true;
                 diary.SetActive(false);
                 // Time.timeScale = 1;
@@ -743,6 +753,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (diary.activeSelf)
         {
+            if (Gamepad.current != null)
+                UnityEngine.Cursor.visible = false;
+
             audioSourceEffectPlayer.clip = audioOpenDiary;
             audioSourceEffectPlayer.Play();
 
@@ -760,6 +773,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(!menuPause.activeSelf)
         {
+            if (Gamepad.current != null)
+                UnityEngine.Cursor.visible = false;
+
             audioSourceEffectPlayer.clip = audioOpenDiary;
             audioSourceEffectPlayer.Play();
 
