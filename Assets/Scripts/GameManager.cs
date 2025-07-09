@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        idiom = Language.English;
+
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -189,13 +191,13 @@ public class GameManager : MonoBehaviour
 
     public void SaveMusicMenu()
     {
-        Load();
+        //Load();
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath +
         "/MyGameData.dat");
         MyData sharedData2 = new MyData();
 
-        if (sharedData != null && sharedData.continueGame && playerMovement != null)
+        /*if (sharedData != null && sharedData.continueGame && playerMovement != null)
         {
             Vector3 position = playerMovement.GetStartPosition();
             sharedData2.player.positionX = position.x;
@@ -226,9 +228,8 @@ public class GameManager : MonoBehaviour
             sharedData2.isOpenDoorGreenYellow = false;
             sharedData2.isOpenDoorBoss = false;
             sharedData2.continueGame = false;
-        }
+        }*/
 
-        sharedData2.helpControls = helpControls;
         sharedData2.musicVolume = musicVol;
         sharedData2.effectVolume = effectVol;
         bf.Serialize(file, sharedData2);
