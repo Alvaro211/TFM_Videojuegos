@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using Unity.VisualScripting.ReorderableList;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -133,6 +134,8 @@ public class PlayerMovement : MonoBehaviour
     private float initialOuterAngle;
     private float initialInnerAngle;
     private float initialIntensity;
+
+    private Coroutine damageCoroutine;
 
     private Colleccionable collecionable;
     void Start()
@@ -602,6 +605,45 @@ public class PlayerMovement : MonoBehaviour
 
                 Transform child = listSong[3].transform.GetChild(0);
                 child.gameObject.SetActive(false);
+            }
+
+            if (GameManager.instance.isTakeColeccionable1)
+            {
+                int index = 0 * 2 + 1;
+
+                book.bookPages[index] = book.bookPageWritten[index];
+                book.bookPages[index + 1] = book.bookPageWritten[index + 1];
+            }
+            else
+            {
+                book.bookPages[1] = book.bloqued;
+                book.bookPages[2] = book.bloqued;
+            }
+
+            if (GameManager.instance.isTakeColeccionable2)
+            {
+                int index = 1 * 2 + 1;
+
+                book.bookPages[index] = book.bookPageWritten[index];
+                book.bookPages[index + 1] = book.bookPageWritten[index + 1];
+            }
+            else
+            {
+                book.bookPages[3] = book.bloqued;
+                book.bookPages[4] = book.bloqued;
+            }
+
+            if (GameManager.instance.isTakeColeccionable2)
+            {
+                int index = 2 * 2 + 1;
+
+                book.bookPages[index] = book.bookPageWritten[index];
+                book.bookPages[index + 1] = book.bookPageWritten[index + 1];
+            }
+            else
+            {
+                book.bookPages[5] = book.bloqued;
+                book.bookPages[6] = book.bloqued;
             }
 
             controller.enabled = false;
@@ -1428,8 +1470,14 @@ public class PlayerMovement : MonoBehaviour
         rotationCanMove = transform.rotation;
 
         currentVelocity = Vector3.zero;
+
+        if (damageCoroutine != null)
+        {
+            StopCoroutine(damageCoroutine);
+        }
+
         imageDamage.gameObject.SetActive(true);
-        StartCoroutine(TrasparentDamage(3f));
+        damageCoroutine = StartCoroutine(TrasparentDamage(3f));
     }
 
     private void RestartMoveAfterDead()
@@ -1440,7 +1488,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator TrasparentDamage(float duration)
     {
         Color startColor = imageDamage.color;
-        float startAlpha = startColor.a;
+        float startAlpha = 1;
 
         for (float t = 0; t < duration; t += Time.deltaTime)
         {
@@ -1456,6 +1504,7 @@ public class PlayerMovement : MonoBehaviour
         Color finalColor = imageDamage.color;
         finalColor.a = 1f;
         imageDamage.color = finalColor;
+        damageCoroutine = null;
     }
 
     private float CheckEnemyAround()
@@ -1601,24 +1650,21 @@ public class PlayerMovement : MonoBehaviour
         else if (other.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            if (enemy == null || !enemy.isStunned)
+            if (enemy != null && !enemy.isStunned)
                 Dead();
-
-            if (other.gameObject.CompareTag("Enemy"))
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Machacadores"))
             {
-                enemy = other.gameObject.GetComponent<Enemy>();
-                if (enemy != null && !enemy.isStunned)
-                    Dead();
-                else if (other.gameObject.layer == LayerMask.NameToLayer("Machacadores"))
-                {
-                    Vector3 direction = (other.transform.position - transform.position).normalized;
+                Vector3 direction = (other.transform.position - transform.position).normalized;
+                float dot = Vector3.Dot(direction, Vector3.up);
 
-                    if (Vector3.Dot(direction, Vector3.down) > 0.5f)
-                    {
-                        Dead();
-                    }
+                Debug.Log(dot);
+                // Si dot > 0.5, el machacador está "encima" de ti (viniendo desde arriba)
+                if (dot > 0.5f || dot < -0.5f)
+                {
+                    Dead(); // Te aplastó
                 }
             }
+
         }
         else if (other.gameObject.CompareTag("PlatformMove"))
         {

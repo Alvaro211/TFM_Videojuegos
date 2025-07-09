@@ -8,7 +8,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public enum Language
+    {
+        Spanish,
+        Valencian,
+        English
+    }
+
     public static GameManager instance = null;
+
+    public Language idiom = Language.English;
 
     public Vibration vibration;
 

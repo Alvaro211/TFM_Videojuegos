@@ -20,6 +20,7 @@ public class Book : MonoBehaviour {
     public Sprite background;
     public Sprite pagina0;
     public Sprite pagina7;
+    public Sprite bloqued;
     public Sprite[] bookPages;
     public Sprite[] bookPageWritten;
     public bool interactable=true;
