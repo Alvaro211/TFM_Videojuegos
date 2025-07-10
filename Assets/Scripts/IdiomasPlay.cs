@@ -22,6 +22,12 @@ public class IdiomasPlay : MonoBehaviour
     public TextMeshPro[] textHelpBallRed2;
 
     public TextMeshPro[] textHelpEnemy;
+
+    private void Start()
+    {
+        ChangeIdiom();
+    }
+
     public void ChangeIdiom()
     {
         if (GameManager.instance.idiom == GameManager.Language.Spanish)

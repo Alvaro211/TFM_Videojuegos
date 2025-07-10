@@ -23,6 +23,11 @@ public class IdiomasMenu : MonoBehaviour
     public List<Sprite> spriteCargar;
 
     public TextMeshProUGUI creditos;
+
+    private void Start()
+    {
+        ChangeIdiom();
+    }
     public void ChangeIdiom()
     {
         if (GameManager.instance.idiom == GameManager.Language.Spanish)
