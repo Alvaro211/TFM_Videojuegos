@@ -19,7 +19,7 @@ public class PlatformMove : MonoBehaviour
     public Material inActivatedMaterial;
     public List<Light> lights;
 
-    public TextMeshPro textoAyuda;
+    public TextMeshPro[] textoAyuda;
     public float timeToAdvise = 5;
 
     private Vector3 initialPosition;
@@ -51,7 +51,30 @@ public class PlatformMove : MonoBehaviour
         }
     }
 
-
+    private void Update()
+    {
+        if (movePlayer)
+        {
+            if (GameManager.instance.idiom == GameManager.Language.Spanish)
+            {
+                textoAyuda[0].gameObject.SetActive(true);
+                textoAyuda[1].gameObject.SetActive(false);
+                textoAyuda[2].gameObject.SetActive(false);
+            }
+            else if (GameManager.instance.idiom == GameManager.Language.Valencian)
+            {
+                textoAyuda[0].gameObject.SetActive(false);
+                textoAyuda[1].gameObject.SetActive(true);
+                textoAyuda[2].gameObject.SetActive(false);
+            }
+            else
+            {
+                textoAyuda[0].gameObject.SetActive(false);
+                textoAyuda[1].gameObject.SetActive(false);
+                textoAyuda[2].gameObject.SetActive(true);
+            }
+        }
+    }
 
     public void MovePlatform(int index)
     {
@@ -186,7 +209,12 @@ public class PlatformMove : MonoBehaviour
             timeInTrigger += Time.deltaTime;
             if (timeInTrigger >= timeToAdvise && !isMovedOneTime)
             {
-                textoAyuda.gameObject.SetActive(true);
+                if(GameManager.instance.idiom == GameManager.Language.Spanish)
+                    textoAyuda[0].gameObject.SetActive(true);
+                else if (GameManager.instance.idiom == GameManager.Language.Valencian)
+                    textoAyuda[1].gameObject.SetActive(true);
+                else
+                    textoAyuda[2].gameObject.SetActive(true);
             }
         }
     }
@@ -196,7 +224,9 @@ public class PlatformMove : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             movePlayer = false;
-            textoAyuda.gameObject.SetActive(false);
+            textoAyuda[0].gameObject.SetActive(false);
+            textoAyuda[1].gameObject.SetActive(false);
+            textoAyuda[2].gameObject.SetActive(false);
             timeInTrigger = 0f;
         }
     }

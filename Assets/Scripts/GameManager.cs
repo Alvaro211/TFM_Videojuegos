@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
         }else
             sharedData.continueGame = false;
 
-        sharedData.helpControls = helpControls;
+        //sharedData.helpControls = helpControls;
         sharedData.musicVolume = musicVol;
         sharedData.effectVolume = effectVol;
         bf.Serialize(file, sharedData);
@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
             isOpenDoorBoss = sharedData.isOpenDoorBoss;
             continueGame = sharedData.continueGame;
 
-            helpControls = sharedData.helpControls;
+           // helpControls = sharedData.helpControls;
             musicVol = sharedData.musicVolume;
             effectVol = sharedData.effectVolume;
 
@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
 
         sharedData.continueGame = true;
         
-        sharedData.helpControls = helpControls;
+       // sharedData.helpControls = helpControls;
         sharedData.musicVolume = musicVol;
         sharedData.effectVolume = effectVol;
         bf.Serialize(file, sharedData);

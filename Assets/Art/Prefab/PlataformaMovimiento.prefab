@@ -127,8 +127,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -304,7 +304,10 @@ MonoBehaviour:
   activatedMaterial: {fileID: 0}
   inActivatedMaterial: {fileID: 0}
   lights: []
-  textoAyuda: {fileID: 5767002708782764010}
+  textoAyuda:
+  - {fileID: 500598953318087851}
+  - {fileID: 9191225213016244703}
+  - {fileID: 5767002708782764010}
   timeToAdvise: 5
 --- !u!82 &4534899081533357302
 AudioSource:
@@ -876,8 +879,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1096,7 +1099,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6407953052569988535, guid: fcd43928ef5ff034a9923cf098c55c4d, type: 2}
+  - {fileID: -1273172730996604238, guid: 6763df91c8422dc40b7be0b8b28a9276, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1141,7 +1144,7 @@ MonoBehaviour:
   m_text: Activate the note to move the platform
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6763df91c8422dc40b7be0b8b28a9276, type: 2}
-  m_sharedMaterial: {fileID: 6407953052569988535, guid: fcd43928ef5ff034a9923cf098c55c4d,
+  m_sharedMaterial: {fileID: -1273172730996604238, guid: 6763df91c8422dc40b7be0b8b28a9276,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1166,8 +1169,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1208,7 +1211,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_renderer: {fileID: 479828363934810737}
   m_maskType: 0
 --- !u!1 &8856849587261706153

@@ -10,7 +10,7 @@ public class FinishLevel : MonoBehaviour
     public AudioClip open;
     public AudioClip wrong;
     public AudioSource audioSource;
-    public TextMeshPro control;
+    public TextMeshPro[] control;
     public bool isDoorOnLeft;
     public bool doorOpen = false;
 
@@ -25,6 +25,7 @@ public class FinishLevel : MonoBehaviour
     public Animator[] dooranimgreen;
     public GameObject doorcollision;
 
+    private bool isPlayerOn = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,7 +61,27 @@ public class FinishLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isPlayerOn)
+        {
+            if (GameManager.instance.idiom == GameManager.Language.Spanish)
+            {
+                control[0].gameObject.SetActive(true);
+                control[1].gameObject.SetActive(false);
+                control[2].gameObject.SetActive(false);
+            }
+            else if (GameManager.instance.idiom == GameManager.Language.Valencian)
+            {
+                control[0].gameObject.SetActive(false);
+                control[1].gameObject.SetActive(true);
+                control[2].gameObject.SetActive(false);
+            }
+            else
+            {
+                control[0].gameObject.SetActive(false);
+                control[1].gameObject.SetActive(false);
+                control[2].gameObject.SetActive(true);
+            }
+        }
     }
 
     public IEnumerator RotateOverTime()
@@ -135,13 +156,38 @@ public class FinishLevel : MonoBehaviour
 
     public void ShowControl()
     {
+        isPlayerOn = true;
+
         if (GameManager.instance.helpControls)
-            control.gameObject.SetActive(true);
+        {
+            if (GameManager.instance.idiom == GameManager.Language.Spanish)
+            {
+                control[0].gameObject.SetActive(true);
+                control[1].gameObject.SetActive(false);
+                control[2].gameObject.SetActive(false);
+            }
+            else if (GameManager.instance.idiom == GameManager.Language.Valencian)
+            {
+                control[0].gameObject.SetActive(false);
+                control[1].gameObject.SetActive(true);
+                control[2].gameObject.SetActive(false);
+            }
+            else
+            {
+                control[0].gameObject.SetActive(false);
+                control[1].gameObject.SetActive(false);
+                control[2].gameObject.SetActive(true);
+            }
+        }
     }
 
     public void HideControl()
     {
-        control.gameObject.SetActive(false);
+        isPlayerOn = false;
+
+        control[0].gameObject.SetActive(false);
+        control[1].gameObject.SetActive(false);
+        control[2].gameObject.SetActive(false);
     }
 
 
