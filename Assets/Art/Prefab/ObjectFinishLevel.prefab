@@ -221,7 +221,8 @@ MonoBehaviour:
   activated: 0
   advise: {fileID: 0}
   cineMachine: {fileID: 0}
-  dooranimgreen: {fileID: 0}
+  dooranimgreen:
+  - {fileID: 0}
   doorcollision: {fileID: 0}
 --- !u!82 &5082061318161917437
 AudioSource:
@@ -377,7 +378,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6407953052569988535, guid: fcd43928ef5ff034a9923cf098c55c4d, type: 2}
+  - {fileID: -1273172730996604238, guid: 6763df91c8422dc40b7be0b8b28a9276, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -421,8 +422,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: E
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fcd43928ef5ff034a9923cf098c55c4d, type: 2}
-  m_sharedMaterial: {fileID: 6407953052569988535, guid: fcd43928ef5ff034a9923cf098c55c4d,
+  m_fontAsset: {fileID: 11400000, guid: 6763df91c8422dc40b7be0b8b28a9276, type: 2}
+  m_sharedMaterial: {fileID: -1273172730996604238, guid: 6763df91c8422dc40b7be0b8b28a9276,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -489,7 +490,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5733215299927240342}
   m_maskType: 0
 --- !u!1 &3198482308057616579
