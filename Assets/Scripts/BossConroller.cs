@@ -117,7 +117,7 @@ public class BossConroller : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ball"))
+        if (collision.gameObject.CompareTag("Ball") && GameManager.instance.defeatBoss)
         {
            collision.gameObject.SetActive(false);
            GameManager.instance.canMove = false;

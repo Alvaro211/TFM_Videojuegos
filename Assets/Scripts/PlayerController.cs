@@ -1587,7 +1587,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "HotSpot") {
+        if (other.tag == "HotSpot")
+        {
             isOnHotSpot = true;
             hotspot = other.GetComponent<HotSpot>();
             hotspot.ShowControl();
@@ -1597,14 +1598,15 @@ public class PlayerMovement : MonoBehaviour
                 startPosition = transform.position;
                 startToLeft = hotspot.continueLeft;
             }
-            
+
             GameManager.instance.Save();
         }
-        else if(other.tag == "FloorObjectSong")
+        else if (other.tag == "FloorObjectSong")
         {
             isNearObjectSong = true;
             objectSong = other.GetComponent<ObjectSong>();
-        }else if(other.tag == "EntryBoss" && !onBoss)
+        }
+        else if (other.tag == "EntryBoss" && !onBoss)
         {
             startPosition = this.transform.position;
             onBoss = true;
@@ -1614,7 +1616,7 @@ public class PlayerMovement : MonoBehaviour
             cinemachine.PlayTimelineLevel5();
 
         }
-        else if(other.gameObject.CompareTag("Ball"))
+        else if (other.gameObject.CompareTag("Ball"))
         {
             BallBounceHandler ballScript = other.gameObject.GetComponent<BallBounceHandler>();
 
@@ -1628,7 +1630,7 @@ public class PlayerMovement : MonoBehaviour
             SphereCollider colliderBall = other.gameObject.GetComponent<SphereCollider>();
             ballLauch = false;
 
-            
+
             if (colliderBall != null) colliderBall.isTrigger = false;
 
             sliderBall.gameObject.SetActive(false);
@@ -1637,14 +1639,15 @@ public class PlayerMovement : MonoBehaviour
             sliderBall.value = 1f;
 
             StopCoroutine(corutineHideball);
-        }else if (other.gameObject.CompareTag("FinishLevel"))
+        }
+        else if (other.gameObject.CompareTag("FinishLevel"))
         {
             isOnFinishLevel = true;
             finishLevel = other.GetComponent<FinishLevel>();
             finishLevel.ShowControl();
             if (GameManager.instance.helpControls)
             {
-               // StartCoroutine(finishLevel.ShowAdvice());
+                // StartCoroutine(finishLevel.ShowAdvice());
             }
         }
         else if (other.gameObject.CompareTag("Enemy"))
@@ -1664,7 +1667,10 @@ public class PlayerMovement : MonoBehaviour
                     Dead(); // Te aplastó
                 }
             }
-
+            else if (other.gameObject.name.Contains("Cylinder"))
+            {
+                Dead();
+            }
         }
         else if (other.gameObject.CompareTag("PlatformMove"))
         {
@@ -1705,10 +1711,12 @@ public class PlayerMovement : MonoBehaviour
                     noteBlue = true;
                 }
             }
-        }else if (other.gameObject.CompareTag("DefeatBoss"))
+        }
+        else if (other.gameObject.CompareTag("DefeatBoss"))
         {
             GameManager.instance.defeatBoss = true;
-        }else if (other.gameObject.CompareTag("Animation2") && !GameManager.instance.isSeenCinematic2)
+        }
+        else if (other.gameObject.CompareTag("Animation2") && !GameManager.instance.isSeenCinematic2)
         {
             anim.SetBool("IsWalking", false);
             GameManager.instance.canMove = false;
@@ -1738,7 +1746,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Collectionable"))
         {
-             collecionable = other.GetComponent<Colleccionable>();
+            collecionable = other.GetComponent<Colleccionable>();
         }
     }
 

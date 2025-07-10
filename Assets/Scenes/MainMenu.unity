@@ -418,7 +418,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Blindness
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fcd43928ef5ff034a9923cf098c55c4d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6763df91c8422dc40b7be0b8b28a9276, type: 2}
   m_sharedMaterial: {fileID: 6407953052569988535, guid: fcd43928ef5ff034a9923cf098c55c4d,
     type: 2}
   m_fontSharedMaterials: []
@@ -2980,7 +2980,7 @@ MonoBehaviour:
     Jimenez\n\tSergio Rodriguez Gonzalez\n\tSergio Garcia Cabezas\n\nThank you very
     much for playing"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fcd43928ef5ff034a9923cf098c55c4d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6763df91c8422dc40b7be0b8b28a9276, type: 2}
   m_sharedMaterial: {fileID: 6407953052569988535, guid: fcd43928ef5ff034a9923cf098c55c4d,
     type: 2}
   m_fontSharedMaterials: []
@@ -3045,7 +3045,7 @@ MonoBehaviour:
   m_margin: {x: -158.71832, y: 0, z: -249.64922, w: -203.3254}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1088668830
