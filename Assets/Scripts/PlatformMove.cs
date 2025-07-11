@@ -35,6 +35,7 @@ public class PlatformMove : MonoBehaviour
     private float timeInTrigger;
     private bool isMovedOneTime = false;
     private bool movePlayer = false;
+    private bool advise = false;
 
     private void Start()
     {
@@ -53,7 +54,7 @@ public class PlatformMove : MonoBehaviour
 
     private void Update()
     {
-        if (movePlayer)
+        if (advise)
         {
             if (GameManager.instance.idiom == GameManager.Language.Spanish)
             {
@@ -209,7 +210,9 @@ public class PlatformMove : MonoBehaviour
             timeInTrigger += Time.deltaTime;
             if (timeInTrigger >= timeToAdvise && !isMovedOneTime)
             {
-                if(GameManager.instance.idiom == GameManager.Language.Spanish)
+                advise = true;
+
+                if (GameManager.instance.idiom == GameManager.Language.Spanish)
                     textoAyuda[0].gameObject.SetActive(true);
                 else if (GameManager.instance.idiom == GameManager.Language.Valencian)
                     textoAyuda[1].gameObject.SetActive(true);
@@ -224,6 +227,7 @@ public class PlatformMove : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             movePlayer = false;
+            advise = false;
             textoAyuda[0].gameObject.SetActive(false);
             textoAyuda[1].gameObject.SetActive(false);
             textoAyuda[2].gameObject.SetActive(false);
