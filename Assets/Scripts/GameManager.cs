@@ -100,6 +100,8 @@ public class GameManager : MonoBehaviour
         }else
             sharedData.continueGame = false;
 
+        sharedData.idiom = idiom;
+
         //sharedData.helpControls = helpControls;
         sharedData.musicVolume = musicVol;
         sharedData.effectVolume = effectVol;
@@ -130,6 +132,7 @@ public class GameManager : MonoBehaviour
                 continueGame = sharedData.continueGame;
             }
 
+            idiom = sharedData.idiom;
 
             isOpenDoorGreen = sharedData.isOpenDoorGreen;
             isOpenDoorGreenYellow = sharedData.isOpenDoorGreenYellow;
@@ -181,8 +184,10 @@ public class GameManager : MonoBehaviour
         sharedData.isTakeColeccionable3 = isTakeColeccionable3;
 
         sharedData.continueGame = true;
-        
-       // sharedData.helpControls = helpControls;
+
+        sharedData.idiom = idiom;
+
+        // sharedData.helpControls = helpControls;
         sharedData.musicVolume = musicVol;
         sharedData.effectVolume = effectVol;
         bf.Serialize(file, sharedData);
@@ -229,6 +234,8 @@ public class GameManager : MonoBehaviour
             sharedData2.isOpenDoorBoss = false;
             sharedData2.continueGame = false;
         }*/
+
+        sharedData2.idiom = idiom;
 
         sharedData2.musicVolume = musicVol;
         sharedData2.effectVolume = effectVol;

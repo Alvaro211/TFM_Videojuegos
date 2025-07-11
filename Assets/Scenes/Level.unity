@@ -9648,6 +9648,7 @@ MonoBehaviour:
     isTakeColeccionable1: 0
     isTakeColeccionable2: 0
     isTakeColeccionable3: 0
+    idiom: 0
   continueGame: 0
   isOpenDoorGreen: 0
   isOpenDoorGreenYellow: 0

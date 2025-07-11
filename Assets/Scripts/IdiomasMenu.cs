@@ -26,7 +26,8 @@ public class IdiomasMenu : MonoBehaviour
 
     private void Start()
     {
-        ChangeIdiom();
+        GameManager.instance.Load();
+        IdiomLeft();
     }
     public void ChangeIdiom()
     {
@@ -34,7 +35,18 @@ public class IdiomasMenu : MonoBehaviour
         {
             idomImage.GetComponent<Image>().sprite = spriteIdiom[0];
             newGame.GetComponent<Image>().sprite = spritenewGame[0];
+
+            Color color1 = newGame.GetComponent<Image>().color;
+            color1.a = 0.6f;
+            newGame.GetComponent<Image>().color = color1;
+
+
             continueGame.GetComponent<Image>().sprite = spriteContinue[0];
+
+            Color color2 = continueGame.GetComponent<Image>().color;
+            color2.a = 0.6f;
+            continueGame.GetComponent<Image>().color = color2;
+
             options.GetComponent<RawImage>().texture = spriteOptions[0];
             cargarImage.GetComponent<SpriteRenderer>().sprite = spriteCargar[0];
 
@@ -44,7 +56,18 @@ public class IdiomasMenu : MonoBehaviour
         {
             idomImage.GetComponent<Image>().sprite = spriteIdiom[1];
             newGame.GetComponent<Image>().sprite = spritenewGame[1];
+
+            Color color1 = newGame.GetComponent<Image>().color;
+            color1.a = 0.6f;
+            newGame.GetComponent<Image>().color = color1;
+
+
             continueGame.GetComponent<Image>().sprite = spriteContinue[1];
+
+            Color color2 = continueGame.GetComponent<Image>().color;
+            color2.a = 0.6f;
+            continueGame.GetComponent<Image>().color = color2;
+
             options.GetComponent<RawImage>().texture = spriteOptions[1];
             cargarImage.GetComponent<SpriteRenderer>().sprite = spriteCargar[1];
             
@@ -55,7 +78,18 @@ public class IdiomasMenu : MonoBehaviour
         {
             idomImage.GetComponent<Image>().sprite = spriteIdiom[2];
             newGame.GetComponent<Image>().sprite = spritenewGame[2];
+
+            Color color1 = newGame.GetComponent<Image>().color;
+            color1.a = 0.6f;
+            newGame.GetComponent<Image>().color = color1;
+
+
             continueGame.GetComponent<Image>().sprite = spriteContinue[2];
+
+            Color color2 = continueGame.GetComponent<Image>().color;
+            color2.a = 0.6f;
+            continueGame.GetComponent<Image>().color = color2;
+
             options.GetComponent<RawImage>().texture = spriteOptions[2];
             cargarImage.GetComponent<SpriteRenderer>().sprite = spriteCargar[2];
 

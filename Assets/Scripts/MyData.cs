@@ -35,5 +35,7 @@ public class MyData
     public bool isTakeColeccionable1;
     public bool isTakeColeccionable2;
     public bool isTakeColeccionable3;
+
+    public GameManager.Language idiom;
 }
 

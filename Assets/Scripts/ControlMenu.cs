@@ -35,8 +35,13 @@ public class ControlMenu : MonoBehaviour
         else if (index == 1)
             audio.AudioPlay();
 
-        if(cargar != null)
+        if (cargar != null)
+        {
             DontDestroyOnLoad(cargar);
+            cargar.SetActive(false);
+        }
+
+        GameManager.instance.cargar = cargar;
     }
 
     public void Play()
