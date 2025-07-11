@@ -9,6 +9,8 @@ public class AutoSpikeTrap : MonoBehaviour
     public float stayTime = 1f;          // Tiempo que se mantiene arriba
     public float triggerInterval = 2f;   // Tiempo entre activaciones
 
+    public AudioSource audio;
+
     private bool isRising = false;
     private bool isFalling = false;
     private float timer = 0f;
@@ -180,6 +182,6 @@ public class AutoSpikeTrap : MonoBehaviour
 
     private void PlaySound()
     {
-        GetComponent<AudioSource>().Play();
+        audio.Play();
     }
 }

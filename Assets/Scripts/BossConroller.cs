@@ -20,6 +20,8 @@ public class BossConroller : MonoBehaviour
 
     public Credits credits;
 
+    public AudioSource audioDead;
+
     [SerializeField] GameObject Deathprefabricated;
 
     private Vector3 positionInitial;
@@ -119,9 +121,11 @@ public class BossConroller : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball") && GameManager.instance.defeatBoss)
         {
+            audioDead.Play();
+
            collision.gameObject.SetActive(false);
            GameManager.instance.canMove = false;
-           credits.Invoke("ShowFloatingMessage", 1f);
+           credits.Invoke("ShowFloatingMessage", 2f);
 
             var myObj = GameObject.Instantiate(Deathprefabricated);
             myObj.transform.position = transform.position;

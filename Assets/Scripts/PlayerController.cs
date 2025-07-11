@@ -137,6 +137,8 @@ public class PlayerMovement : MonoBehaviour
     private Coroutine damageCoroutine;
 
     private Colleccionable collecionable;
+
+    private bool cooldawnLaunchBall;
     void Start()
     {
         
@@ -942,7 +944,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SphereCanceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        if (!ballLauch && spriteHelpBall.enabled && GameManager.instance.canMove)
+        if (!ballLauch && spriteHelpBall.enabled && !cooldawnLaunchBall && GameManager.instance.canMove)
         {
             LaunchBall();
         }
@@ -1293,6 +1295,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (poolBall != null)
         {
+            cooldawnLaunchBall = true;
+
+            Invoke("SetCooldawnLaunchBall", 0.5f);
+
             Vector3 rawDirection = Vector3.zero;
             float rawAngle = 0f;
             Vector3 mousePosition = Vector3.zero;
@@ -1348,10 +1354,10 @@ public class PlayerMovement : MonoBehaviour
             BallBounceHandler ballBuounce = newBall.GetComponent<BallBounceHandler>();
             if (rb != null && ballBuounce != null && ballCollider != null)
             {
-                Physics.IgnoreCollision(ballCollider, playerCollider, true);
+                //Physics.IgnoreCollision(ballCollider, playerCollider, true);
 
                 // Espera 2 segundos y vuelve a activar la colisión
-                StartCoroutine(EnableCollisionAfterDelay(2f));
+                //StartCoroutine(EnableCollisionAfterDelay(2f));
 
 
                 rb.isKinematic = false;
@@ -1397,6 +1403,11 @@ public class PlayerMovement : MonoBehaviour
             corutineHideball = StartCoroutine(HideBall(newBall));
             updateSliderBall = true;
         }
+    }
+
+    void SetCooldawnLaunchBall()
+    {
+        cooldawnLaunchBall = false;
     }
 
     IEnumerator EnableCollisionAfterDelay(float delay)
@@ -1661,7 +1672,7 @@ public class PlayerMovement : MonoBehaviour
 
                 Debug.Log(dot);
                 // Si dot > 0.5, el machacador está "encima" de ti (viniendo desde arriba)
-                if (dot > 0.5f || dot < -0.5f)
+                if (dot > 0.75f || dot < -0.75f)
                 {
                     Dead(); // Te aplastó
                 }
@@ -1769,7 +1780,7 @@ public class PlayerMovement : MonoBehaviour
                 Dead();
             else if (hit.gameObject.layer == LayerMask.NameToLayer("Machacadores"))
             {
-                if (Vector3.Dot(hit.normal, Vector3.down) > 0.5f)
+                if (Vector3.Dot(hit.normal, Vector3.down) > 0.75f)
                 {
                     Dead();
                 }
