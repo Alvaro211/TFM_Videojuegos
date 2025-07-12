@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     {
         Spanish,
         Valencian,
-        English
+        English,
+        Chino
     }
 
     public static GameManager instance = null;
@@ -247,6 +248,12 @@ public class GameManager : MonoBehaviour
     {
         if(cargar != null)
             cargar.SetActive(false);
+    }
+
+    public void EnableCargar()
+    {
+        if (cargar != null)
+            cargar.SetActive(true);
     }
 
     public IEnumerator LoadSceneAsync(string scene)

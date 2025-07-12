@@ -612,8 +612,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 int index = 0 * 2 + 1;
 
-                book.bookPages[index] = book.bookPageWritten[index];
-                book.bookPages[index + 1] = book.bookPageWritten[index + 1];
+                book.bookPages[index] = book.bookPageWrittenEng[index];
+                book.bookPages[index + 1] = book.bookPageWrittenEng[index + 1];
             }
             else
             {
@@ -625,8 +625,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 int index = 1 * 2 + 1;
 
-                book.bookPages[index] = book.bookPageWritten[index];
-                book.bookPages[index + 1] = book.bookPageWritten[index + 1];
+                book.bookPages[index] = book.bookPageWrittenEng[index];
+                book.bookPages[index + 1] = book.bookPageWrittenEng[index + 1];
             }
             else
             {
@@ -638,8 +638,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 int index = 2 * 2 + 1;
 
-                book.bookPages[index] = book.bookPageWritten[index];
-                book.bookPages[index + 1] = book.bookPageWritten[index + 1];
+                book.bookPages[index] = book.bookPageWrittenEng[index];
+                book.bookPages[index + 1] = book.bookPageWrittenEng[index + 1];
             }
             else
             {
@@ -897,8 +897,26 @@ public class PlayerMovement : MonoBehaviour
         {
             int index = collecionable.indexCollecionable * 2 + 1;
 
-            book.bookPages[index] = book.bookPageWritten[index];
-            book.bookPages[index + 1] = book.bookPageWritten[index + 1];
+            if (GameManager.instance.idiom == GameManager.Language.Spanish)
+            {
+                book.bookPages[index] = book.bookPageWrittenEsp[index-1];
+                book.bookPages[index + 1] = book.bookPageWrittenEsp[index];
+            }
+            else if (GameManager.instance.idiom == GameManager.Language.Spanish)
+            {
+                book.bookPages[index] = book.bookPageWrittenVal[index-1];
+                book.bookPages[index + 1] = book.bookPageWrittenVal[index];
+            }
+            else if (GameManager.instance.idiom == GameManager.Language.English)
+            {
+                book.bookPages[index] = book.bookPageWrittenEng[index-1];
+                book.bookPages[index + 1] = book.bookPageWrittenEng[index];
+            }
+            else
+            {
+                book.bookPages[index] = book.bookPageWrittenChi[index - 1];
+                book.bookPages[index + 1] = book.bookPageWrittenChi[index];
+            }
 
             collecionable.gameObject.SetActive(false);
 
@@ -985,7 +1003,8 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
-            
+
+            GameManager.instance.vibration.VibrarMando((0.5f), 0.5f);
 
             souning = true;
             audioSourceSequence.clip = sequence[sound];
@@ -1021,6 +1040,9 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
+
+            GameManager.instance.vibration.VibrarMando((0.5f), 0.5f);
+
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
@@ -1055,6 +1077,9 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
+
+            GameManager.instance.vibration.VibrarMando((0.5f), 0.5f);
+
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
@@ -1084,6 +1109,9 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
+
+            GameManager.instance.vibration.VibrarMando((0.5f), 0.5f);
+
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();
@@ -1115,6 +1143,9 @@ public class PlayerMovement : MonoBehaviour
 
                 }
             }
+
+            GameManager.instance.vibration.VibrarMando((0.5f), 0.5f);
+
             souning = true;
             audioSourceSequence.clip = sequence[sound];
             audioSourceSequence.Play();

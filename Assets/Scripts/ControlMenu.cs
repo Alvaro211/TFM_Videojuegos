@@ -11,6 +11,11 @@ public class ControlMenu : MonoBehaviour
     public GameObject mainMenu;
     public GameObject options;
     public GameObject cargar;
+    public GameObject cargarControls;
+    public GameObject buttonBack;
+
+    public GameObject controls;
+    public GameObject quit;
 
     public SoundManager audio;
 
@@ -39,9 +44,9 @@ public class ControlMenu : MonoBehaviour
         {
             DontDestroyOnLoad(cargar);
             cargar.SetActive(false);
+            GameManager.instance.cargar = cargar;
         }
 
-        GameManager.instance.cargar = cargar;
     }
 
     public void Play()
@@ -81,17 +86,25 @@ public class ControlMenu : MonoBehaviour
 
     public void HideOptionsPlay()
     {
-        foreach (Transform hijo in canvas)
+        if (controls.activeInHierarchy)
         {
-            if (hijo.name == "CirculoNota(Clone)")
-            {
-                hijo.gameObject.SetActive(true);
-            }
+            controls.SetActive(false);
+            quit.SetActive(true);
         }
+        else
+        {
+            foreach (Transform hijo in canvas)
+            {
+                if (hijo.name == "CirculoNota(Clone)")
+                {
+                    hijo.gameObject.SetActive(true);
+                }
+            }
 
-        Time.timeScale = 1;
-        GameManager.instance.canMove = true;
-        options.gameObject.SetActive(false);
+            Time.timeScale = 1;
+            GameManager.instance.canMove = true;
+            options.gameObject.SetActive(false);
+        }
     }
 
     public void Exit()
@@ -104,6 +117,26 @@ public class ControlMenu : MonoBehaviour
     {
         GameManager.instance.DisableCargar();
         SceneManager.LoadScene(0);
+    }
+
+    public void ShowControl()
+    {
+        controls.SetActive(true);
+        quit.SetActive(false);
+    }
+
+    public void ShowCargar()
+    {
+        cargarControls.SetActive(true);
+        buttonBack.SetActive(true);
+        options.SetActive(false);
+    }
+
+    public void HideControls()
+    {
+        cargarControls.SetActive(false);
+        buttonBack.SetActive(false);
+        options.SetActive(true);
     }
 
 }

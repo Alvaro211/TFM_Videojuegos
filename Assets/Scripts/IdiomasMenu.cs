@@ -22,6 +22,12 @@ public class IdiomasMenu : MonoBehaviour
     public GameObject cargarImage;
     public List<Sprite> spriteCargar;
 
+    public GameObject controlsTextImage;
+    public List<Sprite> spriteTextControls;
+
+    public GameObject controlsImage;
+    public List<Sprite> spriteControls;
+
     public TextMeshProUGUI creditos;
 
     private void Start()
@@ -35,6 +41,9 @@ public class IdiomasMenu : MonoBehaviour
         {
             idomImage.GetComponent<Image>().sprite = spriteIdiom[0];
             newGame.GetComponent<Image>().sprite = spritenewGame[0];
+
+            controlsTextImage.GetComponent<Image>().sprite = spriteTextControls[0];
+            controlsImage.GetComponent<SpriteRenderer>().sprite = spriteControls[0];
 
             Color color1 = newGame.GetComponent<Image>().color;
             color1.a = 0.6f;
@@ -56,6 +65,9 @@ public class IdiomasMenu : MonoBehaviour
         {
             idomImage.GetComponent<Image>().sprite = spriteIdiom[1];
             newGame.GetComponent<Image>().sprite = spritenewGame[1];
+
+            controlsTextImage.GetComponent<Image>().sprite = spriteTextControls[1];
+            controlsImage.GetComponent<SpriteRenderer>().sprite = spriteControls[1];
 
             Color color1 = newGame.GetComponent<Image>().color;
             color1.a = 0.6f;
@@ -79,6 +91,9 @@ public class IdiomasMenu : MonoBehaviour
             idomImage.GetComponent<Image>().sprite = spriteIdiom[2];
             newGame.GetComponent<Image>().sprite = spritenewGame[2];
 
+            controlsTextImage.GetComponent<Image>().sprite = spriteTextControls[2];
+            controlsImage.GetComponent<SpriteRenderer>().sprite = spriteControls[2];
+
             Color color1 = newGame.GetComponent<Image>().color;
             color1.a = 0.6f;
             newGame.GetComponent<Image>().color = color1;
@@ -95,19 +110,37 @@ public class IdiomasMenu : MonoBehaviour
 
             creditos.text = "Made by:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nSpecial thanks to our tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nThank you very much for playing";
         }
+        else
+        {
+            idomImage.GetComponent<Image>().sprite = spriteIdiom[3];
+            newGame.GetComponent<Image>().sprite = spritenewGame[3];
+
+            controlsTextImage.GetComponent<Image>().sprite = spriteTextControls[3];
+            controlsImage.GetComponent<SpriteRenderer>().sprite = spriteControls[3];
+
+            Color color1 = newGame.GetComponent<Image>().color;
+            color1.a = 0.6f;
+            newGame.GetComponent<Image>().color = color1;
+
+
+            continueGame.GetComponent<Image>().sprite = spriteContinue[3];
+
+            Color color2 = continueGame.GetComponent<Image>().color;
+            color2.a = 0.6f;
+            continueGame.GetComponent<Image>().color = color2;
+
+            options.GetComponent<RawImage>().texture = spriteOptions[3];
+            cargarImage.GetComponent<SpriteRenderer>().sprite = spriteCargar[3];
+
+            creditos.text = "Made by:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nSpecial thanks to our tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nThank you very much for playing";
+        }
     }
 
     public void IdiomLeft()
     {
         if(GameManager.instance.idiom == GameManager.Language.Spanish)
         {
-            GameManager.instance.idiom = GameManager.Language.Valencian;
-
-            continueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(500f, 350f);
-            continueGame.transform.localPosition = new Vector3(212, -20, 0f);
-
-            newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
-            newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
+            GameManager.instance.idiom = GameManager.Language.Chino;
         }
         else if (GameManager.instance.idiom == GameManager.Language.Valencian)
         {
@@ -119,7 +152,7 @@ public class IdiomasMenu : MonoBehaviour
             newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(1200, 517);
             newGame.transform.localPosition = new Vector3(-309f, 45f, 0f);
         }
-        else
+        else if (GameManager.instance.idiom == GameManager.Language.English)
         {
             GameManager.instance.idiom = GameManager.Language.Spanish;
 
@@ -128,6 +161,17 @@ public class IdiomasMenu : MonoBehaviour
 
             newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
             newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
+        }
+        else
+        {
+            GameManager.instance.idiom = GameManager.Language.Valencian;
+
+            continueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(500f, 350f);
+            continueGame.transform.localPosition = new Vector3(212, -20, 0f);
+
+            newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
+            newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
+
         }
 
         ChangeIdiom();
@@ -155,15 +199,19 @@ public class IdiomasMenu : MonoBehaviour
             newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
             newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
         }
-        else
+        else if(GameManager.instance.idiom == GameManager.Language.Valencian)
         {
-            GameManager.instance.idiom = GameManager.Language.Spanish;
+            GameManager.instance.idiom = GameManager.Language.Chino;
 
             continueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(500f, 350f);
             continueGame.transform.localPosition = new Vector3(212f, -20, 0f);
 
             newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
             newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
+        }else 
+        {
+            GameManager.instance.idiom = GameManager.Language.Spanish;
+
         }
 
         ChangeIdiom();

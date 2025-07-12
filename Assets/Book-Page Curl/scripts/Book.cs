@@ -18,11 +18,14 @@ public class Book : MonoBehaviour {
     [SerializeField]
     RectTransform BookPanel;
     public Sprite background;
-    public Sprite pagina0;
+    public Sprite[] pagina0;
     public Sprite pagina7;
     public Sprite bloqued;
     public Sprite[] bookPages;
-    public Sprite[] bookPageWritten;
+    public Sprite[] bookPageWrittenEng;
+    public Sprite[] bookPageWrittenEsp;
+    public Sprite[] bookPageWrittenVal;
+    public Sprite[] bookPageWrittenChi;
     public bool interactable=true;
     public bool enableShadowEffect=true;
     //represent the index of the sprite shown in the right page
@@ -358,7 +361,7 @@ public class Book : MonoBehaviour {
         if (interactable)
         DragLeftPageToPoint(transformPoint(Input.mousePosition));
 
-        if(LeftNext.GetComponent<Image>().sprite == background && RightNext.GetComponent<Image>().sprite == pagina0)
+        if(LeftNext.GetComponent<Image>().sprite == background && (RightNext.GetComponent<Image>().sprite == pagina0[0] || RightNext.GetComponent<Image>().sprite == pagina0[1] || RightNext.GetComponent<Image>().sprite == pagina0[2]))
         {
 
         }else
