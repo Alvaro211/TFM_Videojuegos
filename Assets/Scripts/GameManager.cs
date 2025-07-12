@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public bool canMove = true;
     public bool playerMovePlatform = false;
     public bool defeatBoss = false;
+    public bool musicEnemy = true;
 
     public float musicVol;
     public float effectVol;

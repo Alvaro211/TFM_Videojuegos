@@ -29,7 +29,7 @@ public class ControlMenu : MonoBehaviour
         if (index == 0)
         {
             if (Gamepad.current != null)
-                UnityEngine.Cursor.visible = true;
+                UnityEngine.Cursor.visible = false;
 
             audio.AudioMenu();
             if (!GameManager.instance.continueGame)

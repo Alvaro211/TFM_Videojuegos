@@ -134,6 +134,9 @@ MonoBehaviour:
   - {fileID: 4432747222010263388}
   - {fileID: 8077695469757588675}
   effect: {fileID: 5270293092982160256, guid: 31b7e818b1c9ab8458e851630289e0d5, type: 3}
+  spriteRenderer: {fileID: 1716640571379251624}
+  colorChangeSpeedDown: 6
+  colorChangeSpeedUp: 3
 --- !u!82 &4121600089561172594
 AudioSource:
   m_ObjectHideFlags: 0

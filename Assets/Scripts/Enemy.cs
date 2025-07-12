@@ -4,6 +4,7 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.InputSystem;
 
 public class Enemy : MonoBehaviour
@@ -33,6 +34,9 @@ public class Enemy : MonoBehaviour
     public AudioClip audioIdle;
     public AudioClip audioChasing;
 
+    public Light light;
+    private Vector3 offsetLight = new Vector3(0, 0, -8f);
+
     private Transform player;
 
     private Coroutine currentRoutine;
@@ -40,6 +44,11 @@ public class Enemy : MonoBehaviour
 
     private float tiempo = 0f; 
     private bool wasPausedByTimeScale = false;
+
+
+    public float minInnerAngle = 30f;
+    public float minOuterAngle = 40f;
+    public float reductionSpeed = 15f;
 
     void Start()
     {
@@ -64,6 +73,16 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (light != null)
+        {
+            light.transform.position = this.transform.position + offsetLight;
+
+            float newInnerAngle = Mathf.MoveTowards(light.innerSpotAngle, minInnerAngle, reductionSpeed * Time.deltaTime);
+            float newOuterAngle = Mathf.MoveTowards(light.spotAngle, minOuterAngle, reductionSpeed * Time.deltaTime);
+
+            light.innerSpotAngle = newInnerAngle;
+            light.spotAngle = newOuterAngle;
+        }
 
         bool isChasing = chasingPlayer || chasingBall;
 
@@ -89,12 +108,20 @@ public class Enemy : MonoBehaviour
             audio.clip = audioChasing;
             audio.loop = false; // O true, según tu caso
             audio.Play();
+
+
+            light.spotAngle = 70;
+            light.innerSpotAngle = 45;
         }
-        else if (!isChasing && !audio.isPlaying && GameManager.instance.canMove)
+        else if (!isChasing && !audio.isPlaying && GameManager.instance.canMove && GameManager.instance.musicEnemy)
         {
-            audio.clip = audioIdle;
-            audio.loop = true;
+            if(audio.clip != audioIdle)
+                audio.clip = audioIdle;
+            //audio.loop = true;
             audio.Play();
+
+            light.spotAngle = 50;
+            light.innerSpotAngle = 35;
         }
 
         if (chasingBall)

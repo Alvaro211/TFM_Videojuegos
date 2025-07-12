@@ -701,7 +701,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (menuPause.activeSelf)
             {
-                if(Gamepad.current != null)
+                GameManager.instance.musicEnemy = true;
+
+                if (Gamepad.current != null)
                     UnityEngine.Cursor.visible = false;
 
                 menuPause.gameObject.SetActive(false);
@@ -733,6 +735,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (!book.gameObject.activeSelf)
             {
+                GameManager.instance.musicEnemy = false;
 
                 if (Gamepad.current != null)
                     UnityEngine.Cursor.visible = true;
@@ -757,6 +760,8 @@ public class PlayerMovement : MonoBehaviour
                 }
             }else if (book.gameObject.activeSelf)
             {
+                GameManager.instance.musicEnemy = true;
+
                 if (Gamepad.current != null)
                     UnityEngine.Cursor.visible = false;
 
@@ -796,6 +801,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (diary.activeSelf)
         {
+            GameManager.instance.musicEnemy = true;
+
             if (Gamepad.current != null)
                 UnityEngine.Cursor.visible = false;
 
@@ -816,8 +823,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(!menuPause.activeSelf)
         {
+            GameManager.instance.musicEnemy = false;
+
             if (Gamepad.current != null)
-                UnityEngine.Cursor.visible = false;
+                UnityEngine.Cursor.visible = true;
 
             audioSourceEffectPlayer.clip = audioOpenDiary;
             audioSourceEffectPlayer.Play();

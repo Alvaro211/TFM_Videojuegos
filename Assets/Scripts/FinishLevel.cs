@@ -205,6 +205,7 @@ public class FinishLevel : MonoBehaviour
             {
                 if (playerSequence.Count == audioClips.Count)
                 {
+                    GameManager.instance.vibration.VibrarMando(0.5f, 0.25f);
                     SoundDoor(true);
                     doorOpen = true;
 

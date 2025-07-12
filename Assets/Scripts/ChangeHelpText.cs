@@ -14,12 +14,19 @@ public class ChangeHelpText : MonoBehaviour
 
     public TextMeshPro[] textHelpBall1;
 
+    public GameObject options;
+    public GameObject diary;
+
     // Update is called once per frame
     void Update()
     {
         if (Gamepad.current != null)
         {
-            Cursor.visible = false;
+            if (options.activeInHierarchy || diary.activeInHierarchy)
+                Cursor.visible = true;
+            else
+                Cursor.visible = false;
+            
             textF.gameObject.SetActive(false);
             iconLB.gameObject.SetActive(true);
 
@@ -34,18 +41,24 @@ public class ChangeHelpText : MonoBehaviour
                 textHelpBall1[0].transform.localPosition = new Vector3(610.71f, 6.59f, -7.36f);
 
                 iconLB.transform.localPosition = new Vector3(601.96f, 8.8f, 0f);
+
+                iconStickR.transform.localPosition = new Vector3(612f, 8.8f, 0f);
             }
             else if (GameManager.instance.idiom == GameManager.Language.Valencian)
             {
                 textHelpBall1[1].transform.localPosition = new Vector3(610.24f, 6.59f, -7.36f);
 
                 iconLB.transform.localPosition = new Vector3(601.96f, 8.8f, 0f);
+
+                iconStickR.transform.localPosition = new Vector3(612f, 8.8f, 0f);
             }
             else
             {
                 textHelpBall1[2].transform.localPosition = new Vector3(611.91f, 6.59f, -7.36f);
 
                 iconLB.transform.localPosition = new Vector3(602.82f, 8.8f, 0f);
+
+                iconStickR.transform.localPosition = new Vector3(614f, 8.8f, 0f);
             }
         }
         else
@@ -66,7 +79,7 @@ public class ChangeHelpText : MonoBehaviour
                 textMouse[1].gameObject.SetActive(false);
                 textMouse[2].gameObject.SetActive(false);
 
-                textF.transform.localPosition = new Vector3(606.15f, 7.4f, -7.36f);
+                textF.transform.localPosition = new Vector3(604f, 7.4f, -7.36f);
             }
             else if (GameManager.instance.idiom == GameManager.Language.Valencian)
             {
@@ -74,7 +87,7 @@ public class ChangeHelpText : MonoBehaviour
                 textMouse[1].gameObject.SetActive(true);
                 textMouse[2].gameObject.SetActive(false);
 
-                textF.transform.localPosition = new Vector3(607.64f, 7.4f, -7.36f);
+                textF.transform.localPosition = new Vector3(605f, 7.4f, -7.36f);
             }
             else
             {
@@ -82,7 +95,7 @@ public class ChangeHelpText : MonoBehaviour
                 textMouse[1].gameObject.SetActive(false);
                 textMouse[2].gameObject.SetActive(true);
 
-                textF.transform.localPosition = new Vector3(607.64f, 7.4f, -7.36f);
+                textF.transform.localPosition = new Vector3(606f, 7.4f, -7.36f);
             }        
         }
     }

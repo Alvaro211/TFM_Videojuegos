@@ -33,8 +33,46 @@ public class IdiomasMenu : MonoBehaviour
     private void Start()
     {
         GameManager.instance.Load();
-        IdiomLeft();
-    }
+
+
+        if (GameManager.instance.idiom == GameManager.Language.Spanish)
+        {
+            continueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(500f, 350f);
+            continueGame.transform.localPosition = new Vector3(212f, -20, 0f);
+
+            newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
+            newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
+        }
+        else if (GameManager.instance.idiom == GameManager.Language.Valencian)
+        {
+            continueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(500f, 350f);
+            continueGame.transform.localPosition = new Vector3(212, -20, 0f);
+
+            newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
+            newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
+
+        }
+        else if (GameManager.instance.idiom == GameManager.Language.English)
+        {
+            continueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(800f, 600f);
+            continueGame.transform.localPosition = new Vector3(212f, 9f, 0f);
+
+            newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(1200, 517);
+            newGame.transform.localPosition = new Vector3(-309f, 45f, 0f);
+        }
+        else
+        {
+
+            continueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(500f, 350f);
+            continueGame.transform.localPosition = new Vector3(212, -20, 0f);
+
+            newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
+            newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
+
+        }
+
+        ChangeIdiom();
+}
     public void ChangeIdiom()
     {
         if (GameManager.instance.idiom == GameManager.Language.Spanish)
@@ -141,6 +179,12 @@ public class IdiomasMenu : MonoBehaviour
         if(GameManager.instance.idiom == GameManager.Language.Spanish)
         {
             GameManager.instance.idiom = GameManager.Language.Chino;
+
+            continueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(500f, 350f);
+            continueGame.transform.localPosition = new Vector3(212f, -20, 0f);
+
+            newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
+            newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
         }
         else if (GameManager.instance.idiom == GameManager.Language.Valencian)
         {
@@ -211,6 +255,12 @@ public class IdiomasMenu : MonoBehaviour
         }else 
         {
             GameManager.instance.idiom = GameManager.Language.Spanish;
+
+            continueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(500f, 350f);
+            continueGame.transform.localPosition = new Vector3(212f, -20, 0f);
+
+            newGame.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 350);
+            newGame.transform.localPosition = new Vector3(-309f, 15f, 0f);
 
         }
 

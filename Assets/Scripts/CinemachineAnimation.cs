@@ -138,6 +138,13 @@ public class CinemachineAnimation : MonoBehaviour
         Rigidbody rb = ballInstanciate.GetComponent<Rigidbody>();
         rb.velocity = new Vector3(0, -10, 0);
         rb.isKinematic = false;
+
+        Invoke("VibrarMandoAnimation1", 0.3f);
+    }
+
+    public void VibrarMandoAnimation1()
+    {
+        GameManager.instance.vibration.VibrarMando(0.5f, 0.25f);
     }
 
     private void OnTimelineFinishedLevel1(PlayableDirector pd)
@@ -322,6 +329,7 @@ public class CinemachineAnimation : MonoBehaviour
         if (directorLevel5 != null)
         {
             GameManager.instance.onAnimation = true;
+            GameManager.instance.musicEnemy = false;
             canvas.gameObject.SetActive(false);
             GameManager.instance.canMove = false;
             TurnOnLightsLevel5();
@@ -375,6 +383,7 @@ public class CinemachineAnimation : MonoBehaviour
 
     private void OnTimelineFinishedLevel5(PlayableDirector pd)
     {
+        GameManager.instance.musicEnemy = true;
         musicAudioSource.volume = 1f;
         musicAudioSource.Play();
         canvas.gameObject.SetActive(true);

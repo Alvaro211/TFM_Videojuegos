@@ -22,6 +22,12 @@ public class CubeFalling : MonoBehaviour
     private float lightTransitionSpeed = 50f;
     private float startPositonX;
 
+    public SpriteRenderer spriteRenderer;
+    private Color colorArriba = new Color(0.3f, 0.3f, 0.3f, 1f);
+    private Color colorAbajo = Color.white;
+    public float colorChangeSpeedDown = 160f;
+    public float colorChangeSpeedUp = 80f;
+
     void Start()
     {
         fastCubeStartPos = transform.position;
@@ -36,6 +42,8 @@ public class CubeFalling : MonoBehaviour
 
     void Update()
     {
+        UpdateSpriteColor();
+
         if (!isWaiting)
         {
             if (fastCubeFalling)
@@ -102,5 +110,30 @@ public class CubeFalling : MonoBehaviour
         fastCubeFalling = true;
         isWaiting = false;
         sound = true;
+    }
+
+    private void UpdateSpriteColor()
+    {
+        if (spriteRenderer != null)
+        {
+            Color targetColor = fastCubeFalling ? colorAbajo : colorArriba;
+
+            if (fastCubeFalling)
+            {
+                spriteRenderer.color = Color.Lerp(
+                    spriteRenderer.color,
+                    targetColor,
+                    colorChangeSpeedDown * Time.deltaTime
+                );
+            }
+            else
+            {
+                spriteRenderer.color = Color.Lerp(
+                    spriteRenderer.color,
+                    targetColor,
+                    colorChangeSpeedUp * Time.deltaTime
+                );
+            }
+        }
     }
 }
