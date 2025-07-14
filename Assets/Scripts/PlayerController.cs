@@ -139,6 +139,8 @@ public class PlayerMovement : MonoBehaviour
     private Colleccionable collecionable;
 
     private bool cooldawnLaunchBall;
+
+    public GameObject sliderMusic;
     void Start()
     {
         
@@ -701,6 +703,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (menuPause.activeSelf)
             {
+
+                EventSystem.current.SetSelectedGameObject(null);
                 GameManager.instance.musicEnemy = true;
 
                 if (Gamepad.current != null)
@@ -735,6 +739,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (!book.gameObject.activeSelf)
             {
+                EventSystem.current.SetSelectedGameObject(sliderMusic);
+
                 GameManager.instance.musicEnemy = false;
 
                 if (Gamepad.current != null)

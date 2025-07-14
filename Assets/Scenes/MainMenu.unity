@@ -2666,8 +2666,8 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 1043516260}
     m_SelectOnDown: {fileID: 282526689}
-    m_SelectOnLeft: {fileID: 614889767}
-    m_SelectOnRight: {fileID: 1591619034}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.97735846, g: 0.97735846, b: 0.97735846, a: 1}
@@ -6455,8 +6455,6 @@ MonoBehaviour:
   - {fileID: 1791605635}
   - {fileID: 71318594}
   playOpciones: []
-  scaleMenuPrincipal: []
-  scaleMenuOpciones: []
 --- !u!114 &1814082539
 MonoBehaviour:
   m_ObjectHideFlags: 0
