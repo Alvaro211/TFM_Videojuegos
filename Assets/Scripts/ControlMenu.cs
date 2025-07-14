@@ -114,11 +114,6 @@ public class ControlMenu : MonoBehaviour
         else
             Cursor.visible = true;
 
-        if (selected != null)
-            Debug.Log(selected.name);
-        else
-            Debug.Log("null");
-
         if (selected != null && Gamepad.current != null)
         {
             if (SceneManager.GetActiveScene().buildIndex == 0)

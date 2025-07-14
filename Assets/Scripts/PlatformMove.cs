@@ -8,7 +8,7 @@ public class PlatformMove : MonoBehaviour
 {
     public enum Direction { Up, Right, Down, Left }
     public Direction moveDirection = Direction.Up;
-    public bool activatedPlatform1;
+    public int noteToActive;
 
     public float moveDistance = 2f;     // Distancia del movimiento
     public float moveSpeed = 2f;        // Velocidad en unidades por segundo
@@ -79,18 +79,19 @@ public class PlatformMove : MonoBehaviour
 
     public void MovePlatform(int index)
     {
-        if (isMoving || (index == 1 && !activatedPlatform1) || (index == 2 && activatedPlatform1)) return; // Evita activar el movimiento si ya se está moviendo
+        if (!isMoving && ((index == 1 && noteToActive == 1) || (index == 2 && noteToActive == 2) || (index == 3 && noteToActive == 3) || (index == 4 && noteToActive == 4))){
 
-        audio.Play();
+            audio.Play();
 
-        isMovedOneTime = true;
+            isMovedOneTime = true;
 
-        isMoved = !isMoved;
-        targetPosition = isMoved
-            ? initialPosition + GetDirectionVector(moveDirection) * moveDistance
-            : initialPosition;
+            isMoved = !isMoved;
+            targetPosition = isMoved
+                ? initialPosition + GetDirectionVector(moveDirection) * moveDistance
+                : initialPosition;
 
-        StartCoroutine(MoveToPosition(targetPosition));
+            StartCoroutine(MoveToPosition(targetPosition));
+        }
     }
 
     private System.Collections.IEnumerator MoveToPosition(Vector3 destination)

@@ -22,22 +22,22 @@ public class ObjetoCancionText : MonoBehaviour
             if (text.text == "1")
             {
                 text.text = "<b>↑</b>";
-                this.transform.localPosition = new Vector3((this.transform.localPosition.x - 0.5f), (this.transform.localPosition.y + 20f), this.transform.localPosition.z);
+                this.transform.localPosition = new Vector3((this.transform.localPosition.x - 0.5f), (this.transform.localPosition.y + 50f), this.transform.localPosition.z);
             }
             else if (text.text == "2")
             {
                 text.text = "<b>→</b>";
-                this.transform.localPosition = new Vector3((this.transform.localPosition.x - 2.5f), (this.transform.localPosition.y + 40f), this.transform.localPosition.z);
+                this.transform.localPosition = new Vector3((this.transform.localPosition.x - 2.5f), (this.transform.localPosition.y + 75f), this.transform.localPosition.z);
             }
             else if (text.text == "3")
             {
                 text.text = "<b>↓</b>";
-                this.transform.localPosition = new Vector3((this.transform.localPosition.x - 0.5f), (this.transform.localPosition.y + 20f), this.transform.localPosition.z);
+                this.transform.localPosition = new Vector3((this.transform.localPosition.x - 0.5f), (this.transform.localPosition.y + 50f), this.transform.localPosition.z);
             }
             else if (text.text == "4")
             {
                 text.text = "<b>←</b>";
-                this.transform.localPosition = new Vector3((this.transform.localPosition.x - 2.5f), (this.transform.localPosition.y + 40f), this.transform.localPosition.z);
+                this.transform.localPosition = new Vector3((this.transform.localPosition.x - 2.5f), (this.transform.localPosition.y + 75f), this.transform.localPosition.z);
             }
 
             text.fontSize = 40f;
@@ -47,22 +47,22 @@ public class ObjetoCancionText : MonoBehaviour
             if (text.text == "<b>↑</b>")
             {
                 text.text = "1";
-                this.transform.localPosition = new Vector3((this.transform.localPosition.x + 0.5f), (this.transform.localPosition.y - 20f), this.transform.localPosition.z);
+                this.transform.localPosition = new Vector3((this.transform.localPosition.x + 0.5f), (this.transform.localPosition.y - 50f), this.transform.localPosition.z);
             }
             else if (text.text == "<b>→</b>")
             {
                 text.text = "2";
-                this.transform.localPosition = new Vector3((this.transform.localPosition.x + 2.5f), (this.transform.localPosition.y - 40f), this.transform.localPosition.z);
+                this.transform.localPosition = new Vector3((this.transform.localPosition.x + 2.5f), (this.transform.localPosition.y - 75f), this.transform.localPosition.z);
             }
             else if (text.text == "<b>↓</b>")
             {
                 text.text = "3";
-                this.transform.localPosition = new Vector3((this.transform.localPosition.x + 0.5f), (this.transform.localPosition.y - 20f), this.transform.localPosition.z);
+                this.transform.localPosition = new Vector3((this.transform.localPosition.x + 0.5f), (this.transform.localPosition.y - 50f), this.transform.localPosition.z);
             }
             else if (text.text == "<b>←</b>")
             {
                 text.text = "4";
-                this.transform.localPosition = new Vector3((this.transform.localPosition.x + 2.5f), (this.transform.localPosition.y - 40f), this.transform.localPosition.z);
+                this.transform.localPosition = new Vector3((this.transform.localPosition.x + 2.5f), (this.transform.localPosition.y - 75f), this.transform.localPosition.z);
             }
 
             text.fontSize = 30f;

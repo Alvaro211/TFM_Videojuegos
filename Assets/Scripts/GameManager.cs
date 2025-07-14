@@ -55,6 +55,9 @@ public class GameManager : MonoBehaviour
     public bool onAnimation = false;
 
     public GameObject cargar;
+    public bool firstDeadEye = false;
+
+    public IdiomasPlay idiomPlay;
 
     private void Awake()
     {
@@ -329,6 +332,11 @@ public class GameManager : MonoBehaviour
 
         // Activar la escena cargada
         asyncLoad.allowSceneActivation = true;
+    }
+
+    public void UpdateIdiom()
+    {
+        idiomPlay.ChangeIdiom();
     }
 }
 

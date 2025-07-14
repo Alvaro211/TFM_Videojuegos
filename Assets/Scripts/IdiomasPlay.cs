@@ -34,6 +34,8 @@ public class IdiomasPlay : MonoBehaviour
     private void Start()
     {
         ChangeIdiom();
+
+        GameManager.instance.idiomPlay = this;
     }
 
     public void ChangeIdiom()
@@ -54,11 +56,13 @@ public class IdiomasPlay : MonoBehaviour
             textHelpBall2[1].gameObject.SetActive(false);
             textHelpBall2[2].gameObject.SetActive(false);
 
-            textHelpBallRed1[0].gameObject.SetActive(true);
+            if(GameManager.instance.firstDeadEye)
+                textHelpBallRed1[0].gameObject.SetActive(true);
             textHelpBallRed1[1].gameObject.SetActive(false);
             textHelpBallRed1[2].gameObject.SetActive(false);
 
-            textHelpBallRed2[0].gameObject.SetActive(true);
+            if (GameManager.instance.firstDeadEye)
+                textHelpBallRed2[0].gameObject.SetActive(true);
             textHelpBallRed2[1].gameObject.SetActive(false);
             textHelpBallRed2[2].gameObject.SetActive(false);
 
@@ -98,11 +102,13 @@ public class IdiomasPlay : MonoBehaviour
             textHelpBall2[2].gameObject.SetActive(false);
 
             textHelpBallRed1[0].gameObject.SetActive(false);
-            textHelpBallRed1[1].gameObject.SetActive(true);
+            if (GameManager.instance.firstDeadEye)
+                textHelpBallRed1[1].gameObject.SetActive(true);
             textHelpBallRed1[2].gameObject.SetActive(false);
 
             textHelpBallRed2[0].gameObject.SetActive(false);
-            textHelpBallRed2[1].gameObject.SetActive(true);
+            if (GameManager.instance.firstDeadEye)
+                textHelpBallRed2[1].gameObject.SetActive(true);
             textHelpBallRed2[2].gameObject.SetActive(false);
 
             textHelpEnemy[0].gameObject.SetActive(false);
@@ -142,11 +148,13 @@ public class IdiomasPlay : MonoBehaviour
 
             textHelpBallRed1[0].gameObject.SetActive(false);
             textHelpBallRed1[1].gameObject.SetActive(false);
-            textHelpBallRed1[2].gameObject.SetActive(true);
+            if (GameManager.instance.firstDeadEye)
+                textHelpBallRed1[2].gameObject.SetActive(true);
 
             textHelpBallRed2[0].gameObject.SetActive(false);
             textHelpBallRed2[1].gameObject.SetActive(false);
-            textHelpBallRed2[2].gameObject.SetActive(true);
+            if (GameManager.instance.firstDeadEye)
+                textHelpBallRed2[2].gameObject.SetActive(true);
 
             textHelpEnemy[0].gameObject.SetActive(false);
             textHelpEnemy[1].gameObject.SetActive(false);
@@ -184,11 +192,13 @@ public class IdiomasPlay : MonoBehaviour
 
             textHelpBallRed1[0].gameObject.SetActive(false);
             textHelpBallRed1[1].gameObject.SetActive(false);
-            textHelpBallRed1[2].gameObject.SetActive(true);
+            if (GameManager.instance.firstDeadEye)
+                textHelpBallRed1[2].gameObject.SetActive(true);
 
             textHelpBallRed2[0].gameObject.SetActive(false);
             textHelpBallRed2[1].gameObject.SetActive(false);
-            textHelpBallRed2[2].gameObject.SetActive(true);
+            if (GameManager.instance.firstDeadEye)
+                textHelpBallRed2[2].gameObject.SetActive(true);
 
             textHelpEnemy[0].gameObject.SetActive(false);
             textHelpEnemy[1].gameObject.SetActive(false);

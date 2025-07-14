@@ -141,6 +141,11 @@ public class PlayerMovement : MonoBehaviour
     private bool cooldawnLaunchBall;
 
     public GameObject sliderMusic;
+
+    private Coroutine scaleCoroutine = null;
+    private float minScale = 0.15f;
+    private float maxScale = 0.45f;
+    private float scaleDuration = 1f;
     void Start()
     {
         
@@ -517,7 +522,9 @@ public class PlayerMovement : MonoBehaviour
             float t = 0f;
             if (Gamepad.current != null)
             {
-                t = Mathf.Clamp01(direction.magnitude); // Ya normalizado, entre 0 y 1
+                //t = Mathf.Clamp01(direction.magnitude); // Ya normalizado, entre 0 y 1
+                if (scaleCoroutine == null)
+                    scaleCoroutine = StartCoroutine(ScaleOverTime());
             }
             else
             {
@@ -525,10 +532,14 @@ public class PlayerMovement : MonoBehaviour
                 float distanceFromCenter = Vector2.Distance(Input.mousePosition, screenCenter);
                 float maxScreenDistance = screenCenter.magnitude;
                 t = distanceFromCenter / maxScreenDistance;
+
+
+                float finalScale2 = Mathf.Lerp(minScale, maxScale, t);
+
+                helpBall.transform.localScale = new Vector3(finalScale2, 1, 1);
             }
 
-            float minScale = 0.15f;
-            float maxScale = 0.45f;
+
             float finalScale = Mathf.Lerp(minScale, maxScale, t);
 
             if ((playerYRotation < 0.1f && playerYRotation > -0.1f && hitPoint.x < transform.position.x + 1.5f) ||
@@ -543,11 +554,40 @@ public class PlayerMovement : MonoBehaviour
                 spriteHelpBall.enabled = true;
             }
 
-            helpBall.transform.localScale = new Vector3(finalScale, 1, 1);
+        }
+        else
+        {
+            // Si se desactiva el helpBall, detenemos la corutina
+            if (scaleCoroutine != null)
+            {
+                StopCoroutine(scaleCoroutine);
+                scaleCoroutine = null;
+            }
+
+            // Puedes resetear la escala si quieres
+            helpBall.transform.localScale = new Vector3(minScale, 1, 1);
         }
 
     }
+    
 
+    IEnumerator ScaleOverTime()
+    {
+        float elapsed = 0f;
+        float startScale = helpBall.transform.localScale.x;
+
+        while (elapsed < scaleDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / scaleDuration;
+            float currentScale = Mathf.Lerp(startScale, maxScale, t);
+            helpBall.transform.localScale = new Vector3(currentScale, 1, 1);
+            yield return null;
+        }
+
+        // Asegurar escala final exacta
+        helpBall.transform.localScale = new Vector3(maxScale, 1, 1);
+    }
 
 
     private void ContinueGame()
@@ -1100,7 +1140,12 @@ public class PlayerMovement : MonoBehaviour
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
-            
+
+            if (movingPlatform != null)
+            {
+                movingPlatform.MovePlatform(3);
+
+            }
         }
     }
     public void Sound4Performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -1132,8 +1177,12 @@ public class PlayerMovement : MonoBehaviour
             audioSourceSequence.Play();
             SoundToDoor(sequence[sound]);
             StartCoroutine(WaitForSoundToEnd());
-           
 
+            if (movingPlatform != null)
+            {
+                movingPlatform.MovePlatform(4);
+
+            }
 
         }
     }
@@ -1225,22 +1274,22 @@ public class PlayerMovement : MonoBehaviour
             if ((spawnedImages.Count + 1) == 1)
             {
                 text.text = "<b>↑</b>";
-                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 0.5f), (text.transform.localPosition.y + 20f), text.transform.localPosition.z);
+                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 0.5f), (text.transform.localPosition.y + 50f), text.transform.localPosition.z);
             }
             else if ((spawnedImages.Count + 1) == 2)
             {
                 text.text = "<b>→</b>";
-                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 2.5f), (text.transform.localPosition.y + 40f), text.transform.localPosition.z);
+                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 2.5f), (text.transform.localPosition.y + 75f), text.transform.localPosition.z);
             }
             else if ((spawnedImages.Count + 1) == 3)
             {
                 text.text = "<b>↓</b>";
-                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 0.5f), (text.transform.localPosition.y + 20f), text.transform.localPosition.z);
+                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 0.5f), (text.transform.localPosition.y + 50f), text.transform.localPosition.z);
             }
             else if ((spawnedImages.Count + 1) == 4)
             {
                 text.text = "<b>←</b>";
-                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 2.5f), (text.transform.localPosition.y + 40f), text.transform.localPosition.z);
+                text.transform.localPosition = new Vector3((text.transform.localPosition.x - 2.5f), (text.transform.localPosition.y + 75f), text.transform.localPosition.z);
             }
 
             text.fontSize = 40f;
