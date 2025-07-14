@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviour
 {
@@ -255,6 +258,51 @@ public class GameManager : MonoBehaviour
     {
         if (cargar != null)
             cargar.SetActive(true);
+    }
+
+    public IEnumerator StartProggresBar(GameObject emptyParent)
+    {
+        Time.timeScale = 1;
+        Image img = emptyParent.GetComponentInChildren<Image>();
+        TextMeshProUGUI text = emptyParent.GetComponentInChildren<TextMeshProUGUI>();
+
+        float duration1 = 1.5f;
+        float duration2 = 3f;
+
+        yield return StartCoroutine(FillToPercentage(0f, 0.3f, duration1, img, text));
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1);
+
+        asyncLoad.allowSceneActivation = false;
+
+        yield return StartCoroutine(FillToPercentage(0.3f, 1f, duration2, img,text));
+
+        while (!asyncLoad.isDone)
+        {
+            if (asyncLoad.progress >= 0.9f)
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+        yield return new WaitForSeconds(2f);
+
+        cargar.SetActive(false);
+    }
+
+    IEnumerator FillToPercentage(float start, float end, float duration, Image fillImage, TextMeshProUGUI text)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            fillImage.fillAmount = Mathf.Lerp(start, end, t);
+            text.text = (Mathf.Round(fillImage.fillAmount * 100f)).ToString() + " %";
+            yield return null;
+        }
+
+        fillImage.fillAmount = end;
     }
 
     public IEnumerator LoadSceneAsync(string scene)
