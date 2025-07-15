@@ -332,6 +332,9 @@ MonoBehaviour:
   control: {fileID: 784547635916059642}
   player: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
+  indexSound: 0
+  light: {fileID: 3686300420244894458}
+  decreaseSpeed: 1.3
 --- !u!82 &2899925836272710693
 AudioSource:
   m_ObjectHideFlags: 0

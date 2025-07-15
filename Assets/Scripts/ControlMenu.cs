@@ -42,6 +42,12 @@ public class ControlMenu : MonoBehaviour
 
     public void Start()
     {
+        if (firstSelectedContinue != null && firstSelectedNewGame != null)
+        {
+            firstSelectedContinue.GetComponent<Button>().interactable = true;
+            firstSelectedNewGame.GetComponent<Button>().interactable = true;
+        }
+
         int index = SceneManager.GetActiveScene().buildIndex;
         if (index == 0)
         {
@@ -622,6 +628,9 @@ public class ControlMenu : MonoBehaviour
             //SceneManager.LoadScene(1);
             //StartCoroutine(GameManager.instance.LoadSceneAsync("Level"));
             StartCoroutine(GameManager.instance.StartProggresBar(cargar));
+
+            firstSelectedContinue.GetComponent<Button>().interactable = false;
+            firstSelectedNewGame.GetComponent<Button>().interactable = false;
         }
     }
 
@@ -632,6 +641,9 @@ public class ControlMenu : MonoBehaviour
         //SceneManager.LoadScene(1);
         //StartCoroutine(GameManager.instance.LoadSceneAsync("Level"));
         StartCoroutine(GameManager.instance.StartProggresBar(cargar));
+
+        firstSelectedContinue.GetComponent<Button>().interactable = false;
+        firstSelectedNewGame.GetComponent<Button>().interactable = false;
     }
 
     

@@ -78,7 +78,7 @@ public class IdiomasPlay : MonoBehaviour
                 {
                     book.bookPages[i] = book.pagina0[0];
                 }
-                else if ((i == 1 && GameManager.instance.isTakeColeccionable1) || (i == 3 && GameManager.instance.isTakeColeccionable1) || (i == 5 && GameManager.instance.isTakeColeccionable1))
+                else if ((i == 1 && GameManager.instance.isTakeColeccionable1) || (i == 3 && GameManager.instance.isTakeColeccionable2) || (i == 5 && GameManager.instance.isTakeColeccionable3))
                 {
                     book.bookPages[i] = book.bookPageWrittenEsp[i-1];
                     book.bookPages[i+1] = book.bookPageWrittenEsp[i];
@@ -123,7 +123,7 @@ public class IdiomasPlay : MonoBehaviour
                 {
                     book.bookPages[i] = book.pagina0[1];
                 }
-                else if ((i == 1 && GameManager.instance.isTakeColeccionable1) || (i == 3 && GameManager.instance.isTakeColeccionable1) || (i == 5 && GameManager.instance.isTakeColeccionable1))
+                else if ((i == 1 && GameManager.instance.isTakeColeccionable1) || (i == 3 && GameManager.instance.isTakeColeccionable2) || (i == 5 && GameManager.instance.isTakeColeccionable3))
                 {
                     book.bookPages[i] = book.bookPageWrittenVal[i-1];
                     book.bookPages[i + 1] = book.bookPageWrittenVal[i];
@@ -168,7 +168,7 @@ public class IdiomasPlay : MonoBehaviour
                 {
                     book.bookPages[i] = book.pagina0[2];
                 }
-                else if ((i == 1 && GameManager.instance.isTakeColeccionable1) || (i == 3 && GameManager.instance.isTakeColeccionable1) || (i == 5 && GameManager.instance.isTakeColeccionable1))
+                else if ((i == 1 && GameManager.instance.isTakeColeccionable1) || (i == 3 && GameManager.instance.isTakeColeccionable2) || (i == 5 && GameManager.instance.isTakeColeccionable3))
                 {
                     book.bookPages[i] = book.bookPageWrittenEng[i-1];
                     book.bookPages[i + 1] = book.bookPageWrittenEng[i];
@@ -212,7 +212,7 @@ public class IdiomasPlay : MonoBehaviour
                 {
                     book.bookPages[i] = book.pagina0[3];
                 }
-                else if ((i == 1 && GameManager.instance.isTakeColeccionable1) || (i == 3 && GameManager.instance.isTakeColeccionable1) || (i == 5 && GameManager.instance.isTakeColeccionable1))
+                else if ((i == 1 && GameManager.instance.isTakeColeccionable1) || (i == 3 && GameManager.instance.isTakeColeccionable2) || (i == 5 && GameManager.instance.isTakeColeccionable3))
                 {
                     book.bookPages[i] = book.bookPageWrittenChi[i - 1];
                     book.bookPages[i + 1] = book.bookPageWrittenChi[i];

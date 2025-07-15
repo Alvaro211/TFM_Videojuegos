@@ -22,6 +22,8 @@ public class BossConroller : MonoBehaviour
 
     public AudioSource audioDead;
 
+    public GameObject[] eyesToLose;
+
     [SerializeField] GameObject Deathprefabricated;
 
     private Vector3 positionInitial;
@@ -67,6 +69,12 @@ public class BossConroller : MonoBehaviour
             {
                 this.transform.position = positionInitial;
             }
+
+            if (!eyesToLose[0].activeInHierarchy && !eyesToLose[1].activeInHierarchy && !eyesToLose[2].activeInHierarchy)
+            {
+                GameManager.instance.defeatBoss = true;
+            }
+            
         }
 
 

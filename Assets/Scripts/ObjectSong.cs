@@ -14,6 +14,10 @@ public class ObjectSong : MonoBehaviour
     public Color color;
     public int indexSound;
 
+    public Light light;
+    public float decreaseSpeed = 2f; // Velocidad de disminución
+    private float minRange = 5f; // Valor mínimo del rango
+
     private bool isSouning;
     private PlayerMovement movement;
 
@@ -32,6 +36,12 @@ public class ObjectSong : MonoBehaviour
         if (!isSouning && movement.hearingSound[indexSound])
         {
             StartCoroutine(SoundItemCoorutine());
+        }
+
+        if (light.range > minRange)
+        {
+            light.range -= decreaseSpeed * Time.deltaTime;
+            light.range = Mathf.Max(light.range, minRange); // Clamp
         }
     }
 
@@ -60,6 +70,7 @@ public class ObjectSong : MonoBehaviour
         if (objectSong.gameObject.activeInHierarchy)
         {
             audioSource.Play();
+            light.range += 5;
         }
     }
 
@@ -69,11 +80,13 @@ public class ObjectSong : MonoBehaviour
         if (objectSong.gameObject.activeInHierarchy)
         {
             audioSource.Play();
+            light.range += 5;
         }
         yield return new WaitForSeconds(5f);
         isSouning = false;
     }
 
+    
    /* public void ShowControl()
     {
         if (GameManager.instance.helpControls && objectSong.activeInHierarchy)

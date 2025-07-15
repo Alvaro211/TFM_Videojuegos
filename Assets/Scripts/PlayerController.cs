@@ -654,8 +654,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 int index = 0 * 2 + 1;
 
-                book.bookPages[index] = book.bookPageWrittenEng[index];
-                book.bookPages[index + 1] = book.bookPageWrittenEng[index + 1];
+                book.bookPages[index] = book.bookPageWrittenEng[index-1];
+                book.bookPages[index + 1] = book.bookPageWrittenEng[index];
             }
             else
             {
@@ -667,8 +667,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 int index = 1 * 2 + 1;
 
-                book.bookPages[index] = book.bookPageWrittenEng[index];
-                book.bookPages[index + 1] = book.bookPageWrittenEng[index + 1];
+                book.bookPages[index] = book.bookPageWrittenEng[index-1];
+                book.bookPages[index + 1] = book.bookPageWrittenEng[index];
             }
             else
             {
@@ -680,8 +680,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 int index = 2 * 2 + 1;
 
-                book.bookPages[index] = book.bookPageWrittenEng[index];
-                book.bookPages[index + 1] = book.bookPageWrittenEng[index + 1];
+                book.bookPages[index] = book.bookPageWrittenEng[index-1];
+                book.bookPages[index + 1] = book.bookPageWrittenEng[index];
             }
             else
             {
@@ -1476,8 +1476,14 @@ public class PlayerMovement : MonoBehaviour
                 if (Mathf.Abs(angleRad - Mathf.Atan2(rawDirection.y, rawDirection.x)) < 0.1f)
                     direction = rawDirection;
 
-                ballBuounce.velocityY = direction.y;
-                ballBuounce.velocityX = direction.x;
+                float t = Mathf.InverseLerp(minScale, maxScale, helpBall.transform.localScale.x);
+                float scaleMultiplier = Mathf.Lerp(0.5f, 1f, t);
+
+                ballBuounce.velocityY = direction.y * scaleMultiplier;
+                ballBuounce.velocityX = direction.x * scaleMultiplier;
+
+                Debug.Log(ballBuounce.velocityX + "   " + ballBuounce.velocityY);
+
                 ballBuounce.bounceCount = 0;
                 ballBuounce.isAscending = false;
 

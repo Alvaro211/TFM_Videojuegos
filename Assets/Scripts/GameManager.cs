@@ -145,7 +145,6 @@ public class GameManager : MonoBehaviour
             isOpenDoorGreen = sharedData.isOpenDoorGreen;
             isOpenDoorGreenYellow = sharedData.isOpenDoorGreenYellow;
             isOpenDoorBoss = sharedData.isOpenDoorBoss;
-            continueGame = sharedData.continueGame;
 
            // helpControls = sharedData.helpControls;
             musicVol = sharedData.musicVolume;

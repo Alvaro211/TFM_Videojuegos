@@ -5143,6 +5143,8 @@ MonoBehaviour:
   newGame: 0
   onAnimation: 0
   cargar: {fileID: 1037110858}
+  firstDeadEye: 0
+  idiomPlay: {fileID: 0}
 --- !u!4 &1562798669
 Transform:
   m_ObjectHideFlags: 0
