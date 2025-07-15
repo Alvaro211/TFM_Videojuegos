@@ -43,13 +43,25 @@ public class ObjectSong : MonoBehaviour
             light.range -= decreaseSpeed * Time.deltaTime;
             light.range = Mathf.Max(light.range, minRange); // Clamp
         }
+
+        if(objectSong.activeInHierarchy)
+            light.gameObject.SetActive(true);
+        else
+            light.gameObject.SetActive(false);
     }
 
     private void OnEnable()
     {
         isSouning = false;
+
+        light.gameObject.SetActive(true);
     }
-    
+
+    private void OnDisable()
+    {
+        light.gameObject.SetActive(false);
+    }
+
     public Color TakeItem()
     {
         

@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour
         TextMeshProUGUI text = emptyParent.GetComponentInChildren<TextMeshProUGUI>();
 
         float duration1 = 1.5f;
-        float duration2 = 3f;
+        float duration2 = 5f;
 
         yield return StartCoroutine(FillToPercentage(0f, 0.3f, duration1, img, text));
 
