@@ -95,6 +95,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'FX_DeleteDig '
       objectReference: {fileID: 0}
+    - target: {fileID: 6925533621942992186, guid: e15ac9282f350b845804d8a9a948175f,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.52156866
+      objectReference: {fileID: 0}
+    - target: {fileID: 6925533621942992186, guid: e15ac9282f350b845804d8a9a948175f,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.5773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 6925533621942992186, guid: e15ac9282f350b845804d8a9a948175f,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.5773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 6925533621942992186, guid: e15ac9282f350b845804d8a9a948175f,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.5773585
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
