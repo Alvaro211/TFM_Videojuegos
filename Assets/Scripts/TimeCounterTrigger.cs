@@ -1,6 +1,8 @@
+using Assets.Scripts.BeamWeapon;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Diagnostics;
+using UnityEngine.UIElements;
 
 
 public class TimeCounterTrigger : MonoBehaviour
@@ -18,6 +20,7 @@ public class TimeCounterTrigger : MonoBehaviour
     public float jiGuang_XianShi_shijian = 0.75f;
 
     public GameObject JiGuang;
+    public BeamWeapon JiGuangChang;
 
     public Cinemachine.CinemachineVirtualCamera virtualCamera;
     public float defaultOrthoSize = 7f;
@@ -26,12 +29,29 @@ public class TimeCounterTrigger : MonoBehaviour
     private Coroutine zoomCoroutine;
     private bool isZooming = false;
 
+    public Transform LaserIgnitionPoint;
+    Transform HeadPosition;
     private void Start()
     {
         GameObject playerGO = GameObject.FindWithTag("Player");
         player = playerGO.GetComponent<PlayerMovement>();
+        HeadPosition = playerGO.transform.Find("HeadPosition");
     }
     Transform dframb;
+
+    bool ison;
+    private void Update()
+    {
+    
+    if (JiGuang.activeSelf)
+        {
+            JiGuangChang.MaxDistance = (HeadPosition.position - LaserIgnitionPoint.position).magnitude;
+            JiGuang.transform.LookAt(HeadPosition.position);
+        }
+           
+   
+        
+    }
     private void OnTriggerEnter(Collider other)
     {
 
@@ -49,9 +69,13 @@ public class TimeCounterTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+       
+
+        
 
         if (startCounting && other.CompareTag("Player"))
         {
+            
             timeInTrigger += Time.deltaTime;
 
             if (timeInTrigger < 0.5f)
@@ -63,25 +87,25 @@ public class TimeCounterTrigger : MonoBehaviour
 
             
             JiGuang.SetActive(true);
-            JiGuang.transform.LookAt(other.transform.position);
+            
 
-            if (!isZooming && timeInTrigger >= 0.1f) // Puedes ajustar el umbral
-            {
-                if (zoomCoroutine != null)
-                    StopCoroutine(zoomCoroutine);
-
-                zoomCoroutine = StartCoroutine(ChangeOrthoSizeSmooth(targetOrthoSize, timeAfterDead));
-            }
-
-            if (timeInTrigger >= timeAfterDead)
-            {
-                JiGuang.SetActive(false);
-
-                GameManager.instance.firstDeadEye = true;
-                GameManager.instance.UpdateIdiom();
-                
-                player.Dead();
-            }
+           if (!isZooming && timeInTrigger >= 0.1f) // Puedes ajustar el umbral
+           {
+               if (zoomCoroutine != null)
+                   StopCoroutine(zoomCoroutine);
+           
+               zoomCoroutine = StartCoroutine(ChangeOrthoSizeSmooth(targetOrthoSize, timeAfterDead));
+           }
+           
+           if (timeInTrigger >= timeAfterDead)
+           {
+               JiGuang.SetActive(false);
+           
+               GameManager.instance.firstDeadEye = true;
+               GameManager.instance.UpdateIdiom();
+               
+               player.Dead();
+           }
         }
         else
         {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.BeamWeapon
 {
-    internal sealed class BeamWeapon : MonoBehaviour
+    public sealed class BeamWeapon : MonoBehaviour
     {
         public GameObject BeamPrefab;
         public GameObject MuzzleFlashPrefab;
