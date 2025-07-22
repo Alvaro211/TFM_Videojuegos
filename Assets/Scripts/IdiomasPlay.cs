@@ -70,7 +70,7 @@ public class IdiomasPlay : MonoBehaviour
             textHelpEnemy[1].gameObject.SetActive(false);
             textHelpEnemy[2].gameObject.SetActive(false);
 
-            creditos.text = "Realizado por:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nEn agradecimientos a nuestros tutores:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nMuchas gracias por jugarlo";
+            creditos.text = "Realizado por:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nEn agradecimientos a nuestros tutores:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nSonidos realizados por:\r\n\r\n\tVABsounds \r\n\tDeathscyp\r\n\tCopyCat\r\n\tYap_Audio_Production\r\n\tLeadstarson\r\n\r\nMuchas gracias por jugarlo";
         
             for(int i = 0; i < book.bookPages.Length-1; i++)
             {
@@ -115,7 +115,7 @@ public class IdiomasPlay : MonoBehaviour
             textHelpEnemy[1].gameObject.SetActive(true);
             textHelpEnemy[2].gameObject.SetActive(false);
 
-            creditos.text = "Realitzat per:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nAgraïments als nostres tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nMoltes gràcies per jugar";
+            creditos.text = "Realitzat per:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nAgraïments als nostres tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nSons realitzats per:\r\n\r\n\tVABsounds \r\n\tDeathscyp\r\n\tCopyCat\r\n\tYap_Audio_Production\r\n\tLeadstarson\r\n\r\nMoltes gràcies per jugar";
 
             for (int i = 0; i < book.bookPages.Length - 1; i++)
             {
@@ -160,7 +160,8 @@ public class IdiomasPlay : MonoBehaviour
             textHelpEnemy[1].gameObject.SetActive(false);
             textHelpEnemy[2].gameObject.SetActive(true);
 
-            creditos.text = "Made by:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nSpecial thanks to our tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nThank you very much for playing";
+            creditos.text = "Made by:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nSpecial thanks to our tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nSounds made by:\r\n\r\n\tVABsounds \r\n\tDeathscyp\r\n\tCopyCat\r\n\tYap_Audio_Production\r\n\tLeadstarson\r\n\r\nThank you very much for playing";
+
 
             for (int i = 0; i < book.bookPages.Length - 1; i++)
             {
@@ -204,7 +205,7 @@ public class IdiomasPlay : MonoBehaviour
             textHelpEnemy[1].gameObject.SetActive(false);
             textHelpEnemy[2].gameObject.SetActive(true);
 
-            creditos.text = "Made by:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nSpecial thanks to our tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nThank you very much for playing";
+            creditos.text = "Made by:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nSpecial thanks to our tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nSounds made by:\r\n\r\n\tVABsounds \r\n\tDeathscyp\r\n\tCopyCat\r\n\tYap_Audio_Production\r\n\tLeadstarson\r\n\r\nThank you very much for playing";
 
             for (int i = 0; i < book.bookPages.Length - 1; i++)
             {

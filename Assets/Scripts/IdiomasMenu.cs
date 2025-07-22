@@ -97,7 +97,7 @@ public class IdiomasMenu : MonoBehaviour
             options.GetComponent<RawImage>().texture = spriteOptions[0];
             cargarImage.GetComponent<SpriteRenderer>().sprite = spriteCargar[0];
 
-            creditos.text = "Realizado por:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nEn agradecimientos a nuestros tutores:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nMuchas gracias por jugarlo";
+            creditos.text = "Realizado por:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nEn agradecimientos a nuestros tutores:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nSonidos realizados por:\r\n\r\n\tVABsounds \r\n\tDeathscyp\r\n\tCopyCat\r\n\tYap_Audio_Production\r\n\tLeadstarson\r\n\r\nMuchas gracias por jugarlo";
         }
         else if (GameManager.instance.idiom == GameManager.Language.Valencian)
         {
@@ -120,8 +120,8 @@ public class IdiomasMenu : MonoBehaviour
 
             options.GetComponent<RawImage>().texture = spriteOptions[1];
             cargarImage.GetComponent<SpriteRenderer>().sprite = spriteCargar[1];
-            
-            creditos.text = "Realitzat per:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nAgraïments als nostres tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nMoltes gràcies per jugar";
+
+            creditos.text = "Realitzat per:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nAgraïments als nostres tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nSons realitzats per:\r\n\r\n\tVABsounds \r\n\tDeathscyp\r\n\tCopyCat\r\n\tYap_Audio_Production\r\n\tLeadstarson\r\n\r\nMoltes gràcies per jugar";
 
         }
         else if (GameManager.instance.idiom == GameManager.Language.English)
@@ -170,7 +170,7 @@ public class IdiomasMenu : MonoBehaviour
             options.GetComponent<RawImage>().texture = spriteOptions[3];
             cargarImage.GetComponent<SpriteRenderer>().sprite = spriteCargar[3];
 
-            creditos.text = "Made by:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nSpecial thanks to our tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nThank you very much for playing";
+            creditos.text = "Made by:\r\n\r\n\tJulia Martinez Campos\r\n\tAlvaro Perez Martinez\r\n\tYihang Sun\r\n\tJuan David Acevedo\r\n\r\nSpecial thanks to our tutors:\r\n\t\r\n\tSergio Gonzalez Jimenez\r\n\tSergio Rodriguez Gonzalez\r\n\tSergio Garcia Cabezas\r\n\r\nSounds made by:\r\n\r\n\tVABsounds \r\n\tDeathscyp\r\n\tCopyCat\r\n\tYap_Audio_Production\r\n\tLeadstarson\r\n\r\nThank you very much for playing";
         }
     }
 

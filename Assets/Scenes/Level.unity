@@ -15115,7 +15115,7 @@ Camera:
   far clip plane: 1000
   field of view: 80
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 13
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -15140,7 +15140,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 581.1, y: 29.500002, z: -22}
+  m_LocalPosition: {x: 581.1, y: 26.420002, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -70555,7 +70555,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1716474887}
   m_Lens:
     FieldOfView: 80
-    OrthographicSize: 20
+    OrthographicSize: 13
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -70581,7 +70581,7 @@ Transform:
   m_GameObject: {fileID: 1547773805}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -65.900024, y: 21.90169, z: 0}
+  m_LocalPosition: {x: -65.900024, y: 18.82169, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -76701,8 +76701,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Made by:\n\n\tJulia Martinez Campos\n\tAlvaro Perez Martinez\n\tYihang
     Sun\n\tJuan David Acevedo\n\nSpecial thanks to our tutors:\n\t\n\tSergio Gonzalez
-    Jimenez\n\tSergio Rodriguez Gonzalez\n\tSergio Garcia Cabezas\n\nThank you very
-    much for playing"
+    Jimenez\n\tSergio Rodriguez Gonzalez\n\tSergio Garcia Cabezas\n\nSounds made
+    by:\n\n\tVABsounds \n\tDeathscyp\r\n\tCopyCat\n\tYap_Audio_Production\n\tLeadstarson\n\nThank
+    you very much for playing"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6763df91c8422dc40b7be0b8b28a9276, type: 2}
   m_sharedMaterial: {fileID: 6407953052569988535, guid: fcd43928ef5ff034a9923cf098c55c4d,
@@ -97004,7 +97005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 118481061}
-  m_PathPosition: 3
+  m_PathPosition: 0
   m_PositionUnits: 0
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0

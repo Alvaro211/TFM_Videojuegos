@@ -3810,8 +3810,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Made by:\n\n\tJulia Martinez Campos\n\tAlvaro Perez Martinez\n\tYihang
     Sun\n\tJuan David Acevedo\n\nSpecial thanks to our tutors:\n\t\n\tSergio Gonzalez
-    Jimenez\n\tSergio Rodriguez Gonzalez\n\tSergio Garcia Cabezas\n\nThank you very
-    much for playing!"
+    Jimenez\n\tSergio Rodriguez Gonzalez\n\tSergio Garcia Cabezas\n\nSounds made
+    by:\n\n\tVABsounds \n\tDeathscyp\r\n\tCopyCat\n\tYap_Audio_Production\n\tLeadstarson\n\nThank
+    you very much for playing"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6763df91c8422dc40b7be0b8b28a9276, type: 2}
   m_sharedMaterial: {fileID: 6407953052569988535, guid: fcd43928ef5ff034a9923cf098c55c4d,
