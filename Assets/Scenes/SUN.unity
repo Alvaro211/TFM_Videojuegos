@@ -2574,14 +2574,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1213133949}
     m_Modifications:
-    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
-      propertyPath: m_Name
-      value: Glowing orb 39 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
-      propertyPath: m_TagString
-      value: TargetBall
-      objectReference: {fileID: 0}
     - target: {fileID: 2899925836272710693, guid: bc2b315902cf9af4ea83c4eb4901215a,
         type: 3}
       propertyPath: MaxDistance
@@ -2617,6 +2609,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 34ce2dadc0a21ed4f9102e2eeeea3497, type: 2}
+    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
+      propertyPath: m_Name
+      value: Glowing orb 39 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
+      propertyPath: m_TagString
+      value: TargetBall
+      objectReference: {fileID: 0}
     - target: {fileID: 4947493555666418, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 186.37
@@ -3737,7 +3737,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4876,9 +4876,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1cd49cdca5f2b459d988db855be7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idiom: 2
+  vibration: {fileID: 0}
   helpControls: 1
+  canMove: 1
   playerMovePlatform: 0
   defeatBoss: 0
+  musicEnemy: 1
+  musicVol: 0
+  effectVol: 0
+  playerMovement: {fileID: 0}
+  sharedData:
+    player:
+      positionX: 0
+      positionY: 0
+      positionZ: 0
+      noteGreen: 0
+      noteYellow: 0
+      noteBlue: 0
+      noteRed: 0
+    continueGame: 0
+    musicVolume: 0
+    effectVolume: 0
+    helpControls: 0
+    isOpenDoorGreen: 0
+    isOpenDoorGreenYellow: 0
+    isOpenDoorBoss: 0
+    isSeenCinematic2: 0
+    isSeenCinematic3: 0
+    isSeenCinematic4: 0
+    isTakeColeccionable1: 0
+    isTakeColeccionable2: 0
+    isTakeColeccionable3: 0
+    idiom: 0
+  continueGame: 0
+  isOpenDoorGreen: 0
+  isOpenDoorGreenYellow: 0
+  isOpenDoorBoss: 0
+  isSeenCinematic2: 0
+  isSeenCinematic3: 0
+  isSeenCinematic4: 0
+  isTakeColeccionable1: 0
+  isTakeColeccionable2: 0
+  isTakeColeccionable3: 0
+  newGame: 1
+  onAnimation: 0
+  cargar: {fileID: 0}
+  firstDeadEye: 0
+  idiomPlay: {fileID: 0}
 --- !u!4 &233032294
 Transform:
   m_ObjectHideFlags: 0
@@ -4938,7 +4983,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 5b493f745c2fa4949aa9475bfd092485, type: 2}
   m_sharedMaterial: {fileID: 2061287619472511616, guid: 5b493f745c2fa4949aa9475bfd092485,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2061287619472511616, guid: 5b493f745c2fa4949aa9475bfd092485, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -9436,18 +9482,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1213133949}
     m_Modifications:
-    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
-      propertyPath: m_Name
-      value: Glowing orb 39
-      objectReference: {fileID: 0}
-    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
-      propertyPath: m_TagString
-      value: TargetBall
-      objectReference: {fileID: 0}
     - target: {fileID: 2899925836272710693, guid: bc2b315902cf9af4ea83c4eb4901215a,
         type: 3}
       propertyPath: MaxDistance
@@ -9492,6 +9526,18 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
+      propertyPath: m_Name
+      value: Glowing orb 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
+      propertyPath: m_TagString
+      value: TargetBall
       objectReference: {fileID: 0}
     - target: {fileID: 4947493555666418, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9563,6 +9609,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 199666584208581868, guid: a5f688d3ef1f8c94e8dcdea75174a07b,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 199754260637560272, guid: a5f688d3ef1f8c94e8dcdea75174a07b,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -9579,11 +9630,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 199504160601226676, guid: 390de966565d5364786c01d918a0ed86,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199666584208581868, guid: a5f688d3ef1f8c94e8dcdea75174a07b,
         type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -11346,6 +11392,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   masterMixer: {fileID: 24100000, guid: f8757647a04f3b340a4b200fc424afe7, type: 2}
+  musicVolumMenu: {fileID: 0}
+  effectVolumMenu: {fileID: 0}
+  helpMenu: {fileID: 0}
+  musicVolumPlay: {fileID: 0}
+  effectVolumPlay: {fileID: 0}
+  helpPlay: {fileID: 0}
 --- !u!4 &437237292
 Transform:
   m_ObjectHideFlags: 0
@@ -17853,6 +17905,14 @@ MonoBehaviour:
   offsetY: 7
   velocityMunition: 20
   timeWaitShoot: 5
+  onAnimation: 1
+  audio: {fileID: 0}
+  audioBossIdle: {fileID: 0}
+  audioBossShout: {fileID: 0}
+  credits: {fileID: 0}
+  audioDead: {fileID: 0}
+  eyesToLose: []
+  Deathprefabricated: {fileID: 0}
 --- !u!135 &683547632
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -18390,7 +18450,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1846262837
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f14de2b36205ced4f94c3c547f743c75, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -21075,12 +21135,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2b315902cf9af4ea83c4eb4901215a, type: 3}
---- !u!1 &806121220 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6840247755021933094, guid: bc2b315902cf9af4ea83c4eb4901215a,
-    type: 3}
-  m_PrefabInstance: {fileID: 806121219}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &806702242
 GameObject:
   m_ObjectHideFlags: 0
@@ -21961,7 +22015,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25809,14 +25863,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1213133949}
     m_Modifications:
-    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
-      propertyPath: m_Name
-      value: Glowing orb 39 (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
-      propertyPath: m_TagString
-      value: TargetBall
-      objectReference: {fileID: 0}
     - target: {fileID: 2899925836272710693, guid: bc2b315902cf9af4ea83c4eb4901215a,
         type: 3}
       propertyPath: MaxDistance
@@ -25867,6 +25913,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7ef83f1fc248c3f4dbb1c3cb579eb573, type: 2}
+    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
+      propertyPath: m_Name
+      value: Glowing orb 39 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
+      propertyPath: m_TagString
+      value: TargetBall
+      objectReference: {fileID: 0}
     - target: {fileID: 4947493555666418, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 180.98
@@ -26936,6 +26990,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 0}
   options: {fileID: 0}
+  cargar: {fileID: 0}
+  cargarControls: {fileID: 0}
+  buttonBack: {fileID: 0}
+  controls: {fileID: 0}
+  quit: {fileID: 0}
+  audio: {fileID: 0}
+  imageContinue: {fileID: 0}
+  canvas: {fileID: 0}
+  firstSelectedContinue: {fileID: 0}
+  firstSelectedNewGame: {fileID: 0}
+  inputActions: {fileID: 0}
+  menuPrincipal: []
+  menuOpciones: []
+  playOpciones: []
 --- !u!1 &999819227
 GameObject:
   m_ObjectHideFlags: 0
@@ -28789,12 +28857,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2b315902cf9af4ea83c4eb4901215a, type: 3}
---- !u!1 &1043153874 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6840247755021933094, guid: bc2b315902cf9af4ea83c4eb4901215a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1043153873}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1049575887
 GameObject:
   m_ObjectHideFlags: 0
@@ -29330,6 +29392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   control: {fileID: 0}
+  iconX: {fileID: 0}
   audioSource: {fileID: 0}
   numLightPlatform: 05000000
   allLight:
@@ -29340,6 +29403,8 @@ MonoBehaviour:
   - {fileID: 493322503}
   fadeDuration: 2
   TimeLightOn: 10
+  numHotSpot: 0
+  continueLeft: 0
 --- !u!64 &1067384034
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -31743,12 +31808,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2b315902cf9af4ea83c4eb4901215a, type: 3}
---- !u!1 &1171141932 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6840247755021933094, guid: bc2b315902cf9af4ea83c4eb4901215a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1171141931}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1174054174
 GameObject:
   m_ObjectHideFlags: 0
@@ -32124,7 +32183,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1846262837
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 2b3e8f311319ee147a6f15734c93bba3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -33006,7 +33065,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1846262837
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b10b9728e8401ca48aefe192d75091ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -34368,7 +34427,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -38129,7 +38188,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -39107,7 +39166,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1846262837
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: b10b9728e8401ca48aefe192d75091ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -42992,6 +43051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   control: {fileID: 0}
+  iconX: {fileID: 0}
   audioSource: {fileID: 0}
   numLightPlatform: 0500000005000000
   allLight:
@@ -43007,6 +43067,8 @@ MonoBehaviour:
   - {fileID: 1952222160}
   fadeDuration: 2
   TimeLightOn: 10
+  numHotSpot: 0
+  continueLeft: 0
 --- !u!64 &1621549053
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -44578,7 +44640,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -46112,6 +46174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3041e88e068b46a0984604c38721e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footSoundWaves: {fileID: 0}
+  footSoundWavesSprite: {fileID: 0}
   moveSpeed: 7
   gravityScale: -9.8
   jumpForce: 4
@@ -46119,20 +46183,23 @@ MonoBehaviour:
   audioSourceEffectPlayer: {fileID: 0}
   poolBall: {fileID: 422646103}
   menuPause: {fileID: 595968779}
+  cooldownBall: 0
   notes:
   - {fileID: 2125593223}
   - {fileID: 1238685474}
   - {fileID: 300011350}
-  aduioJump: {fileID: 8300000, guid: 5406a44e362eae14fa45087bc850857b, type: 3}
+  sliderBall: {fileID: 0}
+  imageDamage: {fileID: 0}
+  audioJump: {fileID: 0}
+  audioThrowBall: {fileID: 0}
+  audioDead: {fileID: 0}
+  audioTakeNote: {fileID: 0}
+  audioOpenDiary: {fileID: 0}
+  diary: {fileID: 0}
   listEnemy:
   - {fileID: 2132533458}
+  listSong: []
   audioSourceMusic: {fileID: 998425726}
-  listObjectSong:
-  - {fileID: 1043153874}
-  - {fileID: 1804430131}
-  - {fileID: 1171141932}
-  - {fileID: 806121220}
-  - {fileID: 1811398723}
   imagePrefab: {fileID: 5736860071195227724, guid: 27dd948ea547d7f48a5f0687a980309d,
     type: 3}
   canvasTransform: {fileID: 998425725}
@@ -46140,7 +46207,22 @@ MonoBehaviour:
   spacing: 20
   sprite: {fileID: 1716474895}
   layout: {fileID: 1213133948}
+  currentIndexHotSpot: 0
   anim: {fileID: 1716474894}
+  cineMachine: {fileID: 0}
+  book: {fileID: 0}
+  hearingSound: 
+  helpBall: {fileID: 0}
+  impulseSource: {fileID: 0}
+  vignetteImage: {fileID: 0}
+  cinemachine: {fileID: 0}
+  playerCollider: {fileID: 0}
+  spotlight: {fileID: 0}
+  spotlight2: {fileID: 0}
+  flickerSpeed: 5
+  angleVariation: 1
+  innerAngleVariation: 0.5
+  sliderMusic: {fileID: 0}
 --- !u!54 &1716474889
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -46332,7 +46414,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -46351,7 +46433,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2036166969
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1fc1c71509c6202468b249b1713e12e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -46404,6 +46486,7 @@ MonoBehaviour:
     redPoint: {fileID: 1655618853}
   - ball: {fileID: 716279374}
     redPoint: {fileID: 156673959}
+  t: {fileID: 0}
 --- !u!1001 &1717855627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48423,12 +48506,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2b315902cf9af4ea83c4eb4901215a, type: 3}
---- !u!1 &1804430131 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6840247755021933094, guid: bc2b315902cf9af4ea83c4eb4901215a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1804430130}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1808014489 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3532028730376989073, guid: fc268cb3d977ce740ae5ed92b4bb7ed6,
@@ -48524,12 +48601,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2b315902cf9af4ea83c4eb4901215a, type: 3}
---- !u!1 &1811398723 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6840247755021933094, guid: bc2b315902cf9af4ea83c4eb4901215a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1811398722}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1812673071
 GameObject:
   m_ObjectHideFlags: 0
@@ -49092,7 +49163,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -49979,14 +50050,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1213133949}
     m_Modifications:
-    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
-      propertyPath: m_Name
-      value: Glowing orb 39 (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
-      propertyPath: m_TagString
-      value: TargetBall
-      objectReference: {fileID: 0}
     - target: {fileID: 2899925836272710693, guid: bc2b315902cf9af4ea83c4eb4901215a,
         type: 3}
       propertyPath: MaxDistance
@@ -50022,6 +50085,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8e2fff65d4b91ef49ac250e7482c7e74, type: 2}
+    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
+      propertyPath: m_Name
+      value: Glowing orb 39 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1758375725454504, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
+      propertyPath: m_TagString
+      value: TargetBall
+      objectReference: {fileID: 0}
     - target: {fileID: 4947493555666418, guid: a5f688d3ef1f8c94e8dcdea75174a07b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 370.6
@@ -50331,7 +50402,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -50885,7 +50956,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -51770,7 +51841,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -51789,7 +51860,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2036166969
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a38437d95aee10d4a9718fe3d2115b11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -54435,7 +54506,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1846262837
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2b3e8f311319ee147a6f15734c93bba3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

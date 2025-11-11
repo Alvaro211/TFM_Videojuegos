@@ -170,7 +170,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -189,7 +189,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -289314669
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d06550e9e43aa524e8c29b8bbc0d54d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -267,7 +267,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -286,7 +286,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1846262837
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: d06550e9e43aa524e8c29b8bbc0d54d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -459,6 +459,10 @@ MonoBehaviour:
   audio: {fileID: 5861233822443597329}
   audioIdle: {fileID: 8300000, guid: db532ae4c87b4cb48a410d8d2e44a9f3, type: 3}
   audioChasing: {fileID: 8300000, guid: 7fa129371e9af224e8ccb8a1b73dbaf3, type: 3}
+  light: {fileID: 0}
+  minInnerAngle: 30
+  minOuterAngle: 40
+  reductionSpeed: 15
 --- !u!82 &5861233822443597329
 AudioSource:
   m_ObjectHideFlags: 0
@@ -620,7 +624,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -639,7 +643,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1846262837
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 15
   m_Sprite: {fileID: 21300000, guid: f4105bccf0f2de74b956c302d5269b28, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -887,7 +891,7 @@ PrefabInstance:
     - target: {fileID: 8673278101991689858, guid: e99d9cf440e36674da79cd62609ae46c,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8673278101991689858, guid: e99d9cf440e36674da79cd62609ae46c,
         type: 3}
@@ -899,6 +903,11 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -289314669
       objectReference: {fileID: 0}
+    - target: {fileID: 8673278101991689858, guid: e99d9cf440e36674da79cd62609ae46c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

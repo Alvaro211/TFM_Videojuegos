@@ -4,24 +4,24 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Floor
-  - FinishLevel
   - HotSpot
-  - StartLevel
-  - Ball
-  - EntryBoss
-  - PlatformMove
+  - Collectionable
   - Enemy
+  - Floor
+  - PlatformMove
+  - FinishLevel
   - FloorObjectSong
   - ObjetoCancion
+  - Ball
   - EnemyMunition
-  - DefeatBoss
-  - TargetBall
-  - Animation2
-  - Animation3
-  - Animation4
-  - Collectionable
   - HearingSound
+  - EntryBoss
+  - Animation2
+  - Animation4
+  - DefeatBoss
+  - Animation3
+  - StartLevel
+  - TargetBall
   layers:
   - Default
   - TransparentFX
@@ -29,10 +29,10 @@ TagManager:
   - 
   - Water
   - UI
-  - ZoneRedBall
-  - point
-  - Player
-  - Machacadores
+  - 
+  - 
+  - Platforms
+  - 
   - 
   - 
   - 
@@ -60,11 +60,11 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: Enviroment
-    uniqueID: 2448704459
+    uniqueID: 7967311
     locked: 0
-  - name: Player
-    uniqueID: 2258800327
+  - name: Perspective
+    uniqueID: 3420322187
     locked: 0
-  - name: point
-    uniqueID: 4005652627
+  - name: Top
+    uniqueID: 282671577
     locked: 0

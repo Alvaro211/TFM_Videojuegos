@@ -119,11 +119,11 @@ public class BallBounceHandler : MonoBehaviour
     // Método para generar la Point Light en la colisión
     void CreatePointLight(Vector3 position)
     {
-        position.y += 2;
+        position.y += 1;
         GameObject lightObject = new GameObject("BounceLight"); // Crear objeto vacío
         Light pointLight = lightObject.AddComponent<Light>(); // Agregar componente Light
         pointLight.type = LightType.Point; // Configurar como luz puntual
-        pointLight.range = 10f; // Ajustar alcance de la luz
+        pointLight.range = 60f; // Ajustar alcance de la luz
         pointLight.intensity = 40f; // Ajustar intensidad
         pointLight.color = Color.white; // Color de la luz
 
