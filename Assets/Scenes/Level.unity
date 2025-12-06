@@ -78263,7 +78263,7 @@ MonoBehaviour:
   footSoundWaves: {fileID: 1303359142}
   footSoundWavesSprite: {fileID: 450849818}
   moveSpeed: 10
-  gravityScale: -9.8
+  gravityScale: -12
   jumpForce: 3.2
   audioSourceSequence: {fileID: 2024507661}
   audioSourceEffectPlayer: {fileID: 0}

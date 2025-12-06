@@ -339,13 +339,20 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetBool("IsJumping", true);
                 anim.SetBool("IsFalling", true);
             }
-                
+
 
 
             if (isPressJumping)
-                verticalVelocity += (gravityScale - gravityScale/3) * Time.deltaTime;
+                verticalVelocity += (gravityScale - gravityScale / 3) * Time.deltaTime;
             else
+            {
+                if(verticalVelocity > 1)
+                    verticalVelocity = 1;
+
                 verticalVelocity += gravityScale * Time.deltaTime;
+            }
+
+            Debug.Log(verticalVelocity);
 
         }
         else
