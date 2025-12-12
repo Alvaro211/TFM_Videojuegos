@@ -352,7 +352,7 @@ public class PlayerMovement : MonoBehaviour
                 verticalVelocity += gravityScale * Time.deltaTime;
             }
 
-            Debug.Log(verticalVelocity);
+           // Debug.Log(verticalVelocity);
 
         }
         else
@@ -1701,10 +1701,30 @@ public class PlayerMovement : MonoBehaviour
                 hearingSound[heard.heardSound] = true;
             }
         }
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            if (enemy != null && !enemy.isStunned)
+                Dead();
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Machacadores"))
+            {
+                Vector3 direction = (other.transform.position - transform.position).normalized;
+                float dot = Vector3.Dot(direction, Vector3.up);
+
+                Debug.Log(dot);
+                // Si dot > 0.5, el machacador está "encima" de ti (viniendo desde arriba)
+                if (dot > 0.75f || dot < -0.75f)
+                {
+                    Dead(); // Te aplastó
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.tag);
+        Debug.Log(other.gameObject.name);
         if (other.tag == "HotSpot")
         {
             isOnHotSpot = true;
