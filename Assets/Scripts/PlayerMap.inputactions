@@ -330,6 +330,17 @@
                 },
                 {
                     "name": "",
+                    "id": "dc0789f9-58f5-4b9a-a819-f252cf93d107",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sphere",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dabdc3ec-9904-45b5-b115-8d761b48e4e2",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -343,6 +354,17 @@
                     "name": "",
                     "id": "46e8b46d-03cf-458c-856f-d3334f26c058",
                     "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c511428-de53-40f2-b2a8-0c825ec29eaa",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
