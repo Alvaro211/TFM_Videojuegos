@@ -13,6 +13,7 @@ public class ChangeHelpText : MonoBehaviour
     public SpriteRenderer iconStickR;
 
     public TextMeshPro[] textHelpBall1;
+    public TextMeshPro[] textLearnToSee;
 
     public GameObject options;
     public GameObject diary;
@@ -26,7 +27,6 @@ public class ChangeHelpText : MonoBehaviour
                 Cursor.visible = true;
             else
                 Cursor.visible = false;
-            
             textF.gameObject.SetActive(false);
             iconLB.gameObject.SetActive(true);
 
@@ -38,7 +38,10 @@ public class ChangeHelpText : MonoBehaviour
 
             if (GameManager.instance.idiom == GameManager.Language.Spanish)
             {
-                textHelpBall1[0].transform.localPosition = new Vector3(610.71f, 6.59f, -7.36f);
+                
+                textHelpBall1[0].transform.localPosition = new Vector3(564.64f, 31.30f, -7.36f);
+
+                textLearnToSee[0].transform.localPosition = new Vector3(570.17f, 33.43f, -7.36f);
 
                 iconLB.transform.localPosition = new Vector3(601.96f, 8.8f, 0f);
 
@@ -46,7 +49,8 @@ public class ChangeHelpText : MonoBehaviour
             }
             else if (GameManager.instance.idiom == GameManager.Language.Valencian)
             {
-                textHelpBall1[1].transform.localPosition = new Vector3(610.24f, 6.59f, -7.36f);
+                textHelpBall1[1].transform.localPosition = new Vector3(564.64f, 31.30f, -7.36f);
+                textLearnToSee[1].transform.localPosition = new Vector3(570.17f, 33.43f, -7.36f);
 
                 iconLB.transform.localPosition = new Vector3(601.96f, 8.8f, 0f);
 
@@ -54,7 +58,9 @@ public class ChangeHelpText : MonoBehaviour
             }
             else
             {
-                textHelpBall1[2].transform.localPosition = new Vector3(611.91f, 6.59f, -7.36f);
+                textHelpBall1[2].transform.localPosition = new Vector3(564.64f, 31.30f, -7.36f);
+                textLearnToSee[2].transform.localPosition = new Vector3(570.17f, 33.43f, -7.36f);
+
 
                 iconLB.transform.localPosition = new Vector3(602.82f, 8.8f, 0f);
 
@@ -69,9 +75,13 @@ public class ChangeHelpText : MonoBehaviour
 
             iconStickR.gameObject.SetActive(false);
 
-            textHelpBall1[0].transform.localPosition = new Vector3(606.76f, 6.59f, -7.36f);
-            textHelpBall1[1].transform.localPosition = new Vector3(606.76f, 6.59f, -7.36f);
-            textHelpBall1[2].transform.localPosition = new Vector3(606.76f, 6.59f, -7.36f);
+            textHelpBall1[0].transform.localPosition = new Vector3(564.64f, 31.30f, -7.36f);
+            textHelpBall1[1].transform.localPosition = new Vector3(564.64f, 31.30f, -7.36f);
+            textHelpBall1[2].transform.localPosition = new Vector3(564.64f, 31.30f, -7.36f);
+
+            textLearnToSee[0].transform.localPosition = new Vector3(570.17f, 33.43f, -7.36f);
+            textLearnToSee[1].transform.localPosition = new Vector3(570.17f, 33.43f, -7.36f);
+            textLearnToSee[2].transform.localPosition = new Vector3(570.17f, 33.43f, -7.36f);
 
             if (GameManager.instance.idiom == GameManager.Language.Spanish)
             {
@@ -79,7 +89,11 @@ public class ChangeHelpText : MonoBehaviour
                 textMouse[1].gameObject.SetActive(false);
                 textMouse[2].gameObject.SetActive(false);
 
-                textF.transform.localPosition = new Vector3(604f, 7.4f, -7.36f);
+                textF.transform.localPosition = new Vector3(561.77f, 32.12f, -7.36f);
+
+                textLearnToSee[0].gameObject.SetActive(true);
+                textLearnToSee[1].gameObject.SetActive(false);
+                textLearnToSee[2].gameObject.SetActive(false);
             }
             else if (GameManager.instance.idiom == GameManager.Language.Valencian)
             {
@@ -87,7 +101,11 @@ public class ChangeHelpText : MonoBehaviour
                 textMouse[1].gameObject.SetActive(true);
                 textMouse[2].gameObject.SetActive(false);
 
-                textF.transform.localPosition = new Vector3(605f, 7.4f, -7.36f);
+                textF.transform.localPosition = new Vector3(562.60f, 32.12f, -7.36f);
+
+                textLearnToSee[0].gameObject.SetActive(false);
+                textLearnToSee[1].gameObject.SetActive(true);
+                textLearnToSee[2].gameObject.SetActive(false);
             }
             else
             {
@@ -95,7 +113,12 @@ public class ChangeHelpText : MonoBehaviour
                 textMouse[1].gameObject.SetActive(false);
                 textMouse[2].gameObject.SetActive(true);
 
-                textF.transform.localPosition = new Vector3(606f, 7.4f, -7.36f);
+                textF.transform.localPosition = new Vector3(563.59f, 32.12f, -7.36f);
+
+                textLearnToSee[0].gameObject.SetActive(false);
+                textLearnToSee[1].gameObject.SetActive(false);
+                textLearnToSee[2].gameObject.SetActive(true);
+
             }        
         }
     }
