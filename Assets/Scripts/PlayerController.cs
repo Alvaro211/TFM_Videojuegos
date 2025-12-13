@@ -146,6 +146,9 @@ public class PlayerMovement : MonoBehaviour
     private float minScale = 0.15f;
     private float maxScale = 0.45f;
     private float scaleDuration = 1f;
+
+    private float timeJumpIsPress = 10f;
+    private bool firstMinumJumpIsSet = false;
     void Start()
     {
         
@@ -343,16 +346,30 @@ public class PlayerMovement : MonoBehaviour
 
 
             if (isPressJumping)
+            {
                 verticalVelocity += (gravityScale - gravityScale / 3) * Time.deltaTime;
+                timeJumpIsPress += Time.deltaTime;
+            }
+            else if (timeJumpIsPress < 1f)
+            {
+                if (!firstMinumJumpIsSet)
+                {
+                    verticalVelocity = 4f;
+                    firstMinumJumpIsSet = true;
+                }
+
+                verticalVelocity += gravityScale/3 * Time.deltaTime;
+                timeJumpIsPress += Time.deltaTime;
+            }
             else
             {
-                if(verticalVelocity > 1)
+                if (verticalVelocity > 1)
                     verticalVelocity = 1;
 
                 verticalVelocity += gravityScale * Time.deltaTime;
             }
 
-           // Debug.Log(verticalVelocity);
+            Debug.Log(verticalVelocity);
 
         }
         else
@@ -722,6 +739,8 @@ public class PlayerMovement : MonoBehaviour
     public void JumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         isPressJumping = true;
+        timeJumpIsPress = 0f;
+        firstMinumJumpIsSet = false;
 
          if (controller.isGrounded && !jumpCooldown && GameManager.instance.canMove)
                  StartCoroutine(Jump());
